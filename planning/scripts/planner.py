@@ -14,13 +14,13 @@ TARGETS_RANDOM_POOL_SIZE = 2 # Size of target area
 KP = 0.05 # Controller proportional gain
 MAX_LINEAR_VELOCITY = 0.8
 MAX_ANGULAR_VELOCITY = 0.2
+NUMBER_OF_ROBOTS = 3
 
 class Planner(Node):
     def __init__(self):
         super().__init__('robot_controller')
         
-        #TODO: automate number of robots
-        self.robots = ['robot0', 'robot1', 'robot2']
+        self.robots = ['robot{}'.format(i) for i in range(NUMBER_OF_ROBOTS)]
         self.subscribers = []
         self.robot_publishers = []
         self.positions = [Point() for _ in range(len(self.robots))]
@@ -65,11 +65,7 @@ class Planner(Node):
         # Compute a new control input for every update in position
         self.drive_robots_to_random_positions()
         
-    def drive_robots_to_random_positions(self):
-        while not self.positions or not self.orientations:
-            self.get_logger().info('Waiting for current position...')
-            rclpy.spin_once(self)
-        
+    def all_robots_arrived_in_targets(self):
         # Check if all robots arrived in target positions
         number_of_robots_in_target = 0
         for robot_index, _ in enumerate(self.robots):
@@ -78,16 +74,24 @@ class Planner(Node):
             self.distance_to_target[int(robot_index)] = self.get_distance_to_target(self.target_positions[int(robot_index)].x - current_position.x, self.target_positions[int(robot_index)].y - current_position.y)
             if self.distance_to_target[int(robot_index)] < THRE_ROBOT_ON_TARGET:
                 number_of_robots_in_target += 1 
+        if int(number_of_robots_in_target) == int(len(self.robots)):
+            return True
+        else:
+            return False
         
-        if int(number_of_robots_in_target) == int(len(self.robots)): # all robots arrived -> new targets
+    def drive_robots_to_random_positions(self):
+        '''
+        Drive robots to a random position. 
+        When all robots arrive, get another random position and drive them to new position. 
+        Do this continuously
+        '''
+        if self.all_robots_arrived_in_targets(): # all robots arrived -> new targets
             for robot_index, _ in enumerate(self.robots):
                 self.get_logger().info('All robots arrived on targets')
                 self.get_logger().info('Acquiring new target')
                 self.target_positions[int(robot_index)] = Point(x=float(random.randint(-TARGETS_RANDOM_POOL_SIZE, TARGETS_RANDOM_POOL_SIZE)), y=float(random.randint(-TARGETS_RANDOM_POOL_SIZE, TARGETS_RANDOM_POOL_SIZE)), z=0.01) # Random target positions
                 time.sleep(2)
 
-        rate = self.create_rate(1)
-        
         d = 0.1 # Virtual point outside robot center (avoid mathematical errors in the feedback linearization controller)
         for robot_index, robot_name in enumerate(self.robots):
             current_position = self.positions[robot_index]
@@ -100,7 +104,7 @@ class Planner(Node):
                 current_orientation = float(current_orientation)
             else:
                 error_msg = "Invalid current_orientation: " + str(current_orientation)
-                self.get_logger().error(error_msg)
+                # self.get_logger().error(error_msg)
                 continue
             try: # Feedback linearization controller
                 cmd_vel.linear.x = (target_position.x - current_position.x) * math.cos(current_orientation) + (target_position.y - current_position.y) * math.sin(current_orientation)

@@ -29,7 +29,8 @@ def generate_launch_description():
     assert os.path.exists(urdf), "Thebox_bot.urdf doesnt exist in "+str(urdf)
 
     # Names and poses of the robots
-    robots = gen_robot_list(3)
+    NUMBER_OF_ROBOTS = 3
+    robots = gen_robot_list(NUMBER_OF_ROBOTS)
 
     # We create the list of spawn robots commands
     spawn_robots_cmds = []
