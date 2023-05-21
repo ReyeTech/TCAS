@@ -1,4 +1,4 @@
-# Multi Agent Gazebo Simulation
+# Traffic Alert and Collision Avoidance System - Gazebo Simulation
 
 Robot and world models heavily based on: https://bitbucket.org/theconstructcore/box_bot/src/foxy/
 
@@ -31,4 +31,7 @@ ros2 launch planning planner_launch.py
 
 ## Demo
 
-[![CONTROL DEMO](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://youtu.be/9uNMXVPop8Q)
+Video accelerated 2x
+In this control demo, Robots don't collide out of luck.
+
+[![CONTROL DEMO](https://github.com/ReyeTech/TCAS/blob/37609850ab5f0766d37741fe33248968ab12472f/gazebo_multiagent.png)](https://youtu.be/9uNMXVPop8Q)
