@@ -32,7 +32,6 @@ install(
 
 # Install Python executables
 install(PROGRAMS
-  scripts/talker.py
   scripts/planner.py
   DESTINATION lib/${PROJECT_NAME}
 )

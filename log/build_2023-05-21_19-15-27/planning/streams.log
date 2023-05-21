@@ -1,0 +1,44 @@
+[0.032s] Invoking command in '/home/edson_20_04/TCAS/build/planning': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/planning -- -j16 -l16
+[0.073s] -- Found ament_cmake: 0.9.11 (/opt/ros/foxy/share/ament_cmake/cmake)
+[0.098s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.274s] -- Found rclcpp: 2.4.2 (/opt/ros/foxy/share/rclcpp/cmake)
+[0.476s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.480s] -- Found rosidl_adapter: 1.3.0 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[5.019s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[5.073s] -- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)
+[5.076s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[5.200s] -- Found rclpy: 1.0.11 (/opt/ros/foxy/share/rclpy/cmake)
+[5.201s] -- Found ament_lint_auto: 0.9.7 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+[5.269s] -- Added test 'copyright' to check source files copyright and LICENSE
+[5.271s] -- Added test 'flake8' to check Python code syntax and style conventions
+[5.271s] -- Added test 'lint_cmake' to check CMake code style
+[5.272s] -- Added test 'pep257' to check Python code against some of the style conventions in PEP 257
+[5.273s] -- Added test 'xmllint' to check XML markup files
+[5.275s] -- Configuring done
+[5.282s] -- Generating done
+[5.283s] -- Build files have been written to: /home/edson_20_04/TCAS/build/planning
+[5.301s] Invoked command in '/home/edson_20_04/TCAS/build/planning' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/planning -- -j16 -l16
+[5.318s] Invoking command in '/home/edson_20_04/TCAS/build/planning': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/TCAS/build/planning
+[5.323s] -- Install configuration: ""
+[5.323s] -- Up-to-date: /home/edson_20_04/TCAS/install/planning/share/planning//launch
+[5.323s] -- Up-to-date: /home/edson_20_04/TCAS/install/planning/share/planning//launch/params
+[5.323s] -- Up-to-date: /home/edson_20_04/TCAS/install/planning/share/planning//launch/params/output.yaml
+[5.323s] -- Up-to-date: /home/edson_20_04/TCAS/install/planning/share/planning//launch/params/input.yaml
+[5.323s] -- Up-to-date: /home/edson_20_04/TCAS/install/planning/share/planning//launch/planner_launch.py
+[5.323s] -- Up-to-date: /home/edson_20_04/TCAS/install/planning/lib/planning/planner.py
+[5.323s] -- Up-to-date: /home/edson_20_04/TCAS/install/planning/share/ament_index/resource_index/package_run_dependencies/planning
+[5.323s] -- Installing: /home/edson_20_04/TCAS/install/planning/share/ament_index/resource_index/parent_prefix_path/planning
+[5.324s] -- Up-to-date: /home/edson_20_04/TCAS/install/planning/share/planning/environment/ament_prefix_path.sh
+[5.324s] -- Installing: /home/edson_20_04/TCAS/install/planning/share/planning/environment/ament_prefix_path.dsv
+[5.324s] -- Up-to-date: /home/edson_20_04/TCAS/install/planning/share/planning/environment/path.sh
+[5.324s] -- Installing: /home/edson_20_04/TCAS/install/planning/share/planning/environment/path.dsv
+[5.324s] -- Up-to-date: /home/edson_20_04/TCAS/install/planning/share/planning/local_setup.bash
+[5.324s] -- Up-to-date: /home/edson_20_04/TCAS/install/planning/share/planning/local_setup.sh
+[5.324s] -- Up-to-date: /home/edson_20_04/TCAS/install/planning/share/planning/local_setup.zsh
+[5.324s] -- Installing: /home/edson_20_04/TCAS/install/planning/share/planning/local_setup.dsv
+[5.325s] -- Installing: /home/edson_20_04/TCAS/install/planning/share/planning/package.dsv
+[5.325s] -- Up-to-date: /home/edson_20_04/TCAS/install/planning/share/ament_index/resource_index/packages/planning
+[5.325s] -- Up-to-date: /home/edson_20_04/TCAS/install/planning/share/planning/cmake/planningConfig.cmake
+[5.325s] -- Up-to-date: /home/edson_20_04/TCAS/install/planning/share/planning/cmake/planningConfig-version.cmake
+[5.325s] -- Installing: /home/edson_20_04/TCAS/install/planning/share/planning/package.xml
+[5.326s] Invoked command in '/home/edson_20_04/TCAS/build/planning' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/TCAS/build/planning
