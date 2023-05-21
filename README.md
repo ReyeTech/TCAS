@@ -31,4 +31,4 @@ ros2 launch planning planner_launch.py
 
 ## Demo
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://youtu.be/9uNMXVPop8Q)
+[![CONTROL DEMO](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://youtu.be/9uNMXVPop8Q)
