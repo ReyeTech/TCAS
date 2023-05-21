@@ -1,0 +1,141 @@
+[0.019s] Invoking command in '/home/edson_20_04/box_bot/build/box_bot_gazebo': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake /home/edson_20_04/box_bot/box_bot_gazebo -DCMAKE_INSTALL_PREFIX=/home/edson_20_04/box_bot/install/box_bot_gazebo
+[0.176s] -- The C compiler identification is GNU 9.4.0
+[0.440s] -- The CXX compiler identification is GNU 9.4.0
+[0.602s] -- Check for working C compiler: /usr/bin/cc
+[0.756s] -- Check for working C compiler: /usr/bin/cc -- works
+[0.756s] -- Detecting C compiler ABI info
+[0.891s] -- Detecting C compiler ABI info - done
+[0.899s] -- Detecting C compile features
+[0.899s] -- Detecting C compile features - done
+[0.901s] -- Check for working CXX compiler: /usr/bin/c++
+[1.031s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[1.032s] -- Detecting CXX compiler ABI info
+[1.203s] -- Detecting CXX compiler ABI info - done
+[1.210s] -- Detecting CXX compile features
+[1.211s] -- Detecting CXX compile features - done
+[1.213s] -- Found ament_cmake: 0.9.11 (/opt/ros/foxy/share/ament_cmake/cmake)
+[1.233s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[1.234s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[1.382s] -- Found rclcpp: 2.4.2 (/opt/ros/foxy/share/rclcpp/cmake)
+[1.570s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.575s] -- Found rosidl_adapter: 1.3.0 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[2.831s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")  
+[4.063s] -- Found FastRTPS: /opt/ros/foxy/include  
+[6.220s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[6.258s] -- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)
+[6.259s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[6.259s] -- Looking for pthread.h
+[6.406s] -- Looking for pthread.h - found
+[6.406s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[6.550s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+[6.550s] -- Looking for pthread_create in pthreads
+[6.701s] -- Looking for pthread_create in pthreads - not found
+[6.702s] -- Looking for pthread_create in pthread
+[6.867s] -- Looking for pthread_create in pthread - found
+[6.868s] -- Found Threads: TRUE  
+[6.975s] -- Found rclpy: 1.0.11 (/opt/ros/foxy/share/rclpy/cmake)
+[6.981s] -- Found PkgConfig: /usr/bin/pkg-config (found version "0.29.1") 
+[6.983s] -- Checking for module 'bullet>=2.82'
+[6.993s] --   Found bullet, version 2.88
+[8.413s] -- Found ccd: /usr/include (found suitable version "2.0", minimum required is "2.0") 
+[8.498s] -- Found fcl: /usr/include (found suitable version "0.5.0", minimum required is "0.3.2") 
+[8.630s] -- Found assimp: /usr/include (found version "5.0.0") 
+[8.657s] -- Found DART: /usr/include (Required is at least version "6.6") found components: dart 
+[8.681s] -- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfig.cmake (found suitable version "1.71.0", minimum required is "1.40.0") found components: thread system filesystem program_options regex iostreams date_time 
+[9.179s] -- Found Protobuf: /usr/lib/x86_64-linux-gnu/libprotobuf.so;-lpthread (found version "3.6.1") 
+[9.185s] -- Looking for ignition-math6 -- found version 6.13.0
+[9.195s] -- Searching for dependencies of ignition-math6
+[9.197s] -- Looking for OGRE...
+[9.198s] -- OGRE_PREFIX_WATCH changed.
+[9.201s] -- Checking for module 'OGRE'
+[9.210s] --   Found OGRE, version 1.9.0
+[9.332s] -- Found Ogre Ghadamon (1.9.0)
+[10.285s] -- Found OGRE: optimized;/usr/lib/x86_64-linux-gnu/libOgreMain.so;debug;/usr/lib/x86_64-linux-gnu/libOgreMain.so
+[10.292s] -- Looking for OGRE_Paging...
+[10.751s] -- Found OGRE_Paging: optimized;/usr/lib/x86_64-linux-gnu/libOgrePaging.so;debug;/usr/lib/x86_64-linux-gnu/libOgrePaging.so
+[10.751s] -- Looking for OGRE_Terrain...
+[11.226s] -- Found OGRE_Terrain: optimized;/usr/lib/x86_64-linux-gnu/libOgreTerrain.so;debug;/usr/lib/x86_64-linux-gnu/libOgreTerrain.so
+[11.227s] -- Looking for OGRE_Property...
+[11.692s] -- Found OGRE_Property: optimized;/usr/lib/x86_64-linux-gnu/libOgreProperty.so;debug;/usr/lib/x86_64-linux-gnu/libOgreProperty.so
+[11.692s] -- Looking for OGRE_RTShaderSystem...
+[12.137s] -- Found OGRE_RTShaderSystem: optimized;/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so;debug;/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so
+[12.137s] -- Looking for OGRE_Volume...
+[12.552s] -- Found OGRE_Volume: optimized;/usr/lib/x86_64-linux-gnu/libOgreVolume.so;debug;/usr/lib/x86_64-linux-gnu/libOgreVolume.so
+[12.552s] -- Looking for OGRE_Overlay...
+[13.021s] -- Found OGRE_Overlay: optimized;/usr/lib/x86_64-linux-gnu/libOgreOverlay.so;debug;/usr/lib/x86_64-linux-gnu/libOgreOverlay.so
+[37.527s] -- Looking for ignition-math6 -- found version 6.13.0
+[37.529s] -- Looking for ignition-transport8 -- found version 8.3.0
+[37.530s] -- Searching for dependencies of ignition-transport8
+[38.546s] -- Found Protobuf: /usr/lib/x86_64-linux-gnu/libprotobuf.so;-lpthread (found suitable version "3.6.1", minimum required is "3") 
+[39.586s] -- Config-file not installed for ZeroMQ -- checking for pkg-config
+[39.590s] -- Checking for module 'libzmq >= 4'
+[39.601s] --   Found libzmq , version 4.3.2
+[39.716s] -- Found ZeroMQ: TRUE (Required is at least version "4") 
+[39.764s] -- Checking for module 'uuid'
+[39.774s] --   Found uuid, version 2.34.0
+[39.898s] -- Found UUID: TRUE  
+[39.901s] -- Looking for ignition-msgs5 -- found version 5.10.0
+[39.901s] -- Searching for dependencies of ignition-msgs5
+[40.986s] -- Looking for ignition-math6 -- found version 6.13.0
+[40.990s] -- Checking for module 'tinyxml2'
+[41.000s] --   Found tinyxml2, version 6.2.0
+[41.122s] -- Looking for ignition-msgs5 -- found version 5.10.0
+[41.125s] -- Looking for ignition-common3 -- found version 3.14.2
+[41.125s] -- Searching for dependencies of ignition-common3
+[41.170s] -- Looking for dlfcn.h - found
+[41.220s] -- Looking for libdl - found
+[41.221s] -- Found DL: TRUE  
+[41.322s] -- Searching for <ignition-common3> component [graphics]
+[41.323s] -- Looking for ignition-common3-graphics -- found version 3.14.2
+[41.324s] -- Searching for dependencies of ignition-common3-graphics
+[41.324s] -- Looking for ignition-math6 -- found version 6.13.0
+[41.327s] -- Looking for ignition-fuel_tools4 -- found version 4.6.0
+[41.328s] -- Searching for dependencies of ignition-fuel_tools4
+[41.646s] -- Found CURL: /usr/lib/x86_64-linux-gnu/libcurl.so (found version "7.68.0")  
+[41.658s] -- Checking for module 'jsoncpp'
+[41.669s] --   Found jsoncpp, version 1.7.4
+[41.784s] -- Found JSONCPP: TRUE  
+[41.789s] -- Checking for module 'libzip'
+[41.800s] --   Found libzip, version 1.5.1
+[41.917s] -- Found ZIP: TRUE  
+[41.918s] -- Looking for ignition-common3 -- found version 3.14.2
+[41.918s] -- Looking for ignition-math6 -- found version 6.13.0
+[41.918s] -- Looking for ignition-msgs5 -- found version 5.10.0
+[41.921s] -- Found ament_lint_auto: 0.9.7 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+[41.971s] -- Added test 'copyright' to check source files copyright and LICENSE
+[41.972s] -- Added test 'flake8' to check Python code syntax and style conventions
+[41.973s] -- Added test 'lint_cmake' to check CMake code style
+[41.973s] -- Added test 'pep257' to check Python code against some of the style conventions in PEP 257
+[41.974s] -- Added test 'xmllint' to check XML markup files
+[41.976s] -- Configuring done
+[41.979s] -- Generating done
+[41.981s] -- Build files have been written to: /home/edson_20_04/box_bot/build/box_bot_gazebo
+[41.989s] Invoked command in '/home/edson_20_04/box_bot/build/box_bot_gazebo' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake /home/edson_20_04/box_bot/box_bot_gazebo -DCMAKE_INSTALL_PREFIX=/home/edson_20_04/box_bot/install/box_bot_gazebo
+[41.992s] Invoking command in '/home/edson_20_04/box_bot/build/box_bot_gazebo': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/box_bot/build/box_bot_gazebo -- -j16 -l16
+[42.018s] Invoked command in '/home/edson_20_04/box_bot/build/box_bot_gazebo' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/box_bot/build/box_bot_gazebo -- -j16 -l16
+[42.035s] Invoking command in '/home/edson_20_04/box_bot/build/box_bot_gazebo': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/box_bot/build/box_bot_gazebo
+[42.040s] -- Install configuration: ""
+[42.040s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo//launch
+[42.040s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo//launch/start_world_launch.py
+[42.041s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo//launch/box_bot_launch.py
+[42.041s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo//launch/multi_box_bot_launch.py
+[42.041s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo//launch/v2_multi_box_bot_launch.py
+[42.041s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo//launch/multi_box_bot_v3.launch.py
+[42.041s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo//worlds
+[42.041s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo//worlds/box_bot_empty.world
+[42.041s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/ament_index/resource_index/package_run_dependencies/box_bot_gazebo
+[42.041s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/ament_index/resource_index/parent_prefix_path/box_bot_gazebo
+[42.042s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo/environment/ament_prefix_path.sh
+[42.042s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo/environment/ament_prefix_path.dsv
+[42.042s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo/environment/path.sh
+[42.042s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo/environment/path.dsv
+[42.042s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo/local_setup.bash
+[42.042s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo/local_setup.sh
+[42.042s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo/local_setup.zsh
+[42.042s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo/local_setup.dsv
+[42.042s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo/package.dsv
+[42.042s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/ament_index/resource_index/packages/box_bot_gazebo
+[42.043s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo/cmake/box_bot_gazeboConfig.cmake
+[42.043s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo/cmake/box_bot_gazeboConfig-version.cmake
+[42.043s] -- Installing: /home/edson_20_04/box_bot/install/box_bot_gazebo/share/box_bot_gazebo/package.xml
+[42.044s] Invoked command in '/home/edson_20_04/box_bot/build/box_bot_gazebo' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/box_bot/build/box_bot_gazebo

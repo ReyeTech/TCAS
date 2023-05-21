@@ -1,0 +1,69 @@
+[0.023s] Invoking command in '/home/edson_20_04/box_bot/build/planning': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake /home/edson_20_04/box_bot/planning -DCMAKE_INSTALL_PREFIX=/home/edson_20_04/box_bot/install/planning
+[0.283s] -- The C compiler identification is GNU 9.4.0
+[0.599s] -- The CXX compiler identification is GNU 9.4.0
+[0.726s] -- Check for working C compiler: /usr/bin/cc
+[0.873s] -- Check for working C compiler: /usr/bin/cc -- works
+[0.876s] -- Detecting C compiler ABI info
+[1.026s] -- Detecting C compiler ABI info - done
+[1.035s] -- Detecting C compile features
+[1.036s] -- Detecting C compile features - done
+[1.039s] -- Check for working CXX compiler: /usr/bin/c++
+[1.222s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[1.223s] -- Detecting CXX compiler ABI info
+[1.412s] -- Detecting CXX compiler ABI info - done
+[1.420s] -- Detecting CXX compile features
+[1.420s] -- Detecting CXX compile features - done
+[1.423s] -- Found ament_cmake: 0.9.11 (/opt/ros/foxy/share/ament_cmake/cmake)
+[1.447s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[1.447s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[1.610s] -- Found rclcpp: 2.4.2 (/opt/ros/foxy/share/rclcpp/cmake)
+[1.799s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.808s] -- Found rosidl_adapter: 1.3.0 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[2.917s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")  
+[4.113s] -- Found FastRTPS: /opt/ros/foxy/include  
+[6.386s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[6.446s] -- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)
+[6.448s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[6.450s] -- Looking for pthread.h
+[6.663s] -- Looking for pthread.h - found
+[6.663s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[6.853s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+[6.853s] -- Looking for pthread_create in pthreads
+[7.015s] -- Looking for pthread_create in pthreads - not found
+[7.015s] -- Looking for pthread_create in pthread
+[7.184s] -- Looking for pthread_create in pthread - found
+[7.184s] -- Found Threads: TRUE  
+[7.322s] -- Found rclpy: 1.0.11 (/opt/ros/foxy/share/rclpy/cmake)
+[7.324s] -- Found ament_lint_auto: 0.9.7 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+[7.392s] -- Added test 'copyright' to check source files copyright and LICENSE
+[7.394s] -- Added test 'flake8' to check Python code syntax and style conventions
+[7.395s] -- Added test 'lint_cmake' to check CMake code style
+[7.395s] -- Added test 'pep257' to check Python code against some of the style conventions in PEP 257
+[7.396s] -- Added test 'xmllint' to check XML markup files
+[7.398s] -- Configuring done
+[7.400s] -- Generating done
+[7.401s] -- Build files have been written to: /home/edson_20_04/box_bot/build/planning
+[7.407s] Invoked command in '/home/edson_20_04/box_bot/build/planning' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake /home/edson_20_04/box_bot/planning -DCMAKE_INSTALL_PREFIX=/home/edson_20_04/box_bot/install/planning
+[7.409s] Invoking command in '/home/edson_20_04/box_bot/build/planning': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/box_bot/build/planning -- -j16 -l16
+[7.436s] Invoked command in '/home/edson_20_04/box_bot/build/planning' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/box_bot/build/planning -- -j16 -l16
+[7.450s] Invoking command in '/home/edson_20_04/box_bot/build/planning': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/box_bot/build/planning
+[7.454s] -- Install configuration: ""
+[7.454s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/planning//launch
+[7.455s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/planning//launch/box_bot_plan_talker_launch.py
+[7.455s] -- Installing: /home/edson_20_04/box_bot/install/planning/lib/planning/talker.py
+[7.455s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/ament_index/resource_index/package_run_dependencies/planning
+[7.455s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/ament_index/resource_index/parent_prefix_path/planning
+[7.456s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/planning/environment/ament_prefix_path.sh
+[7.456s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/planning/environment/ament_prefix_path.dsv
+[7.456s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/planning/environment/path.sh
+[7.456s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/planning/environment/path.dsv
+[7.456s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/planning/local_setup.bash
+[7.456s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/planning/local_setup.sh
+[7.456s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/planning/local_setup.zsh
+[7.457s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/planning/local_setup.dsv
+[7.457s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/planning/package.dsv
+[7.457s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/ament_index/resource_index/packages/planning
+[7.457s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/planning/cmake/planningConfig.cmake
+[7.457s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/planning/cmake/planningConfig-version.cmake
+[7.457s] -- Installing: /home/edson_20_04/box_bot/install/planning/share/planning/package.xml
+[7.458s] Invoked command in '/home/edson_20_04/box_bot/build/planning' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/box_bot/build/planning

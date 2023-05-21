@@ -2,6 +2,7 @@
 import rclpy
 from rclpy.node import Node
 from nav_msgs.msg import Odometry
+from geometry_msgs.msg import Twist
 import re
 
 class Planner(Node):
@@ -27,12 +28,21 @@ class Planner(Node):
     def position_callback(self, msg, topic):
         robot_index = re.search(r'/robot(\d+)/odom', topic).group(1)
         position = msg.pose.pose.position
-        self.get_logger().info(f'{robot_index} position: x={position.x}, y={position.y}, z={position.z}')
+        # self.get_logger().info(f'{robot_index} position: x={position.x}, y={position.y}, z={position.z}')
         self.positions[int(robot_index)].append([position.x, position.y, position.z])
+        
+    def test_pub(self):
+        publisher = self.create_publisher(Twist, '/robot0/cmd_vel', 10)
+        pub_msg = Twist()
+        # pub_msg.linear.x = 0.05
+        pub_msg.angular.z = 0.05
+        publisher.publish(pub_msg)
+        print(pub_msg)
 
 def main(args=None):
     rclpy.init(args=args)
     position_reader = Planner()
+    position_reader.test_pub()
     rclpy.spin(position_reader)
     position_reader.destroy_node()
     rclpy.shutdown()
