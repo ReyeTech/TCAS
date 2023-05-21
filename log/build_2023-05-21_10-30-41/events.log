@@ -1,0 +1,498 @@
+[0.000000] (-) TimerEvent: {}
+[0.000427] (box_bot_description) JobQueued: {'identifier': 'box_bot_description', 'dependencies': OrderedDict()}
+[0.000573] (box_bot_gazebo) JobQueued: {'identifier': 'box_bot_gazebo', 'dependencies': OrderedDict()}
+[0.000620] (planning) JobQueued: {'identifier': 'planning', 'dependencies': OrderedDict()}
+[0.000638] (box_bot_description) JobStarted: {'identifier': 'box_bot_description'}
+[0.007821] (box_bot_gazebo) JobStarted: {'identifier': 'box_bot_gazebo'}
+[0.014348] (planning) JobStarted: {'identifier': 'planning'}
+[0.023868] (box_bot_description) JobProgress: {'identifier': 'box_bot_description', 'progress': 'cmake'}
+[0.024562] (box_bot_description) JobProgress: {'identifier': 'box_bot_description', 'progress': 'build'}
+[0.025161] (box_bot_description) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/edson_20_04/TCAS/build/box_bot_description', '--', '-j16', '-l16'], 'cwd': '/home/edson_20_04/TCAS/build/box_bot_description', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'edson_20_04'), ('GIT_ASKPASS', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/extensions/git/dist/askpass.sh'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib'), ('MOTD_SHOWN', 'update-motd'), ('HOME', '/home/edson_20_04'), ('TERM_PROGRAM_VERSION', '1.78.2'), ('VSCODE_IPC_HOOK_CLI', '/mnt/wslg/runtime-dir/vscode-ipc-2106ba64-d869-4794-88bd-e2d93c75410d.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/node'), ('COLORTERM', 'truecolor'), ('WSL_DISTRO_NAME', 'Ubuntu-20.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'edson_20_04'), ('NAME', 'CIM-PHD-00661'), ('WSL_INTEROP', '/run/WSL/13_interop'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/bin/remote-cli:/home/edson_20_04/.local/bin:/opt/ros/foxy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/VMware/VMware Workstation/bin/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/MATLAB/R2022a/runtime/win64:/mnt/c/Program Files/MATLAB/R2022a/bin:/mnt/c/Program Files (x86)/PharosSystems/Core:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Calibre2/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/PowerShell/7/:/mnt/c/Users/ULAC153/AppData/Local/Programs/Python/Python310/Scripts/:/mnt/c/Users/ULAC153/AppData/Local/Programs/Python/Python310/:/mnt/c/Users/ULAC153/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/ULAC153/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/FFmpeg/bin:/snap/bin'), ('XDG_RUNTIME_DIR', '/mnt/wslg/runtime-dir'), ('DISPLAY', ':0'), ('LANG', 'C.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/mnt/wslg/runtime-dir/vscode-git-9247c2412a.sock'), ('TERM_PROGRAM', 'vscode'), ('AMENT_PREFIX_PATH', '/opt/ros/foxy'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/home/edson_20_04/TCAS/build/box_bot_description'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'VSCODE_WSL_EXT_LOCATION/up'), ('CMAKE_PREFIX_PATH', '/opt/ros/foxy')]), 'shell': False}
+[0.029765] (box_bot_gazebo) JobProgress: {'identifier': 'box_bot_gazebo', 'progress': 'cmake'}
+[0.030490] (box_bot_gazebo) JobProgress: {'identifier': 'box_bot_gazebo', 'progress': 'build'}
+[0.032052] (box_bot_gazebo) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/edson_20_04/TCAS/build/box_bot_gazebo', '--', '-j16', '-l16'], 'cwd': '/home/edson_20_04/TCAS/build/box_bot_gazebo', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'edson_20_04'), ('GIT_ASKPASS', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/extensions/git/dist/askpass.sh'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib'), ('MOTD_SHOWN', 'update-motd'), ('HOME', '/home/edson_20_04'), ('TERM_PROGRAM_VERSION', '1.78.2'), ('VSCODE_IPC_HOOK_CLI', '/mnt/wslg/runtime-dir/vscode-ipc-2106ba64-d869-4794-88bd-e2d93c75410d.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/node'), ('COLORTERM', 'truecolor'), ('WSL_DISTRO_NAME', 'Ubuntu-20.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'edson_20_04'), ('NAME', 'CIM-PHD-00661'), ('WSL_INTEROP', '/run/WSL/13_interop'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/bin/remote-cli:/home/edson_20_04/.local/bin:/opt/ros/foxy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/VMware/VMware Workstation/bin/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/MATLAB/R2022a/runtime/win64:/mnt/c/Program Files/MATLAB/R2022a/bin:/mnt/c/Program Files (x86)/PharosSystems/Core:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Calibre2/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/PowerShell/7/:/mnt/c/Users/ULAC153/AppData/Local/Programs/Python/Python310/Scripts/:/mnt/c/Users/ULAC153/AppData/Local/Programs/Python/Python310/:/mnt/c/Users/ULAC153/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/ULAC153/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/FFmpeg/bin:/snap/bin'), ('XDG_RUNTIME_DIR', '/mnt/wslg/runtime-dir'), ('DISPLAY', ':0'), ('LANG', 'C.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/mnt/wslg/runtime-dir/vscode-git-9247c2412a.sock'), ('TERM_PROGRAM', 'vscode'), ('AMENT_PREFIX_PATH', '/opt/ros/foxy'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/home/edson_20_04/TCAS/build/box_bot_gazebo'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'VSCODE_WSL_EXT_LOCATION/up'), ('CMAKE_PREFIX_PATH', '/opt/ros/foxy')]), 'shell': False}
+[0.036630] (box_bot_description) StderrLine: {'line': b'CMake Error: The current CMakeCache.txt directory /home/edson_20_04/TCAS/build/box_bot_description/CMakeCache.txt is different than the directory /home/edson_20_04/box_bot/build/box_bot_description where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt\n'}
+[0.036808] (planning) JobProgress: {'identifier': 'planning', 'progress': 'cmake'}
+[0.037237] (planning) JobProgress: {'identifier': 'planning', 'progress': 'build'}
+[0.039117] (planning) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/edson_20_04/TCAS/build/planning', '--', '-j16', '-l16'], 'cwd': '/home/edson_20_04/TCAS/build/planning', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'edson_20_04'), ('GIT_ASKPASS', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/extensions/git/dist/askpass.sh'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib'), ('MOTD_SHOWN', 'update-motd'), ('HOME', '/home/edson_20_04'), ('TERM_PROGRAM_VERSION', '1.78.2'), ('VSCODE_IPC_HOOK_CLI', '/mnt/wslg/runtime-dir/vscode-ipc-2106ba64-d869-4794-88bd-e2d93c75410d.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/node'), ('COLORTERM', 'truecolor'), ('WSL_DISTRO_NAME', 'Ubuntu-20.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'edson_20_04'), ('NAME', 'CIM-PHD-00661'), ('WSL_INTEROP', '/run/WSL/13_interop'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/bin/remote-cli:/home/edson_20_04/.local/bin:/opt/ros/foxy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/VMware/VMware Workstation/bin/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/MATLAB/R2022a/runtime/win64:/mnt/c/Program Files/MATLAB/R2022a/bin:/mnt/c/Program Files (x86)/PharosSystems/Core:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Calibre2/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/PowerShell/7/:/mnt/c/Users/ULAC153/AppData/Local/Programs/Python/Python310/Scripts/:/mnt/c/Users/ULAC153/AppData/Local/Programs/Python/Python310/:/mnt/c/Users/ULAC153/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/ULAC153/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/FFmpeg/bin:/snap/bin'), ('XDG_RUNTIME_DIR', '/mnt/wslg/runtime-dir'), ('DISPLAY', ':0'), ('LANG', 'C.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/mnt/wslg/runtime-dir/vscode-git-9247c2412a.sock'), ('TERM_PROGRAM', 'vscode'), ('AMENT_PREFIX_PATH', '/opt/ros/foxy'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/home/edson_20_04/TCAS/build/planning'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'VSCODE_WSL_EXT_LOCATION/up'), ('CMAKE_PREFIX_PATH', '/opt/ros/foxy')]), 'shell': False}
+[0.041232] (box_bot_gazebo) StderrLine: {'line': b'CMake Error: The current CMakeCache.txt directory /home/edson_20_04/TCAS/build/box_bot_gazebo/CMakeCache.txt is different than the directory /home/edson_20_04/box_bot/build/box_bot_gazebo where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt\n'}
+[0.044310] (planning) StderrLine: {'line': b'CMake Error: The current CMakeCache.txt directory /home/edson_20_04/TCAS/build/planning/CMakeCache.txt is different than the directory /home/edson_20_04/box_bot/build/planning where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt\n'}
+[0.044958] (box_bot_description) StdoutLine: {'line': b'-- Found ament_cmake: 0.9.11 (/opt/ros/foxy/share/ament_cmake/cmake)\n'}
+[0.050434] (box_bot_gazebo) StdoutLine: {'line': b'-- Found ament_cmake: 0.9.11 (/opt/ros/foxy/share/ament_cmake/cmake)\n'}
+[0.055820] (planning) StdoutLine: {'line': b'-- Found ament_cmake: 0.9.11 (/opt/ros/foxy/share/ament_cmake/cmake)\n'}
+[0.059208] (box_bot_description) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[0.064936] (box_bot_gazebo) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[0.070805] (planning) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[0.099514] (-) TimerEvent: {}
+[0.192851] (box_bot_gazebo) StdoutLine: {'line': b'-- Found rclcpp: 2.4.2 (/opt/ros/foxy/share/rclcpp/cmake)\n'}
+[0.195962] (box_bot_description) StdoutLine: {'line': b'-- Found urdf: 2.4.0 (/opt/ros/foxy/share/urdf/cmake)\n'}
+[0.199864] (-) TimerEvent: {}
+[0.203134] (planning) StdoutLine: {'line': b'-- Found rclcpp: 2.4.2 (/opt/ros/foxy/share/rclcpp/cmake)\n'}
+[0.299908] (-) TimerEvent: {}
+[0.379319] (box_bot_gazebo) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.382649] (box_bot_gazebo) StdoutLine: {'line': b'-- Found rosidl_adapter: 1.3.0 (/opt/ros/foxy/share/rosidl_adapter/cmake)\n'}
+[0.400058] (-) TimerEvent: {}
+[0.410298] (planning) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.412432] (planning) StdoutLine: {'line': b'-- Found rosidl_adapter: 1.3.0 (/opt/ros/foxy/share/rosidl_adapter/cmake)\n'}
+[0.500201] (-) TimerEvent: {}
+[0.600556] (-) TimerEvent: {}
+[0.700920] (-) TimerEvent: {}
+[0.801303] (-) TimerEvent: {}
+[0.901728] (-) TimerEvent: {}
+[0.927266] (box_bot_description) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.9.7 (/opt/ros/foxy/share/ament_lint_auto/cmake)\n'}
+[0.972387] (box_bot_description) StdoutLine: {'line': b"-- Added test 'copyright' to check source files copyright and LICENSE\n"}
+[0.973273] (box_bot_description) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[0.973528] (box_bot_description) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[0.973744] (box_bot_description) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the style conventions in PEP 257\n"}
+[0.974244] (box_bot_description) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[0.975109] (box_bot_description) StdoutLine: {'line': b'-- Configuring done\n'}
+[0.976574] (box_bot_description) StdoutLine: {'line': b'-- Generating done\n'}
+[0.977171] (box_bot_description) StdoutLine: {'line': b'-- Build files have been written to: /home/edson_20_04/box_bot/build/box_bot_description\n'}
+[0.992692] (box_bot_description) CommandEnded: {'returncode': 0}
+[1.001872] (-) TimerEvent: {}
+[1.009396] (box_bot_description) JobProgress: {'identifier': 'box_bot_description', 'progress': 'install'}
+[1.017658] (box_bot_description) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/edson_20_04/TCAS/build/box_bot_description'], 'cwd': '/home/edson_20_04/TCAS/build/box_bot_description', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'edson_20_04'), ('GIT_ASKPASS', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/extensions/git/dist/askpass.sh'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib'), ('MOTD_SHOWN', 'update-motd'), ('HOME', '/home/edson_20_04'), ('TERM_PROGRAM_VERSION', '1.78.2'), ('VSCODE_IPC_HOOK_CLI', '/mnt/wslg/runtime-dir/vscode-ipc-2106ba64-d869-4794-88bd-e2d93c75410d.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/node'), ('COLORTERM', 'truecolor'), ('WSL_DISTRO_NAME', 'Ubuntu-20.04'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'edson_20_04'), ('NAME', 'CIM-PHD-00661'), ('WSL_INTEROP', '/run/WSL/13_interop'), ('PULSE_SERVER', 'unix:/mnt/wslg/PulseServer'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/edson_20_04/.vscode-server/bin/b3e4e68a0bc097f0ae7907b217c1119af9e03435/bin/remote-cli:/home/edson_20_04/.local/bin:/opt/ros/foxy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/VMware/VMware Workstation/bin/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/MATLAB/R2022a/runtime/win64:/mnt/c/Program Files/MATLAB/R2022a/bin:/mnt/c/Program Files (x86)/PharosSystems/Core:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Calibre2/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Program Files/PowerShell/7/:/mnt/c/Users/ULAC153/AppData/Local/Programs/Python/Python310/Scripts/:/mnt/c/Users/ULAC153/AppData/Local/Programs/Python/Python310/:/mnt/c/Users/ULAC153/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/ULAC153/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/FFmpeg/bin:/snap/bin'), ('XDG_RUNTIME_DIR', '/mnt/wslg/runtime-dir'), ('DISPLAY', ':0'), ('LANG', 'C.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/mnt/wslg/runtime-dir/vscode-git-9247c2412a.sock'), ('TERM_PROGRAM', 'vscode'), ('AMENT_PREFIX_PATH', '/opt/ros/foxy'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/home/edson_20_04/TCAS/build/box_bot_description'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('WSL2_GUI_APPS_ENABLED', '1'), ('HOSTTYPE', 'x86_64'), ('WSLENV', 'VSCODE_WSL_EXT_LOCATION/up'), ('CMAKE_PREFIX_PATH', '/opt/ros/foxy')]), 'shell': False}
+[1.028491] (box_bot_description) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[1.028765] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//launch\n'}
+[1.029060] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//launch/multi_spawn_robot_launch.py\n'}
+[1.029337] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//launch/spawn_box_bot.py\n'}
+[1.029391] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//launch/spawn_box_bot_launch.py\n'}
+[1.029434] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//launch/spawn_robot_launch.py\n'}
+[1.029473] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//robot\n'}
+[1.029513] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//robot/macros.xacro\n'}
+[1.029551] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//robot/box_bot.xacro\n'}
+[1.029590] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//robot/box_bot.urdf\n'}
+[1.029628] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//robot/wheels.xacro\n'}
+[1.029667] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//robot/box_bot_v2.urdf\n'}
+[1.029705] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//robot/box_bot_body.xacro\n'}
+[1.029743] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//robot/caster_wheels.xacro\n'}
+[1.029781] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//robot/materials.xacro\n'}
+[1.029820] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//robot/box_bot_propeller.xacro\n'}
+[1.029858] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//robot/properties.xacro\n'}
+[1.029896] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/share/box_bot_description//robot/box_bot.gazebo\n'}
+[1.029933] (box_bot_description) StdoutLine: {'line': b'-- Up-to-date: /home/edson_20_04/box_bot/install/box_bot_description/lib/box_bot_description/spawn_box_bot.py\n'}
+[1.029974] (box_bot_description) StderrLine: {'line': b'CMake Error at cmake_install.cmake:48 (file):\n'}
+[1.030144] (box_bot_description) StderrLine: {'line': b'  file INSTALL cannot find\n'}
+[1.030360] (box_bot_description) StderrLine: {'line': b'  "/home/edson_20_04/box_bot/box_bot_description/launch/spawn_box_bot_v2.py":\n'}
+[1.030490] (box_bot_description) StderrLine: {'line': b'  No such file or directory.\n'}
+[1.030609] (box_bot_description) StderrLine: {'line': b'\n'}
+[1.030716] (box_bot_description) StderrLine: {'line': b'\n'}
+[1.031778] (box_bot_description) CommandEnded: {'returncode': 1}
+[1.063236] (box_bot_description) JobEnded: {'identifier': 'box_bot_description', 'rc': 1}
+[1.102006] (-) TimerEvent: {}
+[1.202423] (-) TimerEvent: {}
+[1.302846] (-) TimerEvent: {}
+[1.403274] (-) TimerEvent: {}
+[1.503760] (-) TimerEvent: {}
+[1.604142] (-) TimerEvent: {}
+[1.704551] (-) TimerEvent: {}
+[1.804967] (-) TimerEvent: {}
+[1.905357] (-) TimerEvent: {}
+[2.005721] (-) TimerEvent: {}
+[2.106100] (-) TimerEvent: {}
+[2.206510] (-) TimerEvent: {}
+[2.306910] (-) TimerEvent: {}
+[2.407277] (-) TimerEvent: {}
+[2.507675] (-) TimerEvent: {}
+[2.608057] (-) TimerEvent: {}
+[2.708442] (-) TimerEvent: {}
+[2.809076] (-) TimerEvent: {}
+[2.909476] (-) TimerEvent: {}
+[3.009932] (-) TimerEvent: {}
+[3.110305] (-) TimerEvent: {}
+[3.210695] (-) TimerEvent: {}
+[3.311088] (-) TimerEvent: {}
+[3.411454] (-) TimerEvent: {}
+[3.511814] (-) TimerEvent: {}
+[3.612182] (-) TimerEvent: {}
+[3.712583] (-) TimerEvent: {}
+[3.812967] (-) TimerEvent: {}
+[3.913347] (-) TimerEvent: {}
+[4.013736] (-) TimerEvent: {}
+[4.114164] (-) TimerEvent: {}
+[4.214576] (-) TimerEvent: {}
+[4.314988] (-) TimerEvent: {}
+[4.415364] (-) TimerEvent: {}
+[4.515739] (-) TimerEvent: {}
+[4.616126] (-) TimerEvent: {}
+[4.716500] (-) TimerEvent: {}
+[4.737451] (box_bot_gazebo) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[4.770915] (box_bot_gazebo) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)\n'}
+[4.771751] (box_bot_gazebo) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[4.816641] (-) TimerEvent: {}
+[4.868641] (box_bot_gazebo) StdoutLine: {'line': b'-- Found rclpy: 1.0.11 (/opt/ros/foxy/share/rclpy/cmake)\n'}
+[4.916776] (-) TimerEvent: {}
+[5.017168] (-) TimerEvent: {}
+[5.117536] (-) TimerEvent: {}
+[5.118524] (planning) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[5.153880] (planning) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)\n'}
+[5.154741] (planning) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[5.217698] (-) TimerEvent: {}
+[5.263502] (planning) StdoutLine: {'line': b'-- Found rclpy: 1.0.11 (/opt/ros/foxy/share/rclpy/cmake)\n'}
+[5.263927] (planning) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.9.7 (/opt/ros/foxy/share/ament_lint_auto/cmake)\n'}
+[5.308752] (planning) StdoutLine: {'line': b"-- Added test 'copyright' to check source files copyright and LICENSE\n"}
+[5.309879] (planning) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[5.310123] (planning) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[5.310271] (planning) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the style conventions in PEP 257\n"}
+[5.310787] (planning) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[5.312172] (planning) StdoutLine: {'line': b'-- Configuring done\n'}
+[5.313749] (planning) StdoutLine: {'line': b'-- Generating done\n'}
+[5.314714] (planning) StdoutLine: {'line': b'-- Build files have been written to: /home/edson_20_04/box_bot/build/planning\n'}
+[5.317762] (-) TimerEvent: {}
+[5.333858] (planning) JobEnded: {'identifier': 'planning', 'rc': 'SIGINT'}
+[5.417906] (-) TimerEvent: {}
+[5.518392] (-) TimerEvent: {}
+[5.618850] (-) TimerEvent: {}
+[5.719221] (-) TimerEvent: {}
+[5.819640] (-) TimerEvent: {}
+[5.920039] (-) TimerEvent: {}
+[6.009773] (box_bot_gazebo) StdoutLine: {'line': b'-- Found DART: /usr/include (Required is at least version "6.6") found components: dart \n'}
+[6.020168] (-) TimerEvent: {}
+[6.029156] (box_bot_gazebo) StdoutLine: {'line': b'-- Found Protobuf: /usr/lib/x86_64-linux-gnu/libprotobuf.so;-lpthread (found version "3.6.1") \n'}
+[6.030283] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for ignition-math6 -- found version 6.13.0\n'}
+[6.033477] (box_bot_gazebo) StdoutLine: {'line': b'-- Searching for dependencies of ignition-math6\n'}
+[6.034631] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for OGRE...\n'}
+[6.039339] (box_bot_gazebo) StdoutLine: {'line': b'-- Found Ogre Ghadamon (1.9.0)\n'}
+[6.039777] (box_bot_gazebo) StdoutLine: {'line': b'-- Found OGRE: optimized;/usr/lib/x86_64-linux-gnu/libOgreMain.so;debug;/usr/lib/x86_64-linux-gnu/libOgreMain.so\n'}
+[6.046963] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for OGRE_Paging...\n'}
+[6.047304] (box_bot_gazebo) StdoutLine: {'line': b'-- Found OGRE_Paging: optimized;/usr/lib/x86_64-linux-gnu/libOgrePaging.so;debug;/usr/lib/x86_64-linux-gnu/libOgrePaging.so\n'}
+[6.047683] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for OGRE_Terrain...\n'}
+[6.047768] (box_bot_gazebo) StdoutLine: {'line': b'-- Found OGRE_Terrain: optimized;/usr/lib/x86_64-linux-gnu/libOgreTerrain.so;debug;/usr/lib/x86_64-linux-gnu/libOgreTerrain.so\n'}
+[6.047813] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for OGRE_Property...\n'}
+[6.047854] (box_bot_gazebo) StdoutLine: {'line': b'-- Found OGRE_Property: optimized;/usr/lib/x86_64-linux-gnu/libOgreProperty.so;debug;/usr/lib/x86_64-linux-gnu/libOgreProperty.so\n'}
+[6.047895] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for OGRE_RTShaderSystem...\n'}
+[6.047935] (box_bot_gazebo) StdoutLine: {'line': b'-- Found OGRE_RTShaderSystem: optimized;/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so;debug;/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so\n'}
+[6.047976] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for OGRE_Volume...\n'}
+[6.048016] (box_bot_gazebo) StdoutLine: {'line': b'-- Found OGRE_Volume: optimized;/usr/lib/x86_64-linux-gnu/libOgreVolume.so;debug;/usr/lib/x86_64-linux-gnu/libOgreVolume.so\n'}
+[6.048055] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for OGRE_Overlay...\n'}
+[6.048094] (box_bot_gazebo) StdoutLine: {'line': b'-- Found OGRE_Overlay: optimized;/usr/lib/x86_64-linux-gnu/libOgreOverlay.so;debug;/usr/lib/x86_64-linux-gnu/libOgreOverlay.so\n'}
+[6.120304] (-) TimerEvent: {}
+[6.220771] (-) TimerEvent: {}
+[6.321275] (-) TimerEvent: {}
+[6.421700] (-) TimerEvent: {}
+[6.522039] (-) TimerEvent: {}
+[6.622400] (-) TimerEvent: {}
+[6.722784] (-) TimerEvent: {}
+[6.823148] (-) TimerEvent: {}
+[6.923506] (-) TimerEvent: {}
+[7.023965] (-) TimerEvent: {}
+[7.124351] (-) TimerEvent: {}
+[7.224828] (-) TimerEvent: {}
+[7.325315] (-) TimerEvent: {}
+[7.425680] (-) TimerEvent: {}
+[7.526024] (-) TimerEvent: {}
+[7.626367] (-) TimerEvent: {}
+[7.726787] (-) TimerEvent: {}
+[7.827265] (-) TimerEvent: {}
+[7.927690] (-) TimerEvent: {}
+[8.028111] (-) TimerEvent: {}
+[8.128488] (-) TimerEvent: {}
+[8.228913] (-) TimerEvent: {}
+[8.329315] (-) TimerEvent: {}
+[8.429704] (-) TimerEvent: {}
+[8.530199] (-) TimerEvent: {}
+[8.630610] (-) TimerEvent: {}
+[8.731181] (-) TimerEvent: {}
+[8.831590] (-) TimerEvent: {}
+[8.931992] (-) TimerEvent: {}
+[9.032398] (-) TimerEvent: {}
+[9.132775] (-) TimerEvent: {}
+[9.233196] (-) TimerEvent: {}
+[9.333603] (-) TimerEvent: {}
+[9.433962] (-) TimerEvent: {}
+[9.534384] (-) TimerEvent: {}
+[9.634773] (-) TimerEvent: {}
+[9.735278] (-) TimerEvent: {}
+[9.835787] (-) TimerEvent: {}
+[9.936182] (-) TimerEvent: {}
+[10.036643] (-) TimerEvent: {}
+[10.137052] (-) TimerEvent: {}
+[10.237402] (-) TimerEvent: {}
+[10.337758] (-) TimerEvent: {}
+[10.438147] (-) TimerEvent: {}
+[10.538536] (-) TimerEvent: {}
+[10.638936] (-) TimerEvent: {}
+[10.739322] (-) TimerEvent: {}
+[10.839756] (-) TimerEvent: {}
+[10.940125] (-) TimerEvent: {}
+[11.040577] (-) TimerEvent: {}
+[11.141011] (-) TimerEvent: {}
+[11.241381] (-) TimerEvent: {}
+[11.341718] (-) TimerEvent: {}
+[11.442072] (-) TimerEvent: {}
+[11.542434] (-) TimerEvent: {}
+[11.642819] (-) TimerEvent: {}
+[11.743199] (-) TimerEvent: {}
+[11.843569] (-) TimerEvent: {}
+[11.943935] (-) TimerEvent: {}
+[12.044285] (-) TimerEvent: {}
+[12.144705] (-) TimerEvent: {}
+[12.245116] (-) TimerEvent: {}
+[12.345471] (-) TimerEvent: {}
+[12.445826] (-) TimerEvent: {}
+[12.546254] (-) TimerEvent: {}
+[12.646655] (-) TimerEvent: {}
+[12.747030] (-) TimerEvent: {}
+[12.847388] (-) TimerEvent: {}
+[12.947757] (-) TimerEvent: {}
+[13.048140] (-) TimerEvent: {}
+[13.148541] (-) TimerEvent: {}
+[13.248912] (-) TimerEvent: {}
+[13.349246] (-) TimerEvent: {}
+[13.449701] (-) TimerEvent: {}
+[13.550073] (-) TimerEvent: {}
+[13.650511] (-) TimerEvent: {}
+[13.750864] (-) TimerEvent: {}
+[13.851299] (-) TimerEvent: {}
+[13.951659] (-) TimerEvent: {}
+[14.052087] (-) TimerEvent: {}
+[14.152570] (-) TimerEvent: {}
+[14.253080] (-) TimerEvent: {}
+[14.353517] (-) TimerEvent: {}
+[14.453890] (-) TimerEvent: {}
+[14.554279] (-) TimerEvent: {}
+[14.654686] (-) TimerEvent: {}
+[14.755097] (-) TimerEvent: {}
+[14.855510] (-) TimerEvent: {}
+[14.955961] (-) TimerEvent: {}
+[15.056346] (-) TimerEvent: {}
+[15.156734] (-) TimerEvent: {}
+[15.257126] (-) TimerEvent: {}
+[15.357618] (-) TimerEvent: {}
+[15.458011] (-) TimerEvent: {}
+[15.558426] (-) TimerEvent: {}
+[15.658849] (-) TimerEvent: {}
+[15.759252] (-) TimerEvent: {}
+[15.859638] (-) TimerEvent: {}
+[15.960059] (-) TimerEvent: {}
+[16.060511] (-) TimerEvent: {}
+[16.160928] (-) TimerEvent: {}
+[16.261326] (-) TimerEvent: {}
+[16.361755] (-) TimerEvent: {}
+[16.462152] (-) TimerEvent: {}
+[16.562514] (-) TimerEvent: {}
+[16.662901] (-) TimerEvent: {}
+[16.763287] (-) TimerEvent: {}
+[16.863680] (-) TimerEvent: {}
+[16.964137] (-) TimerEvent: {}
+[17.064519] (-) TimerEvent: {}
+[17.164993] (-) TimerEvent: {}
+[17.265441] (-) TimerEvent: {}
+[17.365843] (-) TimerEvent: {}
+[17.466205] (-) TimerEvent: {}
+[17.566586] (-) TimerEvent: {}
+[17.666966] (-) TimerEvent: {}
+[17.767345] (-) TimerEvent: {}
+[17.867728] (-) TimerEvent: {}
+[17.968145] (-) TimerEvent: {}
+[18.068622] (-) TimerEvent: {}
+[18.169069] (-) TimerEvent: {}
+[18.269475] (-) TimerEvent: {}
+[18.369872] (-) TimerEvent: {}
+[18.470247] (-) TimerEvent: {}
+[18.570642] (-) TimerEvent: {}
+[18.671065] (-) TimerEvent: {}
+[18.771433] (-) TimerEvent: {}
+[18.871833] (-) TimerEvent: {}
+[18.972236] (-) TimerEvent: {}
+[19.072608] (-) TimerEvent: {}
+[19.172991] (-) TimerEvent: {}
+[19.273366] (-) TimerEvent: {}
+[19.373777] (-) TimerEvent: {}
+[19.474182] (-) TimerEvent: {}
+[19.574556] (-) TimerEvent: {}
+[19.674956] (-) TimerEvent: {}
+[19.775340] (-) TimerEvent: {}
+[19.875723] (-) TimerEvent: {}
+[19.976127] (-) TimerEvent: {}
+[20.076551] (-) TimerEvent: {}
+[20.176966] (-) TimerEvent: {}
+[20.277361] (-) TimerEvent: {}
+[20.377818] (-) TimerEvent: {}
+[20.478315] (-) TimerEvent: {}
+[20.578833] (-) TimerEvent: {}
+[20.679321] (-) TimerEvent: {}
+[20.779810] (-) TimerEvent: {}
+[20.880370] (-) TimerEvent: {}
+[20.981024] (-) TimerEvent: {}
+[21.081544] (-) TimerEvent: {}
+[21.182026] (-) TimerEvent: {}
+[21.282426] (-) TimerEvent: {}
+[21.382910] (-) TimerEvent: {}
+[21.483374] (-) TimerEvent: {}
+[21.583747] (-) TimerEvent: {}
+[21.684238] (-) TimerEvent: {}
+[21.784718] (-) TimerEvent: {}
+[21.885235] (-) TimerEvent: {}
+[21.985691] (-) TimerEvent: {}
+[22.086084] (-) TimerEvent: {}
+[22.186536] (-) TimerEvent: {}
+[22.287023] (-) TimerEvent: {}
+[22.387477] (-) TimerEvent: {}
+[22.487979] (-) TimerEvent: {}
+[22.588542] (-) TimerEvent: {}
+[22.689022] (-) TimerEvent: {}
+[22.789413] (-) TimerEvent: {}
+[22.889878] (-) TimerEvent: {}
+[22.990377] (-) TimerEvent: {}
+[23.090879] (-) TimerEvent: {}
+[23.191349] (-) TimerEvent: {}
+[23.291800] (-) TimerEvent: {}
+[23.392283] (-) TimerEvent: {}
+[23.492848] (-) TimerEvent: {}
+[23.593441] (-) TimerEvent: {}
+[23.693910] (-) TimerEvent: {}
+[23.794342] (-) TimerEvent: {}
+[23.894789] (-) TimerEvent: {}
+[23.995207] (-) TimerEvent: {}
+[24.095600] (-) TimerEvent: {}
+[24.196081] (-) TimerEvent: {}
+[24.296461] (-) TimerEvent: {}
+[24.396811] (-) TimerEvent: {}
+[24.497222] (-) TimerEvent: {}
+[24.597650] (-) TimerEvent: {}
+[24.698027] (-) TimerEvent: {}
+[24.798537] (-) TimerEvent: {}
+[24.899099] (-) TimerEvent: {}
+[24.999494] (-) TimerEvent: {}
+[25.099909] (-) TimerEvent: {}
+[25.200450] (-) TimerEvent: {}
+[25.301013] (-) TimerEvent: {}
+[25.401482] (-) TimerEvent: {}
+[25.501938] (-) TimerEvent: {}
+[25.602553] (-) TimerEvent: {}
+[25.703147] (-) TimerEvent: {}
+[25.803565] (-) TimerEvent: {}
+[25.904034] (-) TimerEvent: {}
+[26.004452] (-) TimerEvent: {}
+[26.104822] (-) TimerEvent: {}
+[26.205422] (-) TimerEvent: {}
+[26.305866] (-) TimerEvent: {}
+[26.406283] (-) TimerEvent: {}
+[26.506682] (-) TimerEvent: {}
+[26.607143] (-) TimerEvent: {}
+[26.707652] (-) TimerEvent: {}
+[26.808097] (-) TimerEvent: {}
+[26.908535] (-) TimerEvent: {}
+[27.008942] (-) TimerEvent: {}
+[27.109341] (-) TimerEvent: {}
+[27.209744] (-) TimerEvent: {}
+[27.310174] (-) TimerEvent: {}
+[27.410609] (-) TimerEvent: {}
+[27.511031] (-) TimerEvent: {}
+[27.611440] (-) TimerEvent: {}
+[27.711897] (-) TimerEvent: {}
+[27.812318] (-) TimerEvent: {}
+[27.912717] (-) TimerEvent: {}
+[28.013138] (-) TimerEvent: {}
+[28.113618] (-) TimerEvent: {}
+[28.214155] (-) TimerEvent: {}
+[28.314568] (-) TimerEvent: {}
+[28.415048] (-) TimerEvent: {}
+[28.515526] (-) TimerEvent: {}
+[28.615972] (-) TimerEvent: {}
+[28.716351] (-) TimerEvent: {}
+[28.816758] (-) TimerEvent: {}
+[28.917178] (-) TimerEvent: {}
+[29.017580] (-) TimerEvent: {}
+[29.117961] (-) TimerEvent: {}
+[29.218365] (-) TimerEvent: {}
+[29.318769] (-) TimerEvent: {}
+[29.419188] (-) TimerEvent: {}
+[29.519661] (-) TimerEvent: {}
+[29.620095] (-) TimerEvent: {}
+[29.720461] (-) TimerEvent: {}
+[29.820892] (-) TimerEvent: {}
+[29.921356] (-) TimerEvent: {}
+[30.021955] (-) TimerEvent: {}
+[30.122506] (-) TimerEvent: {}
+[30.222923] (-) TimerEvent: {}
+[30.323295] (-) TimerEvent: {}
+[30.423765] (-) TimerEvent: {}
+[30.524256] (-) TimerEvent: {}
+[30.624735] (-) TimerEvent: {}
+[30.725112] (-) TimerEvent: {}
+[30.825701] (-) TimerEvent: {}
+[30.926190] (-) TimerEvent: {}
+[30.979268] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for ignition-math6 -- found version 6.13.0\n'}
+[30.979541] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for ignition-transport8 -- found version 8.3.0\n'}
+[30.979835] (box_bot_gazebo) StdoutLine: {'line': b'-- Searching for dependencies of ignition-transport8\n'}
+[31.026340] (-) TimerEvent: {}
+[31.126791] (-) TimerEvent: {}
+[31.227264] (-) TimerEvent: {}
+[31.327739] (-) TimerEvent: {}
+[31.428239] (-) TimerEvent: {}
+[31.528758] (-) TimerEvent: {}
+[31.629185] (-) TimerEvent: {}
+[31.729588] (-) TimerEvent: {}
+[31.830042] (-) TimerEvent: {}
+[31.930595] (-) TimerEvent: {}
+[32.031023] (-) TimerEvent: {}
+[32.064503] (box_bot_gazebo) StdoutLine: {'line': b'-- Found Protobuf: /usr/lib/x86_64-linux-gnu/libprotobuf.so;-lpthread (found suitable version "3.6.1", minimum required is "3") \n'}
+[32.131187] (-) TimerEvent: {}
+[32.231589] (-) TimerEvent: {}
+[32.331981] (-) TimerEvent: {}
+[32.432373] (-) TimerEvent: {}
+[32.532786] (-) TimerEvent: {}
+[32.633268] (-) TimerEvent: {}
+[32.733666] (-) TimerEvent: {}
+[32.834066] (-) TimerEvent: {}
+[32.934483] (-) TimerEvent: {}
+[33.034960] (-) TimerEvent: {}
+[33.135373] (-) TimerEvent: {}
+[33.160836] (box_bot_gazebo) StdoutLine: {'line': b'-- Config-file not installed for ZeroMQ -- checking for pkg-config\n'}
+[33.165098] (box_bot_gazebo) StdoutLine: {'line': b"-- Checking for module 'libzmq >= 4'\n"}
+[33.175100] (box_bot_gazebo) StdoutLine: {'line': b'--   Found libzmq , version 4.3.2\n'}
+[33.202814] (box_bot_gazebo) StdoutLine: {'line': b"-- Checking for module 'uuid'\n"}
+[33.212460] (box_bot_gazebo) StdoutLine: {'line': b'--   Found uuid, version 2.34.0\n'}
+[33.235567] (-) TimerEvent: {}
+[33.243719] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for ignition-msgs5 -- found version 5.10.0\n'}
+[33.244152] (box_bot_gazebo) StdoutLine: {'line': b'-- Searching for dependencies of ignition-msgs5\n'}
+[33.335726] (-) TimerEvent: {}
+[33.436195] (-) TimerEvent: {}
+[33.536729] (-) TimerEvent: {}
+[33.637147] (-) TimerEvent: {}
+[33.737636] (-) TimerEvent: {}
+[33.838023] (-) TimerEvent: {}
+[33.938624] (-) TimerEvent: {}
+[34.039140] (-) TimerEvent: {}
+[34.139588] (-) TimerEvent: {}
+[34.240039] (-) TimerEvent: {}
+[34.328649] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for ignition-math6 -- found version 6.13.0\n'}
+[34.331946] (box_bot_gazebo) StdoutLine: {'line': b"-- Checking for module 'tinyxml2'\n"}
+[34.340189] (-) TimerEvent: {}
+[34.340672] (box_bot_gazebo) StdoutLine: {'line': b'--   Found tinyxml2, version 6.2.0\n'}
+[34.363387] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for ignition-msgs5 -- found version 5.10.0\n'}
+[34.363861] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for ignition-common3 -- found version 3.14.2\n'}
+[34.363965] (box_bot_gazebo) StdoutLine: {'line': b'-- Searching for dependencies of ignition-common3\n'}
+[34.364008] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for dlfcn.h - found\n'}
+[34.364046] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for libdl - found\n'}
+[34.440395] (-) TimerEvent: {}
+[34.471417] (box_bot_gazebo) StdoutLine: {'line': b'-- Searching for <ignition-common3> component [graphics]\n'}
+[34.471995] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for ignition-common3-graphics -- found version 3.14.2\n'}
+[34.472294] (box_bot_gazebo) StdoutLine: {'line': b'-- Searching for dependencies of ignition-common3-graphics\n'}
+[34.472396] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for ignition-math6 -- found version 6.13.0\n'}
+[34.473307] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for ignition-fuel_tools4 -- found version 4.6.0\n'}
+[34.473597] (box_bot_gazebo) StdoutLine: {'line': b'-- Searching for dependencies of ignition-fuel_tools4\n'}
+[34.540684] (-) TimerEvent: {}
+[34.641433] (-) TimerEvent: {}
+[34.713197] (box_bot_gazebo) StdoutLine: {'line': b"-- Checking for module 'jsoncpp'\n"}
+[34.722657] (box_bot_gazebo) StdoutLine: {'line': b'--   Found jsoncpp, version 1.7.4\n'}
+[34.741605] (-) TimerEvent: {}
+[34.748543] (box_bot_gazebo) StdoutLine: {'line': b"-- Checking for module 'libzip'\n"}
+[34.758014] (box_bot_gazebo) StdoutLine: {'line': b'--   Found libzip, version 1.5.1\n'}
+[34.781945] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for ignition-common3 -- found version 3.14.2\n'}
+[34.782277] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for ignition-math6 -- found version 6.13.0\n'}
+[34.782405] (box_bot_gazebo) StdoutLine: {'line': b'-- Looking for ignition-msgs5 -- found version 5.10.0\n'}
+[34.783399] (box_bot_gazebo) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.9.7 (/opt/ros/foxy/share/ament_lint_auto/cmake)\n'}
+[34.826410] (box_bot_gazebo) StdoutLine: {'line': b"-- Added test 'copyright' to check source files copyright and LICENSE\n"}
+[34.827258] (box_bot_gazebo) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[34.827472] (box_bot_gazebo) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[34.827604] (box_bot_gazebo) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the style conventions in PEP 257\n"}
+[34.828005] (box_bot_gazebo) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[34.829652] (box_bot_gazebo) StdoutLine: {'line': b'-- Configuring done\n'}
+[34.831795] (box_bot_gazebo) StdoutLine: {'line': b'-- Generating done\n'}
+[34.833226] (box_bot_gazebo) StdoutLine: {'line': b'-- Build files have been written to: /home/edson_20_04/box_bot/build/box_bot_gazebo\n'}
+[34.841769] (-) TimerEvent: {}
+[34.854387] (box_bot_gazebo) JobEnded: {'identifier': 'box_bot_gazebo', 'rc': 'SIGINT'}
+[34.855919] (-) EventReactorShutdown: {}

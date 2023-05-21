@@ -1,0 +1,71 @@
+[0.025s] Invoking command in '/home/edson_20_04/TCAS/build/box_bot_gazebo': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/box_bot_gazebo -- -j16 -l16
+[0.030s] CMake Error: The current CMakeCache.txt directory /home/edson_20_04/TCAS/build/box_bot_gazebo/CMakeCache.txt is different than the directory /home/edson_20_04/box_bot/build/box_bot_gazebo where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt
+[0.045s] -- Found ament_cmake: 0.9.11 (/opt/ros/foxy/share/ament_cmake/cmake)
+[0.065s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.212s] -- Found rclcpp: 2.4.2 (/opt/ros/foxy/share/rclcpp/cmake)
+[0.343s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.347s] -- Found rosidl_adapter: 1.3.0 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[4.820s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[4.852s] -- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)
+[4.852s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[4.944s] -- Found rclpy: 1.0.11 (/opt/ros/foxy/share/rclpy/cmake)
+[5.989s] -- Found DART: /usr/include (Required is at least version "6.6") found components: dart 
+[6.036s] -- Found Protobuf: /usr/lib/x86_64-linux-gnu/libprotobuf.so;-lpthread (found version "3.6.1") 
+[6.039s] -- Looking for ignition-math6 -- found version 6.13.0
+[6.047s] -- Searching for dependencies of ignition-math6
+[6.050s] -- Looking for OGRE...
+[6.054s] -- Found Ogre Ghadamon (1.9.0)
+[6.054s] -- Found OGRE: optimized;/usr/lib/x86_64-linux-gnu/libOgreMain.so;debug;/usr/lib/x86_64-linux-gnu/libOgreMain.so
+[6.061s] -- Looking for OGRE_Paging...
+[6.061s] -- Found OGRE_Paging: optimized;/usr/lib/x86_64-linux-gnu/libOgrePaging.so;debug;/usr/lib/x86_64-linux-gnu/libOgrePaging.so
+[6.061s] -- Looking for OGRE_Terrain...
+[6.062s] -- Found OGRE_Terrain: optimized;/usr/lib/x86_64-linux-gnu/libOgreTerrain.so;debug;/usr/lib/x86_64-linux-gnu/libOgreTerrain.so
+[6.062s] -- Looking for OGRE_Property...
+[6.062s] -- Found OGRE_Property: optimized;/usr/lib/x86_64-linux-gnu/libOgreProperty.so;debug;/usr/lib/x86_64-linux-gnu/libOgreProperty.so
+[6.062s] -- Looking for OGRE_RTShaderSystem...
+[6.062s] -- Found OGRE_RTShaderSystem: optimized;/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so;debug;/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so
+[6.062s] -- Looking for OGRE_Volume...
+[6.062s] -- Found OGRE_Volume: optimized;/usr/lib/x86_64-linux-gnu/libOgreVolume.so;debug;/usr/lib/x86_64-linux-gnu/libOgreVolume.so
+[6.062s] -- Looking for OGRE_Overlay...
+[6.062s] -- Found OGRE_Overlay: optimized;/usr/lib/x86_64-linux-gnu/libOgreOverlay.so;debug;/usr/lib/x86_64-linux-gnu/libOgreOverlay.so
+[28.950s] -- Looking for ignition-math6 -- found version 6.13.0
+[28.952s] -- Looking for ignition-transport8 -- found version 8.3.0
+[28.952s] -- Searching for dependencies of ignition-transport8
+[29.978s] -- Found Protobuf: /usr/lib/x86_64-linux-gnu/libprotobuf.so;-lpthread (found suitable version "3.6.1", minimum required is "3") 
+[31.050s] -- Config-file not installed for ZeroMQ -- checking for pkg-config
+[31.053s] -- Checking for module 'libzmq >= 4'
+[31.065s] --   Found libzmq , version 4.3.2
+[31.092s] -- Checking for module 'uuid'
+[31.100s] --   Found uuid, version 2.34.0
+[31.124s] -- Looking for ignition-msgs5 -- found version 5.10.0
+[31.124s] -- Searching for dependencies of ignition-msgs5
+[32.243s] -- Looking for ignition-math6 -- found version 6.13.0
+[32.252s] -- Checking for module 'tinyxml2'
+[32.262s] --   Found tinyxml2, version 6.2.0
+[32.286s] -- Looking for ignition-msgs5 -- found version 5.10.0
+[32.287s] -- Looking for ignition-common3 -- found version 3.14.2
+[32.287s] -- Searching for dependencies of ignition-common3
+[32.287s] -- Looking for dlfcn.h - found
+[32.287s] -- Looking for libdl - found
+[32.392s] -- Searching for <ignition-common3> component [graphics]
+[32.393s] -- Looking for ignition-common3-graphics -- found version 3.14.2
+[32.393s] -- Searching for dependencies of ignition-common3-graphics
+[32.394s] -- Looking for ignition-math6 -- found version 6.13.0
+[32.396s] -- Looking for ignition-fuel_tools4 -- found version 4.6.0
+[32.396s] -- Searching for dependencies of ignition-fuel_tools4
+[32.613s] -- Checking for module 'jsoncpp'
+[32.624s] --   Found jsoncpp, version 1.7.4
+[32.651s] -- Checking for module 'libzip'
+[32.661s] --   Found libzip, version 1.5.1
+[32.684s] -- Looking for ignition-common3 -- found version 3.14.2
+[32.684s] -- Looking for ignition-math6 -- found version 6.13.0
+[32.685s] -- Looking for ignition-msgs5 -- found version 5.10.0
+[32.686s] -- Found ament_lint_auto: 0.9.7 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+[32.731s] -- Added test 'copyright' to check source files copyright and LICENSE
+[32.732s] -- Added test 'flake8' to check Python code syntax and style conventions
+[32.732s] -- Added test 'lint_cmake' to check CMake code style
+[32.732s] -- Added test 'pep257' to check Python code against some of the style conventions in PEP 257
+[32.733s] -- Added test 'xmllint' to check XML markup files
+[32.735s] -- Configuring done
+[32.737s] -- Generating done
+[32.738s] -- Build files have been written to: /home/edson_20_04/box_bot/build/box_bot_gazebo
