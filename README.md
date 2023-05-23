@@ -29,17 +29,18 @@ ros2 launch planning planner_launch.py
 
 ## Observations
 
-- Path planning will be added for all robots at once (centralized CBS)
+- Multi Agent Cetralized Conflict Search Based Path planning (CBS MAPF) 
 - Robots are differential drive (like turtlebots)
-- Number of robots is hardcoded for now
+- Number of robots is hardcoded in /TCAS/box_bot_description/launch/multi_spawn_robot_launch.py
 - A feedback linearization controller was implemented
-- To change the number of robots manually change the number in /TCAS/planning/scripts/planner.py and in /TCAS/box_bot_description/launch/multi_spawn_robot_launch.py
-- Robots wait other robots before going to new positions, this sincronization will be needed when implementing a global path planner
-- Collisions may occur (there is no path planner nor collision avoidance)
+- Robots wait other robots before going to new positions, this sincronization is be neededfor the path planner
+- Collisions may occur if size of robots is too big in relation with map discretization
 
-## Demo
+## Control Demo
 
 Video accelerated 2x
 In this control demo, Robots don't collide out of luck.
 
 [![CONTROL DEMO](https://github.com/ReyeTech/TCAS/blob/37609850ab5f0766d37741fe33248968ab12472f/gazebo_multiagent.png)](https://youtu.be/9uNMXVPop8Q)
+
+## Path Planning Demo
