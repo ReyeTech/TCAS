@@ -33,7 +33,7 @@ class Planner(Node):
         self.distance_to_target = [float for _ in range(len(self.robots))]
         self.target_positions = [Point() for _ in range(len(self.robots))]
         self.position_received = 0
-        self.first_planning = False
+        self.first_time_planning = True
         self.create_all_publishers()
         self.create_all_subscribers()
         
@@ -103,7 +103,7 @@ class Planner(Node):
         if self.all_positions_received():
             self.call_cbs_planner()
         
-        if self.first_planning == True:
+        if self.first_time_planning == False:
             if self.all_robots_arrived_in_targets(): # all robots arrived -> new targets
                 for robot_index, _ in enumerate(self.robots):
                     self.get_logger().info('All robots arrived on targets')
@@ -169,9 +169,12 @@ class Planner(Node):
 
         with open(filename, 'w') as file:
             yaml.dump(data, file, default_flow_style=None, indent=4)
+            
+    def get_data_from_yaml(self):
+        
 
     def all_positions_received(self):
-        if self.first_planning == False:
+        if self.first_time_planning == True:
             self.position_received = 0
             for robot_index, _ in enumerate(self.robots):
                 current_position = self.positions[robot_index]
@@ -180,7 +183,7 @@ class Planner(Node):
                     self.position_received += 1                    
             if self.position_received == len(self.robots): # All positions received
                 self.get_logger().info('All positions received')
-                self.first_planning = True
+                self.first_time_planning = False
                 return True
         return False
         
