@@ -311,9 +311,8 @@ def main():
     # parser.add_argument("output", help="output file with the schedule")
     # args = parser.parse_args()
 
-
-    input_file = '/home/edson_20_04/TCAS/planning/params/input.yaml'
-    output_file = '/home/edson_20_04/TCAS/planning/params/output.yaml'
+    input_file = '/home/edson_20_04/TCAS/planning/params/cbs_input.yaml'
+    output_file = '/home/edson_20_04/TCAS/planning/params/cbs_output.yaml'
     # Read from input file
     with open(input_file, 'r') as param_file:
         try:
@@ -324,31 +323,25 @@ def main():
     dimension = param["map"]["dimensions"]
     obstacles = param["map"]["obstacles"]
     agents = param['robots']
-    print(dimension)
-    print(type(dimension))
-    print(obstacles)
-    print(type(obstacles))
-    print(agents)
-    print(type(agents))
+ 
+    output = dict()
+    output["status"] = 0  
 
     env = Environment(dimension, agents, obstacles)
-
     # Searching
     cbs = CBS(env)
     solution = cbs.search()
+    
     if not solution:
         print(" Solution not found" )
-        return
+    else:
+        output["status"] = 1 # Solution found   
 
     # Write to output file
-    output = dict()
     output["schedule"] = solution
     output["cost"] = env.compute_solution_cost(solution)
     with open(output_file, 'w') as output_yaml:
         yaml.safe_dump(output, output_yaml)
 
-
-if __name__ == "__main__":
-    print(" Solution not found" )
-    
+if __name__ == "__main__":   
     main()
