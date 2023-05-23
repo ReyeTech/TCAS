@@ -14,19 +14,20 @@ import ament_index_python.packages as packages
 import cbs
 
 THRE_ROBOT_ON_TARGET = 0.1 # Threshold to consider that robot has reached a target
-TARGETS_RANDOM_POOL_SIZE = 2 # Size of target area
-KP = 0.08 # Controller "proportional" gain
+TARGETS_RANDOM_POOL_SIZE = 3 # Size of target area
+KP = 0.12 # Controller "proportional" gain
 MAX_LINEAR_VELOCITY = 1
 MAX_ANGULAR_VELOCITY = 0.3
-NUMBER_OF_ROBOTS = 3 
-MAP_SIZE = 20 # Discretization of map
+MAP_SIZE = 20 # Size of Discretization of map
 SHIFT_MAP = MAP_SIZE/2 # CBS only accepts positive values
 
 class Planner(Node):
     def __init__(self):
-        super().__init__('robot_controller')
+        super().__init__('robot_controller')      
+        self.number_of_robots = int(self.count_robot_topics())
+        self.get_logger().info(f'NNNN: {self.count_robot_topics()}')
         
-        self.robots = ['robot{}'.format(i) for i in range(NUMBER_OF_ROBOTS)]
+        self.robots = ['robot{}'.format(i) for i in range(self.number_of_robots)]
         self.subscribers = []
         self.robot_publishers = []
         self.positions = [Point() for _ in range(len(self.robots))]
@@ -37,19 +38,27 @@ class Planner(Node):
         self.first_time_planning = True
         self.cbs_time_schedule = 1
         self.number_of_succesfully_executed_plans = 0
-        self.create_all_publishers()
         self.create_all_subscribers()
+        self.create_all_publishers()
         self.generate_new_random_targets()
         self.get_logger().info(f'New targets acquired: {self.final_target}')
         
-    def create_all_publishers(self):
+    def count_robot_topics(self):
+        topic_list = Node.get_topic_names_and_types(self)
+        robot_count = 0
+        for item in topic_list:
+            if item[0].startswith('/robot') and item[0].endswith('/cmd_vel'):
+                robot_count += 1        
+        return robot_count
+        
+    def create_all_subscribers(self):
         for robot_name in self.robots:
             topic = f'/{robot_name}/odom'
             subscriber = self.create_subscription(Odometry, topic, lambda msg, topic=topic: self.position_callback(msg, topic), 10)
             subscriber.robot_name = robot_name
             self.subscribers.append(subscriber)
     
-    def create_all_subscribers(self):
+    def create_all_publishers(self):
         for robot_name in self.robots:
             topic = f'/{robot_name}/cmd_vel'
             publisher = self.create_publisher(Twist, topic, 10)
@@ -107,7 +116,6 @@ class Planner(Node):
         Do this continuously
         '''
         if self.all_positions_received():
-            self.get_logger().info('Planning for the first time')
             self.call_cbs_planner()
                            
         if self.first_time_planning == False: # Planner was already called at least once
@@ -162,22 +170,27 @@ class Planner(Node):
     def generate_new_random_targets(self):
         for robot_index, _ in enumerate(self.robots):
             self.final_target[int(robot_index)] = Point(x=float(random.randint(-TARGETS_RANDOM_POOL_SIZE, TARGETS_RANDOM_POOL_SIZE)), y=float(random.randint(-TARGETS_RANDOM_POOL_SIZE, TARGETS_RANDOM_POOL_SIZE)), z=0.01) # Random target positions
-    
-    def write_data_to_yaml(self):       
-        filename = '/home/edson_20_04/TCAS/planning/params/cbs_input.yaml'
-        # TODO: this should be generic
-        
-        # package_name = 'planning'
-        # filename = 'params/input.yaml'
+        while self.check_equal_points(self.final_target) == True: # Unique targets
+            self.generate_new_random_targets()     
 
-        # package_path = packages.get_package_share_directory(package_name)
-        # file_path = os.path.join(package_path, filename)
+    def check_equal_points(self, points):
+        for i in range(len(points)):
+            for j in range(i + 1, len(points)):
+                if points[i] == points[j]:
+                    return True  # Found equal points
+        return False  # No equal points found
+
+    def write_data_to_yaml(self):       
+        input_filename = 'params/cbs_input.yaml'
+        filename = self.get_full_filename(input_filename)
 
         data = {'robots': [],
                 "map": {
-                "dimensions": [19, 19],
+                "dimensions": [20, 20],
                 "obstacles": [
-                (MAP_SIZE, MAP_SIZE)
+                (2 + SHIFT_MAP, 0 + SHIFT_MAP),
+                (4 + SHIFT_MAP, -3 + SHIFT_MAP),
+                (-1 + SHIFT_MAP, -1 + SHIFT_MAP)
                 ]}}
         for robot_index, robot_name in enumerate(self.robots):
             start_x = int(round(self.positions[int(robot_index)].x))
@@ -191,16 +204,23 @@ class Planner(Node):
             yaml.dump(data, file, default_flow_style=None, indent=4)
             
     def get_data_from_yaml(self):
-        filename = '/home/edson_20_04/TCAS/planning/params/cbs_output.yaml'
+        output_filename = 'params/cbs_output.yaml'
+        filename = self.get_full_filename(output_filename)
         with open(filename, 'r') as file:
             data = yaml.safe_load(file)
         if not data:
             self.get_logger().info(f'Solution not found!')
+            time.sleep(2)
+            self.first_time_planning = True
+            self.generate_new_random_targets()
             return
         else:
             status = data["status"]
             if status == 0:
                 self.get_logger().info(f'Solution not found!')
+                time.sleep(2)
+                self.first_time_planning = True
+                self.generate_new_random_targets()
                 return
             else:
                 self.get_logger().info(f'Solution found!')
@@ -223,7 +243,14 @@ class Planner(Node):
                             self.max_cbs_times[int(robot_index)] = int(t_value)
                     self.target_waypoints[int(robot_index)].append(Point(x=float(x_value), y=float(y_value), z=0.01))
             self.get_logger().info(f'Max number of waypoints to execute: {max(self.max_cbs_times)}')
-                    
+    
+    def get_full_filename(self, param_filename):   
+        package_path = packages.get_package_share_directory('planning')
+        substring = 'install/planning/share/'
+        filename = os.path.join(package_path, param_filename)
+        filename = filename.replace(substring, '')
+        return filename
+    
     def all_positions_received(self):
         if self.first_time_planning == True:
             self.position_received = 0

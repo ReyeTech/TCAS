@@ -8,19 +8,29 @@ from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, TextSubstitution
+import random
 
+SPAWN_AREA = 4
+NUMBER_OF_ROBOTS = 6
 
 def gen_robot_list(number_of_robots):
-
     robots = []
+    coordinates = set()  # Set to store unique coordinates
 
     for i in range(number_of_robots):
-        robot_name = "robot"+str(i)
-        x_pos = float(i)
-        y_pos = float(i)
-        robots.append({'name': robot_name, 'x_pose': x_pos, 'y_pose': y_pos, 'z_pose': 0.01})
+        while True:
+            x = random.randint(-SPAWN_AREA, SPAWN_AREA)
+            y = random.randint(-SPAWN_AREA, SPAWN_AREA)
 
-    return robots 
+            # Check if the coordinates are already taken
+            if (x, y) not in coordinates:
+                break
+
+        coordinates.add((x, y))
+        robot_name = "robot" + str(i)
+        robots.append({'name': robot_name, 'x_pose': x, 'y_pose': y, 'z_pose': 0.01})
+
+    return robots
 
 def generate_launch_description():
 
@@ -29,7 +39,6 @@ def generate_launch_description():
     assert os.path.exists(urdf), "Thebox_bot.urdf doesnt exist in "+str(urdf)
 
     # Names and poses of the robots
-    NUMBER_OF_ROBOTS = 3
     robots = gen_robot_list(NUMBER_OF_ROBOTS)
 
     # We create the list of spawn robots commands
