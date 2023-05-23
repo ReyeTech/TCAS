@@ -12,7 +12,6 @@ import yaml
 from math import fabs
 from itertools import combinations
 from copy import deepcopy
-
 from a_star import AStar
 
 class Location(object):
@@ -307,13 +306,16 @@ class CBS(object):
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("param", help="input file containing map and obstacles")
-    parser.add_argument("output", help="output file with the schedule")
-    args = parser.parse_args()
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument("param", help="input file containing map and obstacles")
+    # parser.add_argument("output", help="output file with the schedule")
+    # args = parser.parse_args()
 
+
+    input_file = '/home/edson_20_04/TCAS/planning/params/input.yaml'
+    output_file = '/home/edson_20_04/TCAS/planning/params/output.yaml'
     # Read from input file
-    with open(args.param, 'r') as param_file:
+    with open(input_file, 'r') as param_file:
         try:
             param = yaml.load(param_file, Loader=yaml.FullLoader)
         except yaml.YAMLError as exc:
@@ -342,9 +344,11 @@ def main():
     output = dict()
     output["schedule"] = solution
     output["cost"] = env.compute_solution_cost(solution)
-    with open(args.output, 'w') as output_yaml:
+    with open(output_file, 'w') as output_yaml:
         yaml.safe_dump(output, output_yaml)
 
 
 if __name__ == "__main__":
+    print(" Solution not found" )
+    
     main()

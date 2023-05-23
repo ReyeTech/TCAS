@@ -33,6 +33,8 @@ install(
 # Install Python executables
 install(PROGRAMS
   scripts/planner.py
+  scripts/cbs.py
+  scripts/a_star.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
