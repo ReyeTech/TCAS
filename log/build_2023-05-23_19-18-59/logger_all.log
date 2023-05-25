@@ -1,0 +1,269 @@
+[0.267s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[0.267s] DEBUG:colcon:Parsed command line arguments: Namespace(allow_overriding=[], ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='parallel', ignore_user_meta=False, install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f17e0d12a90>>, merge_install=False, metas=['./colcon.meta'], packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=None, packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, parallel_workers=16, paths=None, symlink_install=False, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f17e0d12a90>, verb_name='build', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7f17e0d1c040>)
+[0.288s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.288s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.288s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.288s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.288s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.288s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.288s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/edson_20_04/TCAS'
+[0.288s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.288s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.288s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.289s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.289s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.289s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.289s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.289s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.289s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.307s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.307s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.307s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.307s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.307s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.307s] Level 1:colcon.colcon_core.package_identification:_identify(Docs) by extensions ['ignore', 'ignore_ament_install']
+[0.307s] Level 1:colcon.colcon_core.package_identification:_identify(Docs) by extension 'ignore'
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(Docs) by extension 'ignore_ament_install'
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(Docs) by extensions ['colcon_pkg']
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(Docs) by extension 'colcon_pkg'
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(Docs) by extensions ['colcon_meta']
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(Docs) by extension 'colcon_meta'
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(Docs) by extensions ['ros']
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(Docs) by extension 'ros'
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(Docs) by extensions ['cmake', 'python']
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(Docs) by extension 'cmake'
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(Docs) by extension 'python'
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(Docs) by extensions ['python_setup_py']
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(Docs) by extension 'python_setup_py'
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_description) by extensions ['ignore', 'ignore_ament_install']
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_description) by extension 'ignore'
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_description) by extension 'ignore_ament_install'
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_description) by extensions ['colcon_pkg']
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_description) by extension 'colcon_pkg'
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_description) by extensions ['colcon_meta']
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_description) by extension 'colcon_meta'
+[0.308s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_description) by extensions ['ros']
+[0.309s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_description) by extension 'ros'
+[0.311s] DEBUG:colcon.colcon_core.package_identification:Package 'box_bot_description' with type 'ros.ament_cmake' and name 'box_bot_description'
+[0.311s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_gazebo) by extensions ['ignore', 'ignore_ament_install']
+[0.311s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_gazebo) by extension 'ignore'
+[0.311s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_gazebo) by extension 'ignore_ament_install'
+[0.311s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_gazebo) by extensions ['colcon_pkg']
+[0.311s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_gazebo) by extension 'colcon_pkg'
+[0.311s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_gazebo) by extensions ['colcon_meta']
+[0.311s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_gazebo) by extension 'colcon_meta'
+[0.311s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_gazebo) by extensions ['ros']
+[0.311s] Level 1:colcon.colcon_core.package_identification:_identify(box_bot_gazebo) by extension 'ros'
+[0.312s] DEBUG:colcon.colcon_core.package_identification:Package 'box_bot_gazebo' with type 'ros.ament_cmake' and name 'box_bot_gazebo'
+[0.312s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.312s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.312s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.312s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.312s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.312s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extensions ['ignore', 'ignore_ament_install']
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extension 'ignore'
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extension 'ignore_ament_install'
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extensions ['colcon_pkg']
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extension 'colcon_pkg'
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extensions ['colcon_meta']
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extension 'colcon_meta'
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extensions ['ros']
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extension 'ros'
+[0.314s] DEBUG:colcon.colcon_core.package_identification:Package 'planning' with type 'ros.ament_cmake' and name 'planning'
+[0.314s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.314s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.314s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.314s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.314s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.331s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.332s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.334s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 5 installed packages in /home/edson_20_04/TCAS/install
+[0.336s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 398 installed packages in /opt/ros/foxy
+[0.339s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'box_bot_description' build argument 'cmake_args' from command line to 'None'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'box_bot_description' build argument 'cmake_target' from command line to 'None'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'box_bot_description' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'box_bot_description' build argument 'cmake_clean_cache' from command line to 'False'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'box_bot_description' build argument 'cmake_clean_first' from command line to 'False'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'box_bot_description' build argument 'cmake_force_configure' from command line to 'False'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'box_bot_description' build argument 'ament_cmake_args' from command line to 'None'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'box_bot_description' build argument 'catkin_cmake_args' from command line to 'None'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'box_bot_description' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.414s] DEBUG:colcon.colcon_core.verb:Building package 'box_bot_description' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/edson_20_04/TCAS/build/box_bot_description', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/edson_20_04/TCAS/install/box_bot_description', 'merge_install': False, 'path': '/home/edson_20_04/TCAS/box_bot_description', 'symlink_install': False, 'test_result_base': None}
+[0.415s] Level 5:colcon.colcon_core.verb:set package 'box_bot_gazebo' build argument 'cmake_args' from command line to 'None'
+[0.415s] Level 5:colcon.colcon_core.verb:set package 'box_bot_gazebo' build argument 'cmake_target' from command line to 'None'
+[0.415s] Level 5:colcon.colcon_core.verb:set package 'box_bot_gazebo' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.415s] Level 5:colcon.colcon_core.verb:set package 'box_bot_gazebo' build argument 'cmake_clean_cache' from command line to 'False'
+[0.415s] Level 5:colcon.colcon_core.verb:set package 'box_bot_gazebo' build argument 'cmake_clean_first' from command line to 'False'
+[0.415s] Level 5:colcon.colcon_core.verb:set package 'box_bot_gazebo' build argument 'cmake_force_configure' from command line to 'False'
+[0.415s] Level 5:colcon.colcon_core.verb:set package 'box_bot_gazebo' build argument 'ament_cmake_args' from command line to 'None'
+[0.415s] Level 5:colcon.colcon_core.verb:set package 'box_bot_gazebo' build argument 'catkin_cmake_args' from command line to 'None'
+[0.415s] Level 5:colcon.colcon_core.verb:set package 'box_bot_gazebo' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.415s] DEBUG:colcon.colcon_core.verb:Building package 'box_bot_gazebo' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/edson_20_04/TCAS/build/box_bot_gazebo', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/edson_20_04/TCAS/install/box_bot_gazebo', 'merge_install': False, 'path': '/home/edson_20_04/TCAS/box_bot_gazebo', 'symlink_install': False, 'test_result_base': None}
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'planning' build argument 'cmake_args' from command line to 'None'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'planning' build argument 'cmake_target' from command line to 'None'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'planning' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'planning' build argument 'cmake_clean_cache' from command line to 'False'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'planning' build argument 'cmake_clean_first' from command line to 'False'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'planning' build argument 'cmake_force_configure' from command line to 'False'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'planning' build argument 'ament_cmake_args' from command line to 'None'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'planning' build argument 'catkin_cmake_args' from command line to 'None'
+[0.416s] Level 5:colcon.colcon_core.verb:set package 'planning' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.416s] DEBUG:colcon.colcon_core.verb:Building package 'planning' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/edson_20_04/TCAS/build/planning', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/edson_20_04/TCAS/install/planning', 'merge_install': False, 'path': '/home/edson_20_04/TCAS/planning', 'symlink_install': False, 'test_result_base': None}
+[0.417s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.420s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.421s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/edson_20_04/TCAS/box_bot_description' with build type 'ament_cmake'
+[0.421s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/edson_20_04/TCAS/box_bot_description'
+[0.425s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.425s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.425s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.431s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/edson_20_04/TCAS/box_bot_gazebo' with build type 'ament_cmake'
+[0.431s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/edson_20_04/TCAS/box_bot_gazebo'
+[0.433s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.433s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.441s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/edson_20_04/TCAS/planning' with build type 'ament_cmake'
+[0.442s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/edson_20_04/TCAS/planning'
+[0.443s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.444s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.460s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/edson_20_04/TCAS/build/box_bot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/box_bot_description -- -j16 -l16
+[0.468s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/edson_20_04/TCAS/build/box_bot_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/box_bot_gazebo -- -j16 -l16
+[0.477s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/edson_20_04/TCAS/build/planning': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/planning -- -j16 -l16
+[0.493s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/edson_20_04/TCAS/build/box_bot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/box_bot_description -- -j16 -l16
+[0.504s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/edson_20_04/TCAS/build/box_bot_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/box_bot_gazebo -- -j16 -l16
+[0.520s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/edson_20_04/TCAS/build/box_bot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/TCAS/build/box_bot_description
+[0.525s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/edson_20_04/TCAS/build/box_bot_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/TCAS/build/box_bot_gazebo
+[0.536s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(box_bot_description)
+[0.544s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/edson_20_04/TCAS/build/planning' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/planning -- -j16 -l16
+[0.551s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_description' for CMake module files
+[0.555s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/edson_20_04/TCAS/build/box_bot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/TCAS/build/box_bot_description
+[0.555s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_description' for CMake config files
+[0.555s] Level 1:colcon.colcon_core.shell:create_environment_hook('box_bot_description', 'cmake_prefix_path')
+[0.557s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/hook/cmake_prefix_path.ps1'
+[0.557s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/hook/cmake_prefix_path.dsv'
+[0.558s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/hook/cmake_prefix_path.sh'
+[0.559s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_description/lib'
+[0.559s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_description/bin'
+[0.559s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_description/lib/pkgconfig/box_bot_description.pc'
+[0.559s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_description/lib/python3.8/site-packages'
+[0.559s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_description/bin'
+[0.561s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/package.ps1'
+[0.562s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/package.dsv'
+[0.562s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/package.sh'
+[0.563s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/package.bash'
+[0.564s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/package.zsh'
+[0.564s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/edson_20_04/TCAS/install/box_bot_description/share/colcon-core/packages/box_bot_description)
+[0.569s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(box_bot_gazebo)
+[0.571s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_gazebo' for CMake module files
+[0.572s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/edson_20_04/TCAS/build/box_bot_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/TCAS/build/box_bot_gazebo
+[0.573s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_gazebo' for CMake config files
+[0.573s] Level 1:colcon.colcon_core.shell:create_environment_hook('box_bot_gazebo', 'cmake_prefix_path')
+[0.574s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/hook/cmake_prefix_path.ps1'
+[0.575s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/hook/cmake_prefix_path.dsv'
+[0.575s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/hook/cmake_prefix_path.sh'
+[0.576s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_gazebo/bin'
+[0.576s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_gazebo/lib/pkgconfig/box_bot_gazebo.pc'
+[0.577s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_gazebo/lib/python3.8/site-packages'
+[0.577s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_gazebo/bin'
+[0.579s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/package.ps1'
+[0.580s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/package.dsv'
+[0.580s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/package.sh'
+[0.581s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/package.bash'
+[0.581s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/package.zsh'
+[0.582s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/edson_20_04/TCAS/install/box_bot_gazebo/share/colcon-core/packages/box_bot_gazebo)
+[0.589s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/edson_20_04/TCAS/build/planning': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/TCAS/build/planning
+[0.592s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(box_bot_description)
+[0.594s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_description' for CMake module files
+[0.595s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_description' for CMake config files
+[0.601s] Level 1:colcon.colcon_core.shell:create_environment_hook('box_bot_description', 'cmake_prefix_path')
+[0.603s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/hook/cmake_prefix_path.ps1'
+[0.603s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/hook/cmake_prefix_path.dsv'
+[0.604s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/hook/cmake_prefix_path.sh'
+[0.604s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_description/lib'
+[0.605s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_description/bin'
+[0.605s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_description/lib/pkgconfig/box_bot_description.pc'
+[0.605s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_description/lib/python3.8/site-packages'
+[0.605s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_description/bin'
+[0.606s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/package.ps1'
+[0.607s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/package.dsv'
+[0.607s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/package.sh'
+[0.608s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/package.bash'
+[0.608s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_description/share/box_bot_description/package.zsh'
+[0.609s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/edson_20_04/TCAS/install/box_bot_description/share/colcon-core/packages/box_bot_description)
+[0.612s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(box_bot_gazebo)
+[0.614s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_gazebo' for CMake module files
+[0.615s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_gazebo' for CMake config files
+[0.615s] Level 1:colcon.colcon_core.shell:create_environment_hook('box_bot_gazebo', 'cmake_prefix_path')
+[0.617s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/hook/cmake_prefix_path.ps1'
+[0.617s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/hook/cmake_prefix_path.dsv'
+[0.618s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/hook/cmake_prefix_path.sh'
+[0.618s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_gazebo/bin'
+[0.618s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_gazebo/lib/pkgconfig/box_bot_gazebo.pc'
+[0.618s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_gazebo/lib/python3.8/site-packages'
+[0.618s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/box_bot_gazebo/bin'
+[0.620s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/package.ps1'
+[0.620s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/package.dsv'
+[0.621s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/package.sh'
+[0.621s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/package.bash'
+[0.622s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/box_bot_gazebo/share/box_bot_gazebo/package.zsh'
+[0.622s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/edson_20_04/TCAS/install/box_bot_gazebo/share/colcon-core/packages/box_bot_gazebo)
+[0.623s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(planning)
+[0.624s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/planning' for CMake module files
+[0.627s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/edson_20_04/TCAS/build/planning' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/TCAS/build/planning
+[0.627s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/planning' for CMake config files
+[0.627s] Level 1:colcon.colcon_core.shell:create_environment_hook('planning', 'cmake_prefix_path')
+[0.629s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/edson_20_04/TCAS/install/planning/share/planning/hook/cmake_prefix_path.ps1'
+[0.630s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/edson_20_04/TCAS/install/planning/share/planning/hook/cmake_prefix_path.dsv'
+[0.630s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/edson_20_04/TCAS/install/planning/share/planning/hook/cmake_prefix_path.sh'
+[0.631s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/planning/lib'
+[0.631s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/planning/bin'
+[0.632s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/planning/lib/pkgconfig/planning.pc'
+[0.632s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/planning/lib/python3.8/site-packages'
+[0.632s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/planning/bin'
+[0.633s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/planning/share/planning/package.ps1'
+[0.634s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/edson_20_04/TCAS/install/planning/share/planning/package.dsv'
+[0.634s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/planning/share/planning/package.sh'
+[0.635s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/planning/share/planning/package.bash'
+[0.635s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/planning/share/planning/package.zsh'
+[0.635s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/edson_20_04/TCAS/install/planning/share/colcon-core/packages/planning)
+[0.659s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(planning)
+[0.661s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/planning' for CMake module files
+[0.662s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/planning' for CMake config files
+[0.662s] Level 1:colcon.colcon_core.shell:create_environment_hook('planning', 'cmake_prefix_path')
+[0.663s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/edson_20_04/TCAS/install/planning/share/planning/hook/cmake_prefix_path.ps1'
+[0.664s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/edson_20_04/TCAS/install/planning/share/planning/hook/cmake_prefix_path.dsv'
+[0.664s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/edson_20_04/TCAS/install/planning/share/planning/hook/cmake_prefix_path.sh'
+[0.665s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/planning/lib'
+[0.665s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/planning/bin'
+[0.665s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/planning/lib/pkgconfig/planning.pc'
+[0.665s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/planning/lib/python3.8/site-packages'
+[0.665s] Level 1:colcon.colcon_core.environment:checking '/home/edson_20_04/TCAS/install/planning/bin'
+[0.666s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/planning/share/planning/package.ps1'
+[0.667s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/edson_20_04/TCAS/install/planning/share/planning/package.dsv'
+[0.667s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/planning/share/planning/package.sh'
+[0.668s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/planning/share/planning/package.bash'
+[0.668s] INFO:colcon.colcon_core.shell:Creating package script '/home/edson_20_04/TCAS/install/planning/share/planning/package.zsh'
+[0.668s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/edson_20_04/TCAS/install/planning/share/colcon-core/packages/planning)
+[0.669s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[0.670s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[0.670s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[0.670s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[0.736s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.notify_send': Could not find 'notify-send'
+[0.736s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[0.736s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[0.736s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[0.740s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.Notifications was not provided by any .service files
+[0.741s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[0.742s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/edson_20_04/TCAS/install/local_setup.ps1'
+[0.743s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/edson_20_04/TCAS/install/_local_setup_util_ps1.py'
+[0.744s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/edson_20_04/TCAS/install/setup.ps1'
+[0.746s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/edson_20_04/TCAS/install/local_setup.sh'
+[0.746s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/edson_20_04/TCAS/install/_local_setup_util_sh.py'
+[0.746s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/edson_20_04/TCAS/install/setup.sh'
+[0.748s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/edson_20_04/TCAS/install/local_setup.bash'
+[0.748s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/edson_20_04/TCAS/install/setup.bash'
+[0.749s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/edson_20_04/TCAS/install/local_setup.zsh'
+[0.749s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/edson_20_04/TCAS/install/setup.zsh'
