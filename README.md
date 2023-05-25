@@ -2,6 +2,13 @@
 
 Robot and world models heavily based on: https://bitbucket.org/theconstructcore/box_bot/src/foxy/
 
+## Requirements
+
+ROS2 Foxy
+
+sudo pip3 install transforms3d
+sudo apt-get install ros-foxy-tf-transformations
+
 ## To launch gazebo world and N robots
 
 In a new terminal:
