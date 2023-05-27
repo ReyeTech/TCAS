@@ -32,6 +32,10 @@ def gen_robot_list(number_of_robots):
 
     return robots
 
+def get_obstacles():
+    pass
+    
+
 def generate_launch_description():
 
     urdf = os.path.join(get_package_share_directory('box_bot_description'), 'robot/', 'box_bot_v2.urdf')

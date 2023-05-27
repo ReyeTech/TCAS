@@ -14,8 +14,8 @@ import yaml
 import ament_index_python.packages as packages
 import cbs
 
-CUSTOM_GOALS = True # True: read positions from /params/custom_goals.yaml False: Random targets
-REPLAN = False # True: Plan and execute continuosly False: Plan and execute once
+CUSTOM_GOALS = False # True: read positions from /params/custom_goals.yaml False: Random targets
+REPLAN = True # True: Plan and execute continuosly False: Plan and execute once
 THRE_ROBOT_ON_TARGET = 0.1 # Threshold to consider that robot has reached a target
 TARGETS_RANDOM_POOL_SIZE = 4 # Size of target area in meters (Gazebo squares)
 KP = 0.15 # Controller "proportional" gain
@@ -40,6 +40,7 @@ class Planner(Node):
         self.first_time_planning = True
         self.cbs_time_schedule = 1
         self.number_of_succesfully_executed_plans = 0
+        self.read_obstacle_param()
         self.create_all_subscribers()
         self.create_all_publishers()
         self.generate_new_targets()
@@ -202,6 +203,7 @@ class Planner(Node):
             self.final_goal[int(robot_index)] = Point(x=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), y=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), z=0.01) # Random target positions
         while self.check_equal_points(self.final_goal) == True: # Unique targets
             self.generate_new_random_targets()     
+        self.resolve_obstacle_conflicts()
 
     def check_equal_points(self, points):
         for i in range(len(points)):
@@ -217,13 +219,7 @@ class Planner(Node):
         data = {'robots': [],
                 "map": {
                 "dimensions": [CBS_MAP_DIMENSION, CBS_MAP_DIMENSION],
-                "obstacles": [
-                (200 + SHIFT_MAP, 200 + SHIFT_MAP),
-                    
-                # (2 + SHIFT_MAP, 0 + SHIFT_MAP),
-                # (4 + SHIFT_MAP, -3 + SHIFT_MAP),
-                # (-1 + SHIFT_MAP, -1 + SHIFT_MAP)
-                ]}}
+                "obstacles": self.obstacles}}
         for robot_index, robot_name in enumerate(self.robots):
             start_x = int(round(self.positions[int(robot_index)].x*DISCRETIZATION))
             start_y = int(round(self.positions[int(robot_index)].y*DISCRETIZATION))
@@ -235,6 +231,18 @@ class Planner(Node):
         with open(filename, 'w') as file:
             yaml.dump(data, file, default_flow_style=None, indent=4)
             
+    def read_obstacle_param(self):
+        input_filename = 'params/custom_obstacles.yaml'
+        filename = self.get_full_filename(input_filename)
+        with open(filename, 'r') as file:
+            data = yaml.safe_load(file)
+        self.obstacles=[]
+        for data in data['obstacles']:
+            self.get_logger().info(f"Data obstacles: {data}")
+            obst = data['obstacle']
+            self.obstacles.append([int(obst[0]*DISCRETIZATION + SHIFT_MAP), int(obst[1]*DISCRETIZATION + SHIFT_MAP)])
+        self.get_logger().info(f"self.obstacles: {self.obstacles}")
+    
     def read_and_set_custom_goals(self):
         input_filename = 'params/custom_goals.yaml'
         filename = self.get_full_filename(input_filename)
@@ -248,6 +256,7 @@ class Planner(Node):
                 self.final_goal[int(robot_index)].x = float(round(goal[0]))
                 self.final_goal[int(robot_index)].y = float(round(goal[1]))
         self.resolve_goal_conflicts()
+        self.resolve_obstacle_conflicts()
                    
     def update_goal(self, robot_id, new_goal):
         self.final_goal[robot_id] = new_goal
@@ -264,15 +273,25 @@ class Planner(Node):
                         new_goal = self.generate_new_goal(goal_i)
                         self.update_goal(robot_i, new_goal)
                         conflict = True
+                        
+    def resolve_obstacle_conflicts(self):
+        conflict = True
+        while conflict:
+            conflict = False
+            for robot_i, goal_i in enumerate(self.final_goal):
+                for obstacle_i in self.obstacles:
+                    if goal_i == obstacle_i:
+                        self.get_logger().info(f"Robot-{robot_i} goal is inside obstacle-{obstacle_i}")
+                        new_goal = self.generate_new_goal(goal_i)
+                        self.update_goal(robot_i, new_goal)
+                        conflict = True
 
     def generate_new_goal(self, old_goal):
         new_goal = Point(x=old_goal.x + random.randint(-1, 1),
                          y=old_goal.y + random.randint(-1, 1),
                          z=0.0)
         return new_goal
-        
-    # def robots_have_same_goal();
-        
+                
     def get_data_from_yaml(self):
         output_filename = 'params/cbs_output.yaml'
         filename = self.get_full_filename(output_filename)

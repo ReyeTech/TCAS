@@ -24,7 +24,13 @@ Subscribe to all robot position via: /{robot_name}/odom topic
 Publish to all robot velocity command via: /{robot_name}/cmd_vel topic
 In which robot_name is robot0, robot1, robot2, ...
 
-### To control robots to random goals (continuously):
+### Continuously planning
+
+variable REPLAN in /planning/scripts/planner.py
+True -> Plan and execute continuosly 
+False -> Plan and execute once
+
+### To control robots to random goals:
 
 In a new terminal:
 
@@ -38,6 +44,8 @@ ros2 launch planning planner_launch.py
 
 Set CUSTOM_GOALS = True in planning/scripts/planner.py
 Modify goals in planning/params/custom_goals.yaml
+
+If goals of more than one robot is the same, robots will pick another goal close to the original one
 
 ## Observations
 
@@ -54,4 +62,10 @@ Video accelerated
 Robots have to reach random targets. Conflict Based Search solve for collisions. Robots follow collision free trajectories.  
 
 [![PATH PLANNING DEMO 1](https://github.com/ReyeTech/TCAS/blob/37609850ab5f0766d37741fe33248968ab12472f/gazebo_multiagent2.png)](https://youtu.be/fz4IjyRInoU)
+
+
+## Limitations
+
+- If goals are in the obstacles, plan will not find a solution;
+- 
 
