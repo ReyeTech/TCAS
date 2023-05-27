@@ -183,7 +183,8 @@ class Planner(Node):
     def write_data_to_yaml(self):       
         input_filename = 'params/cbs_input.yaml'
         filename = self.get_full_filename(input_filename)
-
+        self.get_logger().info(f'cbs_input path: {filename}')
+        
         data = {'robots': [],
                 "map": {
                 "dimensions": [20, 20],
