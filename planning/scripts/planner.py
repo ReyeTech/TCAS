@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 import os
+import sys
 import rclpy
 from rclpy.node import Node
 from nav_msgs.msg import Odometry
@@ -14,6 +15,7 @@ import ament_index_python.packages as packages
 import cbs
 
 CUSTOM_GOALS = True # True: read positions from /params/custom_goals.yaml False: Random targets
+REPLAN = False # True: Plan and execute continuosly False: Plan and execute once
 THRE_ROBOT_ON_TARGET = 0.1 # Threshold to consider that robot has reached a target
 TARGETS_RANDOM_POOL_SIZE = 4 # Size of target area in meters (Gazebo squares)
 KP = 0.15 # Controller "proportional" gain
@@ -33,7 +35,7 @@ class Planner(Node):
         self.positions = [Point() for _ in range(len(self.robots))]
         self.orientations = [float for _ in range(len(self.robots))]
         self.distance_to_target = [float for _ in range(len(self.robots))]
-        self.final_target = [Point() for _ in range(len(self.robots))]
+        self.final_goal = [Point() for _ in range(len(self.robots))]
         self.position_received = 0
         self.first_time_planning = True
         self.cbs_time_schedule = 1
@@ -41,7 +43,7 @@ class Planner(Node):
         self.create_all_subscribers()
         self.create_all_publishers()
         self.generate_new_targets()
-        self.get_logger().info(f'New targets acquired: {self.final_target}')
+        self.get_logger().info(f'New targets acquired: {self.final_goal}')
         
     def count_robot_topics(self):
         topic_list = Node.get_topic_names_and_types(self)
@@ -105,7 +107,7 @@ class Planner(Node):
             if self.distance_to_target[int(robot_index)] < THRE_ROBOT_ON_TARGET:
                 number_of_robots_in_waypoints += 1 
         if int(number_of_robots_in_waypoints) == int(len(self.robots)):
-            self.get_logger().info(f'Robots Arrived in waypoints, schedule time: {self.cbs_time_schedule}')
+            self.get_logger().info(f'Robots Arrived in waypoint: {self.cbs_time_schedule}')
             return True
         else:
             return False
@@ -121,15 +123,19 @@ class Planner(Node):
                            
         if self.first_time_planning == False: # Planner was already called at least once
             if self.all_robots_arrived_cbs_final_waypoint(): # all robots arrived -> new targets -> call planner
-                self.get_logger().info('All robots arrived on targets')
-                self.get_logger().info('Acquiring new targets')
-                self.generate_new_targets()
-                self.call_cbs_planner()
+                if REPLAN == True:
+                    self.get_logger().info('All robots arrived on targets')
+                    self.get_logger().info('Acquiring new targets')
+                    self.generate_new_targets()
+                    self.call_cbs_planner()
+                else:
+                    self.get_logger().warning(f'Plan Executed sucessfully!')
+                    sys.exit()
             else: #Drive robots to next waypoint
                 if self.all_robots_arrived_in_waypoints():
                     if self.cbs_time_schedule < max(self.max_cbs_times):
                         self.cbs_time_schedule += 1 # Next time in CBS schedule
-                        self.get_logger().info(f'Going to waypoint with CBS schedule time: {self.cbs_time_schedule}')
+                        self.get_logger().info(f'Going to waypoint: {self.cbs_time_schedule} | of total: {max(self.max_cbs_times)}')
                     
                 for robot_index, robot_name in enumerate(self.robots):  
                     target_waypoint = self.get_next_target_waypoint(robot_index)
@@ -151,8 +157,6 @@ class Planner(Node):
             target_y_scaled = (target_waypoint.y - SHIFT_MAP)/DISCRETIZATION
             error_x = target_x_scaled - current_position.x
             error_y = target_y_scaled - current_position.y
-            # self.get_logger().info(f'Robot: {robot_index}, Targetx: {target_x_scaled}, Current: {current_position.x}')
-            # self.get_logger().info(f'Robot: {robot_index}, Targetx: {target_y_scaled}, Current: {current_position.y}')
             cmd_vel.linear.x = (error_x) * math.cos(current_orientation) + (error_y) * math.sin(current_orientation)
             cmd_vel.angular.z = -(error_x) * math.sin(current_orientation) / d + (error_y) * math.cos(current_orientation) / d
             cmd_vel.linear.x = KP * cmd_vel.linear.x
@@ -170,6 +174,9 @@ class Planner(Node):
         for robot_index, _ in enumerate(self.robots):
             try:
                 cmd_vel.linear.x = float(0)
+                cmd_vel.linear.y = float(0)
+                cmd_vel.angular.x = float(0)
+                cmd_vel.angular.y = float(0)
                 cmd_vel.angular.z = float(0)
                 self.robot_publishers[int(robot_index)].publish(cmd_vel)
             except Exception as e:
@@ -192,8 +199,8 @@ class Planner(Node):
 
     def generate_new_random_targets(self):
         for robot_index, _ in enumerate(self.robots):
-            self.final_target[int(robot_index)] = Point(x=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), y=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), z=0.01) # Random target positions
-        while self.check_equal_points(self.final_target) == True: # Unique targets
+            self.final_goal[int(robot_index)] = Point(x=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), y=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), z=0.01) # Random target positions
+        while self.check_equal_points(self.final_goal) == True: # Unique targets
             self.generate_new_random_targets()     
 
     def check_equal_points(self, points):
@@ -220,8 +227,8 @@ class Planner(Node):
         for robot_index, robot_name in enumerate(self.robots):
             start_x = int(round(self.positions[int(robot_index)].x*DISCRETIZATION))
             start_y = int(round(self.positions[int(robot_index)].y*DISCRETIZATION))
-            goal_x = int(round(self.final_target[int(robot_index)].x))
-            goal_y = int(round(self.final_target[int(robot_index)].y))
+            goal_x = int(round(self.final_goal[int(robot_index)].x))
+            goal_y = int(round(self.final_goal[int(robot_index)].y))
             agent_data = {'start': [(start_x + SHIFT_MAP), (start_y + SHIFT_MAP)], 'goal': [goal_x + SHIFT_MAP, goal_y + SHIFT_MAP], 'name': robot_name}
             data['robots'].append(agent_data)
 
@@ -238,9 +245,33 @@ class Planner(Node):
         for robot_index, robot_data in enumerate(data_robots):
             if robot_index < self.number_of_robots:
                 goal = robot_data['goal']
-                self.final_target[int(robot_index)].x = float(round(goal[0]))
-                self.final_target[int(robot_index)].y = float(round(goal[1]))
-        self.get_logger().info(f'Custom goals set: {data_robots}')           
+                self.final_goal[int(robot_index)].x = float(round(goal[0]))
+                self.final_goal[int(robot_index)].y = float(round(goal[1]))
+        self.resolve_goal_conflicts()
+                   
+    def update_goal(self, robot_id, new_goal):
+        self.final_goal[robot_id] = new_goal
+        self.get_logger().info(f"Updated Goal for robot-{robot_id}: [{new_goal.x}, {new_goal.y}]")
+
+    def resolve_goal_conflicts(self):
+        conflict = True
+        while conflict:
+            conflict = False
+            for robot_i, goal_i in enumerate(self.final_goal):
+                for robot_j, goal_j in enumerate(self.final_goal):
+                    if robot_i > robot_j and goal_i == goal_j:
+                        self.get_logger().info(f"Same goal for robot-{robot_i} and robot-{robot_j}")
+                        new_goal = self.generate_new_goal(goal_i)
+                        self.update_goal(robot_i, new_goal)
+                        conflict = True
+
+    def generate_new_goal(self, old_goal):
+        new_goal = Point(x=old_goal.x + random.randint(-1, 1),
+                         y=old_goal.y + random.randint(-1, 1),
+                         z=0.0)
+        return new_goal
+        
+    # def robots_have_same_goal();
         
     def get_data_from_yaml(self):
         output_filename = 'params/cbs_output.yaml'

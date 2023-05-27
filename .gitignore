@@ -42,6 +42,9 @@ qtcreator-*
 /planning/cfg
 /planning/docs
 /planning/src
+/build
+/install
+/log
 
 *~
 
