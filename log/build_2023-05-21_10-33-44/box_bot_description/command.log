@@ -1,0 +1,6 @@
+Invoking command in '/home/edson_20_04/TCAS/build/box_bot_description': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake /home/edson_20_04/TCAS/box_bot_description -DCMAKE_INSTALL_PREFIX=/home/edson_20_04/TCAS/install/box_bot_description
+Invoked command in '/home/edson_20_04/TCAS/build/box_bot_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake /home/edson_20_04/TCAS/box_bot_description -DCMAKE_INSTALL_PREFIX=/home/edson_20_04/TCAS/install/box_bot_description
+Invoking command in '/home/edson_20_04/TCAS/build/box_bot_description': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/box_bot_description -- -j16 -l16
+Invoked command in '/home/edson_20_04/TCAS/build/box_bot_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/box_bot_description -- -j16 -l16
+Invoking command in '/home/edson_20_04/TCAS/build/box_bot_description': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/TCAS/build/box_bot_description
+Invoked command in '/home/edson_20_04/TCAS/build/box_bot_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/TCAS/build/box_bot_description

@@ -1,0 +1,1 @@
+Invoking command in '/home/edson_20_04/TCAS/build/box_bot_gazebo': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/box_bot_gazebo -- -j16 -l16

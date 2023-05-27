@@ -1,0 +1,20 @@
+[0.027s] Invoking command in '/home/edson_20_04/TCAS/build/planning': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/planning -- -j16 -l16
+[0.030s] CMake Error: The current CMakeCache.txt directory /home/edson_20_04/TCAS/build/planning/CMakeCache.txt is different than the directory /home/edson_20_04/box_bot/build/planning where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt
+[0.041s] -- Found ament_cmake: 0.9.11 (/opt/ros/foxy/share/ament_cmake/cmake)
+[0.057s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.189s] -- Found rclcpp: 2.4.2 (/opt/ros/foxy/share/rclcpp/cmake)
+[0.396s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.398s] -- Found rosidl_adapter: 1.3.0 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[5.104s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[5.140s] -- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)
+[5.140s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[5.249s] -- Found rclpy: 1.0.11 (/opt/ros/foxy/share/rclpy/cmake)
+[5.250s] -- Found ament_lint_auto: 0.9.7 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+[5.295s] -- Added test 'copyright' to check source files copyright and LICENSE
+[5.296s] -- Added test 'flake8' to check Python code syntax and style conventions
+[5.296s] -- Added test 'lint_cmake' to check CMake code style
+[5.296s] -- Added test 'pep257' to check Python code against some of the style conventions in PEP 257
+[5.296s] -- Added test 'xmllint' to check XML markup files
+[5.298s] -- Configuring done
+[5.299s] -- Generating done
+[5.300s] -- Build files have been written to: /home/edson_20_04/box_bot/build/planning
