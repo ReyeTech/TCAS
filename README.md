@@ -43,6 +43,7 @@ ros2 launch planning planner_launch.py
 ### To set custom goals:
 
 Set CUSTOM_GOALS = True in planning/scripts/planner.py
+
 Modify goals in planning/params/custom_goals.yaml
 
 If goals of more than one robot is the same, robots will pick another goal close to the original one
@@ -53,19 +54,16 @@ If goals of more than one robot is the same, robots will pick another goal close
 - Robots are differential drive (like turtlebots)
 - Number of robots is hardcoded in /TCAS/box_bot_description/launch/multi_spawn_robot_launch.py
 - A feedback linearization controller was implemented (To move diff drive robots from initial position X,Y to final position X,Y)
-- Robots wait other robots before going to new positions, this sincronization is be needed for the path planner
-- Collisions may occur if size of robots is too big in relation with map discretization ans obstacles sizes (Path Planning is not aware of robot dynamics)
 
 ## Path Planning Demo
 
 Video accelerated
 Robots have to reach random targets. Conflict Based Search solve for collisions. Robots follow collision free trajectories.  
 
-[![PATH PLANNING DEMO 1](https://github.com/ReyeTech/TCAS/blob/37609850ab5f0766d37741fe33248968ab12472f/gazebo_multiagent2.png)](https://youtu.be/fz4IjyRInoU)
+[![PATH PLANNING DEMO](https://github.com/ReyeTech/TCAS/blob/37609850ab5f0766d37741fe33248968ab12472f/gazebo_multiagent2.png)](https://youtu.be/fz4IjyRInoU)
 
 
 ## Limitations
-
-- If goals are in the obstacles, plan will not find a solution;
-- 
-
+- Robots wait other robots before going to new positions, this sincronization is be needed for the path planner
+- Collisions may occur if size of robots is too big in relation with map discretization ans obstacles sizes (Path Planning is not aware of robot dynamics)
+- CBS code allows positive integers only. Workaround: shift all values, run CBS, shift values back

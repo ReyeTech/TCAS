@@ -11,7 +11,7 @@ from launch.substitutions import LaunchConfiguration, TextSubstitution
 import random
 
 SPAWN_AREA = 3
-NUMBER_OF_ROBOTS = 5
+NUMBER_OF_ROBOTS = 10
 
 def gen_robot_list(number_of_robots):
     robots = []

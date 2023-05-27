@@ -1,0 +1,34 @@
+map:
+    dimensions: [40, 40]
+    obstacles: [500, 500]
+robots:
+-   goal: [20, 20]
+    name: robot0
+    start: [24, 26]
+-   goal: [20, 19]
+    name: robot1
+    start: [24, 16]
+-   goal: [19, 19]
+    name: robot2
+    start: [20, 24]
+-   goal: [21, 19]
+    name: robot3
+    start: [18, 18]
+-   goal: [21, 20]
+    name: robot4
+    start: [22, 14]
+-   goal: [16, 16]
+    name: robot5
+    start: [20, 20]
+-   goal: [15, 17]
+    name: robot6
+    start: [20, 22]
+-   goal: [15, 15]
+    name: robot7
+    start: [26, 20]
+-   goal: [17, 17]
+    name: robot8
+    start: [26, 22]
+-   goal: [15, 16]
+    name: robot9
+    start: [24, 14]

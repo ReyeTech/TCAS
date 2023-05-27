@@ -14,8 +14,8 @@ import yaml
 import ament_index_python.packages as packages
 import cbs
 
-CUSTOM_GOALS = False # True: read positions from /params/custom_goals.yaml False: Random targets
-REPLAN = True # True: Plan and execute continuosly False: Plan and execute once
+CUSTOM_GOALS = True # True: read positions from /params/custom_goals.yaml False: Random targets
+REPLAN = False # True: Plan and execute continuosly False: Plan and execute once
 THRE_ROBOT_ON_TARGET = 0.1 # Threshold to consider that robot has reached a target
 TARGETS_RANDOM_POOL_SIZE = 4 # Size of target area in meters (Gazebo squares)
 KP = 0.15 # Controller "proportional" gain
@@ -40,7 +40,8 @@ class Planner(Node):
         self.first_time_planning = True
         self.cbs_time_schedule = 1
         self.number_of_succesfully_executed_plans = 0
-        self.read_obstacle_param()
+        self.obstacles=[500, 500] #Dummy obstacle
+        # self.read_obstacle_param()
         self.create_all_subscribers()
         self.create_all_publishers()
         self.generate_new_targets()
@@ -203,7 +204,7 @@ class Planner(Node):
             self.final_goal[int(robot_index)] = Point(x=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), y=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), z=0.01) # Random target positions
         while self.check_equal_points(self.final_goal) == True: # Unique targets
             self.generate_new_random_targets()     
-        self.resolve_obstacle_conflicts()
+        # self.resolve_obstacle_conflicts()
 
     def check_equal_points(self, points):
         for i in range(len(points)):
@@ -213,7 +214,7 @@ class Planner(Node):
         return False  # No equal points found
 
     def write_data_to_yaml(self):       
-        input_filename = 'params/cbs_input.yaml'
+        input_filename = 'scripts/params/cbs_input.yaml'
         filename = self.get_full_filename(input_filename)
 
         data = {'robots': [],
@@ -232,7 +233,7 @@ class Planner(Node):
             yaml.dump(data, file, default_flow_style=None, indent=4)
             
     def read_obstacle_param(self):
-        input_filename = 'params/custom_obstacles.yaml'
+        input_filename = 'scripts/params/custom_obstacles.yaml'
         filename = self.get_full_filename(input_filename)
         with open(filename, 'r') as file:
             data = yaml.safe_load(file)
@@ -244,7 +245,7 @@ class Planner(Node):
         self.get_logger().info(f"self.obstacles: {self.obstacles}")
     
     def read_and_set_custom_goals(self):
-        input_filename = 'params/custom_goals.yaml'
+        input_filename = 'scripts/params/custom_goals.yaml'
         filename = self.get_full_filename(input_filename)
         with open(filename, 'r') as file:
             data = yaml.safe_load(file)
@@ -256,7 +257,7 @@ class Planner(Node):
                 self.final_goal[int(robot_index)].x = float(round(goal[0]))
                 self.final_goal[int(robot_index)].y = float(round(goal[1]))
         self.resolve_goal_conflicts()
-        self.resolve_obstacle_conflicts()
+        # self.resolve_obstacle_conflicts()
                    
     def update_goal(self, robot_id, new_goal):
         self.final_goal[robot_id] = new_goal
@@ -293,7 +294,7 @@ class Planner(Node):
         return new_goal
                 
     def get_data_from_yaml(self):
-        output_filename = 'params/cbs_output.yaml'
+        output_filename = 'scripts/params/cbs_output.yaml'
         filename = self.get_full_filename(output_filename)
         with open(filename, 'r') as file:
             data = yaml.safe_load(file)
@@ -335,6 +336,7 @@ class Planner(Node):
     
     def get_full_filename(self, param_filename):   
         package_path = packages.get_package_share_directory('planning')
+        self.get_logger().info(f'package path: {package_path}')
         substring = 'install/planning/share/'
         filename = os.path.join(package_path, param_filename)
         filename = filename.replace(substring, '')

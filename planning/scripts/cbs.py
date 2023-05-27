@@ -6,6 +6,7 @@ author: Ashwin Bose (@atb033)
 
 """
 import sys
+import os
 sys.path.insert(0, '../')
 import argparse
 import yaml
@@ -13,6 +14,8 @@ from math import fabs
 from itertools import combinations
 from copy import deepcopy
 from a_star import AStar
+import ament_index_python.packages as packages
+
 
 class Location(object):
     def __init__(self, x=-1, y=-1):
@@ -302,18 +305,23 @@ class CBS(object):
             path_dict_list = [{'t':state.time, 'x':state.location.x, 'y':state.location.y} for state in path]
             plan[agent] = path_dict_list
         return plan
-
-
+    
+    
+def get_full_filename(param_filename):   
+    package_path = packages.get_package_share_directory('planning')
+    substring = 'install/planning/share/'
+    filename = os.path.join(package_path, param_filename)
+    filename = filename.replace(substring, '')
+    return filename
+    
 def main():
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument("param", help="input file containing map and obstacles")
-    # parser.add_argument("output", help="output file with the schedule")
-    # args = parser.parse_args()
-
-    input_file = '/home/edson_20_04/TCAS/planning/params/cbs_input.yaml'
-    output_file = '/home/edson_20_04/TCAS/planning/params/cbs_output.yaml'
+    input_filename = 'scripts/params/cbs_input.yaml'
+    output_filename = 'scripts/params/cbs_output.yaml'
+    input_full_filename = get_full_filename(input_filename)
+    output_full_filename = get_full_filename(output_filename)
+    
     # Read from input file
-    with open(input_file, 'r') as param_file:
+    with open(input_full_filename, 'r') as param_file:
         try:
             param = yaml.load(param_file, Loader=yaml.FullLoader)
         except yaml.YAMLError as exc:
@@ -340,7 +348,7 @@ def main():
     # Write to output file
     output["schedule"] = solution
     output["cost"] = env.compute_solution_cost(solution)
-    with open(output_file, 'w') as output_yaml:
+    with open(output_full_filename, 'w') as output_yaml:
         yaml.safe_dump(output, output_yaml)
 
 if __name__ == "__main__":   
