@@ -122,12 +122,15 @@
     <!-- body -->
     <collision name="collision_chassis">
       <geometry>
-        <box size="0.1 0.1 0.1"/>
+        <!-- <box size="0.1 0.1 0.1"/> -->
+
+        <cylinder length="0.1" radius="0.05"/>
       </geometry>
     </collision>
     <visual name="visual_chassis">
       <geometry>
-        <box size="0.1 0.1 0.1"/>
+        <!-- <box size="0.1 0.1 0.1"/> -->
+        <cylinder length="0.1" radius="0.05"/>
       </geometry>
     </visual>
   </link>
@@ -214,14 +217,15 @@
     <collision name="link_right_wheel_collision">
       <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
       <geometry>
-        <cylinder length="0.001" radius="0.035"/>
+        <cylinder length="0.01" radius="0.035"/>
       </geometry>
     </collision>
-    <visual name="link_right_wheel_visual">
+    <visual>
       <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
       <geometry>
-        <cylinder length="0.001" radius="0.035"/>
+        <cylinder length="0.01" radius="0.035"/>
       </geometry>
+      <material name="blue"/>
     </visual>
   </link>
   <joint name="joint_right_wheel" type="continuous">
@@ -241,14 +245,15 @@
     <collision name="link_right_wheel_collision">
       <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
       <geometry>
-        <cylinder length="0.001" radius="0.035"/>
+        <cylinder length="0.01" radius="0.035"/>
       </geometry>
     </collision>
-    <visual name="link_right_wheel_visual">
+    <visual>
       <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
       <geometry>
-        <cylinder length="0.001" radius="0.035"/>
+        <cylinder length="0.01" radius="0.035"/>
       </geometry>
+      <material name="blue"/>
     </visual>
   </link>
   <joint name="joint_left_wheel" type="continuous">
@@ -334,11 +339,12 @@
         <sphere radius="0.01"/>
       </geometry>
     </collision>
-    <visual name="front_visual">
+    <visual>
       <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
       <geometry>
         <sphere radius="0.01"/>
       </geometry>
+      <material name="grey"/>
     </visual>
   </link>
   <joint name="front_pitch_joint" type="continuous">
@@ -441,11 +447,12 @@
         <sphere radius="0.01"/>
       </geometry>
     </collision>
-    <visual name="back_visual">
+    <visual>
       <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
       <geometry>
         <sphere radius="0.01"/>
       </geometry>
+      <material name="grey"/>
     </visual>
   </link>
   <joint name="back_pitch_joint" type="continuous">

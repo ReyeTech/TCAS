@@ -11,7 +11,7 @@ from launch.substitutions import LaunchConfiguration, TextSubstitution
 import random
 
 SPAWN_AREA = 4
-NUMBER_OF_ROBOTS = 6
+NUMBER_OF_ROBOTS = 1
 
 def gen_robot_list(number_of_robots):
     robots = []
@@ -35,6 +35,7 @@ def gen_robot_list(number_of_robots):
 def generate_launch_description():
 
     urdf = os.path.join(get_package_share_directory('box_bot_description'), 'robot/', 'box_bot_v2.urdf')
+    # urdf = os.path.join(get_package_share_directory('box_bot_description'), 'robot/', 'turtlebot_burger.urdf')
     pkg_box_bot_description = get_package_share_directory('box_bot_description')
     assert os.path.exists(urdf), "Thebox_bot.urdf doesnt exist in "+str(urdf)
 
