@@ -13,6 +13,7 @@ import yaml
 import ament_index_python.packages as packages
 import cbs
 
+CUSTOM_GOALS = True # True: read positions from /params/custom_goals.yaml False: Random targets
 THRE_ROBOT_ON_TARGET = 0.1 # Threshold to consider that robot has reached a target
 TARGETS_RANDOM_POOL_SIZE = 4 # Size of target area in meters (Gazebo squares)
 KP = 0.15 # Controller "proportional" gain
@@ -39,7 +40,7 @@ class Planner(Node):
         self.number_of_succesfully_executed_plans = 0
         self.create_all_subscribers()
         self.create_all_publishers()
-        self.generate_new_random_targets()
+        self.generate_new_targets()
         self.get_logger().info(f'New targets acquired: {self.final_target}')
         
     def count_robot_topics(self):
@@ -75,7 +76,7 @@ class Planner(Node):
         self.drive_robots_to_cbs_waypoints()
         
     def all_robots_arrived_cbs_final_waypoint(self):
-        # Check if all robots arrived in cbs last waypoint (the random generated target)
+        # Check if all robots arrived in cbs last waypoint
         number_of_robots_in_target = 0
         cbs_last_waypoints = []
         for robot_index, _ in enumerate(self.target_waypoints):
@@ -122,8 +123,7 @@ class Planner(Node):
             if self.all_robots_arrived_cbs_final_waypoint(): # all robots arrived -> new targets -> call planner
                 self.get_logger().info('All robots arrived on targets')
                 self.get_logger().info('Acquiring new targets')
-                self.generate_new_random_targets()
-                self.get_logger().info(f'Targets: {self.final_target}')
+                self.generate_new_targets()
                 self.call_cbs_planner()
             else: #Drive robots to next waypoint
                 if self.all_robots_arrived_in_waypoints():
@@ -183,6 +183,13 @@ class Planner(Node):
             target_waypoint = self.target_waypoints[robot_index][self.max_cbs_times[robot_index]] # Reached its final waypoint -> Stay put
         return target_waypoint
 
+    def generate_new_targets(self):
+        if CUSTOM_GOALS == False:
+            self.generate_new_random_targets()
+        else:
+            self.get_logger().info(f'custom goals')
+            self.read_and_set_custom_goals()
+
     def generate_new_random_targets(self):
         for robot_index, _ in enumerate(self.robots):
             self.final_target[int(robot_index)] = Point(x=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), y=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), z=0.01) # Random target positions
@@ -221,6 +228,20 @@ class Planner(Node):
         with open(filename, 'w') as file:
             yaml.dump(data, file, default_flow_style=None, indent=4)
             
+    def read_and_set_custom_goals(self):
+        input_filename = 'params/custom_goals.yaml'
+        filename = self.get_full_filename(input_filename)
+        with open(filename, 'r') as file:
+            data = yaml.safe_load(file)
+        data_robots = data['robots']
+        size_custom_inputs = len(data_robots)        
+        for robot_index, robot_data in enumerate(data_robots):
+            if robot_index < self.number_of_robots:
+                goal = robot_data['goal']
+                self.final_target[int(robot_index)].x = float(round(goal[0]))
+                self.final_target[int(robot_index)].y = float(round(goal[1]))
+        self.get_logger().info(f'Custom goals set: {data_robots}')           
+        
     def get_data_from_yaml(self):
         output_filename = 'params/cbs_output.yaml'
         filename = self.get_full_filename(output_filename)
@@ -230,7 +251,7 @@ class Planner(Node):
             self.get_logger().info(f'Solution not found!')
             time.sleep(2)
             self.first_time_planning = True
-            self.generate_new_random_targets()
+            self.generate_new_targets()
             return
         else:
             status = data["status"]
@@ -238,7 +259,7 @@ class Planner(Node):
                 self.get_logger().info(f'Solution not found!')
                 time.sleep(2)
                 self.first_time_planning = True
-                self.generate_new_random_targets()
+                self.generate_new_targets()
                 return
             else:
                 self.get_logger().info(f'Solution found!')
