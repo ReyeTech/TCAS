@@ -60,8 +60,7 @@ If goals of more than one robot is the same, robots will pick another goal close
 Video accelerated
 Robots have to reach random targets. Conflict Based Search solve for collisions. Robots follow collision free trajectories.  
 
-[![PATH PLANNING DEMO](https://github.com/ReyeTech/TCAS/blob/37609850ab5f0766d37741fe33248968ab12472f/gazebo_multiagent2.png)](https://youtu.be/fz4IjyRInoU)
-
+[![PATH PLANNING DEMO 1](https://github.com/ReyeTech/TCAS/blob/3-Multi-agent-path-planning/gazebo_multiagent2.png?raw=true)](https://youtu.be/fz4IjyRInoU)
 
 ## Limitations
 - Robots wait other robots before going to new positions, this sincronization is be needed for the path planner
