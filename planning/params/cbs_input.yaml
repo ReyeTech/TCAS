@@ -1,23 +1,25 @@
 map:
-    dimensions: [40, 40]
+    dimensions: [20, 20]
     obstacles:
-    - !!python/tuple [220, 220]
+    - !!python/tuple [12.0, 10.0]
+    - !!python/tuple [14.0, 7.0]
+    - !!python/tuple [9.0, 9.0]
 robots:
--   goal: [22, 16]
+-   goal: [11.0, 10.0]
     name: robot0
-    start: [12, 22]
--   goal: [20, 20]
+    start: [11.0, 13.0]
+-   goal: [13.0, 11.0]
     name: robot1
-    start: [14, 20]
--   goal: [15, 17]
+    start: [11.0, 9.0]
+-   goal: [10.0, 8.0]
     name: robot2
-    start: [12, 24]
--   goal: [18, 16]
+    start: [10.0, 8.0]
+-   goal: [13.0, 7.0]
     name: robot3
-    start: [22, 14]
--   goal: [23, 18]
+    start: [10.0, 13.0]
+-   goal: [7.0, 8.0]
     name: robot4
-    start: [26, 16]
--   goal: [17, 27]
+    start: [12.0, 7.0]
+-   goal: [10.0, 10.0]
     name: robot5
-    start: [22, 26]
+    start: [7.0, 13.0]
