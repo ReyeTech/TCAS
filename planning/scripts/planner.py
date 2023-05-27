@@ -14,19 +14,18 @@ import ament_index_python.packages as packages
 import cbs
 
 THRE_ROBOT_ON_TARGET = 0.1 # Threshold to consider that robot has reached a target
-TARGETS_RANDOM_POOL_SIZE = 3 # Size of target area
-KP = 0.12 # Controller "proportional" gain
+TARGETS_RANDOM_POOL_SIZE = 4 # Size of target area in meters (Gazebo squares)
+KP = 0.15 # Controller "proportional" gain
 MAX_LINEAR_VELOCITY = 1
-MAX_ANGULAR_VELOCITY = 0.3
-MAP_SIZE = 20 # Size of Discretization of map
-SHIFT_MAP = MAP_SIZE/2 # CBS only accepts positive values
+MAX_ANGULAR_VELOCITY = 0.2
+DISCRETIZATION = 2 # Discretization of map (1: one robot per gazebo square, 2: 4 robots per gazebo square)
+SHIFT_MAP = 10*DISCRETIZATION # CBS only accepts positive values
+CBS_MAP_DIMENSION = 20*DISCRETIZATION
 
 class Planner(Node):
     def __init__(self):
         super().__init__('robot_controller')      
-        self.number_of_robots = int(self.count_robot_topics())
-        self.get_logger().info(f'NNNN: {self.count_robot_topics()}')
-        
+        self.number_of_robots = int(self.count_robot_topics())        
         self.robots = ['robot{}'.format(i) for i in range(self.number_of_robots)]
         self.subscribers = []
         self.robot_publishers = []
@@ -83,10 +82,11 @@ class Planner(Node):
             cbs_last_waypoints.append(self.target_waypoints[robot_index][-1])
         for robot_index, _ in enumerate(self.robots):
             current_position = self.positions[robot_index]
-            self.distance_to_target[int(robot_index)] = self.get_distance_to_target(cbs_last_waypoints[int(robot_index)].x - SHIFT_MAP - current_position.x, cbs_last_waypoints[int(robot_index)].y - SHIFT_MAP - current_position.y)
+            self.distance_to_target[int(robot_index)] = self.get_distance((cbs_last_waypoints[int(robot_index)].x - SHIFT_MAP)/DISCRETIZATION - current_position.x, (cbs_last_waypoints[int(robot_index)].y - SHIFT_MAP)/DISCRETIZATION - current_position.y)
             if self.distance_to_target[int(robot_index)] < THRE_ROBOT_ON_TARGET:
                 number_of_robots_in_target += 1 
         if int(number_of_robots_in_target) == int(len(self.robots)): # All robots on last waypoint
+            self.halt_robots()
             self.number_of_succesfully_executed_plans += 1
             self.get_logger().warning(f'Number of succesfully executed plans: {self.number_of_succesfully_executed_plans}')
             self.cbs_time_schedule = 1 # Plan again
@@ -100,7 +100,7 @@ class Planner(Node):
         for robot_index, _ in enumerate(self.robots):
             current_position = self.positions[robot_index]
             target_waypoint  = self.get_next_target_waypoint(robot_index)
-            self.distance_to_target[int(robot_index)] = self.get_distance_to_target(target_waypoint.x -SHIFT_MAP - current_position.x, target_waypoint.y-SHIFT_MAP - current_position.y)
+            self.distance_to_target[int(robot_index)] = self.get_distance((target_waypoint.x -SHIFT_MAP)/DISCRETIZATION - current_position.x, (target_waypoint.y-SHIFT_MAP)/DISCRETIZATION - current_position.y)
             if self.distance_to_target[int(robot_index)] < THRE_ROBOT_ON_TARGET:
                 number_of_robots_in_waypoints += 1 
         if int(number_of_robots_in_waypoints) == int(len(self.robots)):
@@ -140,7 +140,6 @@ class Planner(Node):
                     else:
                         error_msg = "Invalid current_orientation: " + str(current_orientation)
                         continue
-                    # self.get_logger().info(f'Robot: {robot_index}, Target: {target_position}, Current: {current_position}')
                     self.command_robot(robot_index, target_waypoint, current_orientation)
                     
     def command_robot(self, robot_index, target_waypoint, current_orientation):
@@ -148,8 +147,14 @@ class Planner(Node):
         current_position = self.positions[robot_index]
         cmd_vel = Twist()
         try: # Feedback linearization controller
-            cmd_vel.linear.x = (target_waypoint.x - SHIFT_MAP - current_position.x) * math.cos(current_orientation) + (target_waypoint.y - SHIFT_MAP - current_position.y) * math.sin(current_orientation)
-            cmd_vel.angular.z = -(target_waypoint.x - SHIFT_MAP - current_position.x) * math.sin(current_orientation) / d + (target_waypoint.y - SHIFT_MAP - current_position.y) * math.cos(current_orientation) / d
+            target_x_scaled = (target_waypoint.x - SHIFT_MAP)/DISCRETIZATION
+            target_y_scaled = (target_waypoint.y - SHIFT_MAP)/DISCRETIZATION
+            error_x = target_x_scaled - current_position.x
+            error_y = target_y_scaled - current_position.y
+            # self.get_logger().info(f'Robot: {robot_index}, Targetx: {target_x_scaled}, Current: {current_position.x}')
+            # self.get_logger().info(f'Robot: {robot_index}, Targetx: {target_y_scaled}, Current: {current_position.y}')
+            cmd_vel.linear.x = (error_x) * math.cos(current_orientation) + (error_y) * math.sin(current_orientation)
+            cmd_vel.angular.z = -(error_x) * math.sin(current_orientation) / d + (error_y) * math.cos(current_orientation) / d
             cmd_vel.linear.x = KP * cmd_vel.linear.x
             cmd_vel.angular.z = KP * cmd_vel.angular.z
             # Limit the velocities
@@ -160,6 +165,17 @@ class Planner(Node):
             error_msg = "Error occurred during computation: " + str(e)
             self.get_logger().error(error_msg)             
 
+    def halt_robots(self):
+        cmd_vel = Twist()
+        for robot_index, _ in enumerate(self.robots):
+            try:
+                cmd_vel.linear.x = float(0)
+                cmd_vel.angular.z = float(0)
+                self.robot_publishers[int(robot_index)].publish(cmd_vel)
+            except Exception as e:
+                error_msg = "Error halting robots: " + str(e)
+                self.get_logger().error(error_msg)     
+
     def get_next_target_waypoint(self, robot_index):
         if len(self.target_waypoints[robot_index]) > self.cbs_time_schedule: # While new CBS waypoints exists -> Go to them
             target_waypoint = self.target_waypoints[robot_index][self.cbs_time_schedule]
@@ -169,7 +185,7 @@ class Planner(Node):
 
     def generate_new_random_targets(self):
         for robot_index, _ in enumerate(self.robots):
-            self.final_target[int(robot_index)] = Point(x=float(random.randint(-TARGETS_RANDOM_POOL_SIZE, TARGETS_RANDOM_POOL_SIZE)), y=float(random.randint(-TARGETS_RANDOM_POOL_SIZE, TARGETS_RANDOM_POOL_SIZE)), z=0.01) # Random target positions
+            self.final_target[int(robot_index)] = Point(x=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), y=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), z=0.01) # Random target positions
         while self.check_equal_points(self.final_target) == True: # Unique targets
             self.generate_new_random_targets()     
 
@@ -186,18 +202,20 @@ class Planner(Node):
 
         data = {'robots': [],
                 "map": {
-                "dimensions": [20, 20],
+                "dimensions": [CBS_MAP_DIMENSION, CBS_MAP_DIMENSION],
                 "obstacles": [
-                (2 + SHIFT_MAP, 0 + SHIFT_MAP),
-                (4 + SHIFT_MAP, -3 + SHIFT_MAP),
-                (-1 + SHIFT_MAP, -1 + SHIFT_MAP)
+                (200 + SHIFT_MAP, 200 + SHIFT_MAP),
+                    
+                # (2 + SHIFT_MAP, 0 + SHIFT_MAP),
+                # (4 + SHIFT_MAP, -3 + SHIFT_MAP),
+                # (-1 + SHIFT_MAP, -1 + SHIFT_MAP)
                 ]}}
         for robot_index, robot_name in enumerate(self.robots):
-            start_x = int(round(self.positions[int(robot_index)].x))
-            start_y = int(round(self.positions[int(robot_index)].y))
+            start_x = int(round(self.positions[int(robot_index)].x*DISCRETIZATION))
+            start_y = int(round(self.positions[int(robot_index)].y*DISCRETIZATION))
             goal_x = int(round(self.final_target[int(robot_index)].x))
             goal_y = int(round(self.final_target[int(robot_index)].y))
-            agent_data = {'start': [start_x + SHIFT_MAP, start_y + SHIFT_MAP], 'goal': [goal_x + SHIFT_MAP, goal_y + SHIFT_MAP], 'name': robot_name}
+            agent_data = {'start': [(start_x + SHIFT_MAP), (start_y + SHIFT_MAP)], 'goal': [goal_x + SHIFT_MAP, goal_y + SHIFT_MAP], 'name': robot_name}
             data['robots'].append(agent_data)
 
         with open(filename, 'w') as file:
@@ -264,16 +282,26 @@ class Planner(Node):
                 return True
         return False
         
+    def verify_initial_robots_positions(self):
+        for robot_i, _ in enumerate(self.robots):
+            for robot_j, _ in enumerate(self.robots):
+                if robot_i != robot_j:
+                    dist = self.get_distance((self.positions[robot_i].x - self.positions[robot_j].x), (self.positions[robot_i].y - self.positions[robot_j].y))
+                    if dist < 0.8*(1/DISCRETIZATION):
+                        self.get_logger().info('Robots are to close, CBS will not find a solution')
+                        
     def call_cbs_planner(self):
+        self.verify_initial_robots_positions()
+        self.halt_robots()
         self.get_logger().info(f'Conflict Based Search Planning')
         self.write_data_to_yaml()
         time.sleep(1)
+        self.get_logger().info(f'Searching for solution...')
         cbs.main()
         time.sleep(1)
         self.get_data_from_yaml()
         
-    def get_distance_to_target(self, dx, dy):
-        # Calculate the Euclidean distance between the current position and the target position
+    def get_distance(self, dx, dy):
         return math.sqrt(dx*dx + dy*dy)
 
 def main(args=None):

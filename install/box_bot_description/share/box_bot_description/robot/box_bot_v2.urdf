@@ -370,7 +370,7 @@
     <kd>1000000000000000000000000000.0</kd>
     <mu1>0.5</mu1>
     <mu2>0.5</mu2>
-    <material>Gazebo/Green</material>
+    <material>Gazebo/Grey</material>
   </gazebo>
   <!-- CASTER FRONT-->
   <link name="back_yaw_link">
@@ -478,7 +478,8 @@
     <kd>1000000000000000000000000000.0</kd>
     <mu1>0.5</mu1>
     <mu2>0.5</mu2>
-    <material>Gazebo/Green</material>
+    <material><Gazebo/>
+    <Grey></Grey></material>
   </gazebo>
 </robot>
 

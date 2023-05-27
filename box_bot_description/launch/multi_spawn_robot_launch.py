@@ -10,8 +10,8 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, TextSubstitution
 import random
 
-SPAWN_AREA = 4
-NUMBER_OF_ROBOTS = 1
+SPAWN_AREA = 3
+NUMBER_OF_ROBOTS = 15
 
 def gen_robot_list(number_of_robots):
     robots = []

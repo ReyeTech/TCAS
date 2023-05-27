@@ -209,7 +209,6 @@ class Environment(object):
         goal = self.agent_dict[agent_name]["goal"]
         return fabs(state.location.x - goal.location.x) + fabs(state.location.y - goal.location.y)
 
-
     def is_at_goal(self, state, agent_name):
         goal_state = self.agent_dict[agent_name]["goal"]
         return state.is_equal_except_time(goal_state)
@@ -329,6 +328,7 @@ def main():
 
     env = Environment(dimension, agents, obstacles)
     # Searching
+    print("Searching for solution" )
     cbs = CBS(env)
     solution = cbs.search()
     
