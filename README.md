@@ -2,6 +2,12 @@
 
 Robot and world models heavily based on: https://bitbucket.org/theconstructcore/box_bot/src/foxy/
 
+## Requirements
+
+ROS2 Foxy
+
+sudo pip3 install transforms3d
+sudo apt-get install ros-foxy-tf-transformations
 
 ## To launch gazebo world and N robots
 
@@ -29,17 +35,17 @@ ros2 launch planning planner_launch.py
 
 ## Observations
 
-- Path planning will be added for all robots at once (centralized CBS)
+- Multi Agent Cetralized Conflict Search Based Path planning (CBS MAPF) 
 - Robots are differential drive (like turtlebots)
-- Number of robots is hardcoded for now
-- A feedback linearization controller was implemented
-- To change the number of robots manually change the number in /TCAS/planning/scripts/planner.py and in /TCAS/box_bot_description/launch/multi_spawn_robot_launch.py
-- Robots wait other robots before going to new positions, this sincronization will be needed when implementing a global path planner
-- Collisions may occur (there is no path planner nor collision avoidance)
+- Number of robots is hardcoded in /TCAS/box_bot_description/launch/multi_spawn_robot_launch.py
+- A feedback linearization controller was implemented (To move diff drive robots from X,Y to X,Y)
+- Robots wait other robots before going to new positions, this sincronization is be needed for the path planner
+- Collisions may occur if size of robots is too big in relation with map discretization ans obstacles sizes (Path Planning is not aware of robot dynamics)
 
-## Demo
+## Path Planning Demo
 
-Video accelerated 2x
-In this control demo, Robots don't collide out of luck.
+Video accelerated 5x
+Robots have to reach random targets. Conflict Based Search solve for collisions. Robots follow collision free trajectories.  
 
-[![CONTROL DEMO](https://github.com/ReyeTech/TCAS/blob/37609850ab5f0766d37741fe33248968ab12472f/gazebo_multiagent.png)](https://youtu.be/9uNMXVPop8Q)
+[![PATH PLANNING DEMO 1](https://github.com/ReyeTech/TCAS/blob/3-Multi-agent-path-planning/gazebo_multiagent2.png?raw=true)](https://youtu.be/fz4IjyRInoU)
+

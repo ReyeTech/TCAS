@@ -12,7 +12,6 @@ import yaml
 from math import fabs
 from itertools import combinations
 from copy import deepcopy
-
 from a_star import AStar
 
 class Location(object):
@@ -307,13 +306,15 @@ class CBS(object):
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("param", help="input file containing map and obstacles")
-    parser.add_argument("output", help="output file with the schedule")
-    args = parser.parse_args()
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument("param", help="input file containing map and obstacles")
+    # parser.add_argument("output", help="output file with the schedule")
+    # args = parser.parse_args()
 
+    input_file = '/home/edson_20_04/TCAS/planning/params/cbs_input.yaml'
+    output_file = '/home/edson_20_04/TCAS/planning/params/cbs_output.yaml'
     # Read from input file
-    with open(args.param, 'r') as param_file:
+    with open(input_file, 'r') as param_file:
         try:
             param = yaml.load(param_file, Loader=yaml.FullLoader)
         except yaml.YAMLError as exc:
@@ -322,29 +323,25 @@ def main():
     dimension = param["map"]["dimensions"]
     obstacles = param["map"]["obstacles"]
     agents = param['robots']
-    print(dimension)
-    print(type(dimension))
-    print(obstacles)
-    print(type(obstacles))
-    print(agents)
-    print(type(agents))
+ 
+    output = dict()
+    output["status"] = 0  
 
     env = Environment(dimension, agents, obstacles)
-
     # Searching
     cbs = CBS(env)
     solution = cbs.search()
+    
     if not solution:
         print(" Solution not found" )
-        return
+    else:
+        output["status"] = 1 # Solution found   
 
     # Write to output file
-    output = dict()
     output["schedule"] = solution
     output["cost"] = env.compute_solution_cost(solution)
-    with open(args.output, 'w') as output_yaml:
+    with open(output_file, 'w') as output_yaml:
         yaml.safe_dump(output, output_yaml)
 
-
-if __name__ == "__main__":
+if __name__ == "__main__":   
     main()
