@@ -60,13 +60,13 @@ If goals of more than one robot are at the same positions, robots will pick anot
 
 Robots have to reach random or custom targets. Conflict Based Search solve for collisions. Robots follow collision free trajectories.
 
-[![OBSTACLE FREE - CUSTOM GOALS - 10 ROBOTS]](https://youtu.be/oolDAnwFhWY)
+[OBSTACLE FREE - CUSTOM GOALS - 10 ROBOTS](https://youtu.be/oolDAnwFhWY)
 
-[![OBSTACLE FREE - RANDOM GOALS - 15 ROBOTS]](https://youtu.be/EQ7SeHiKW7A)
+[OBSTACLE FREE - RANDOM GOALS - 15 ROBOTS](https://youtu.be/EQ7SeHiKW7A)
 
-[![WITH OBSTACLES - RANDOM GOALS - 8 ROBOTS]](https://youtu.be/HCOMOpOvJdI)
+[WITH OBSTACLES - RANDOM GOALS - 8 ROBOTS](https://youtu.be/HCOMOpOvJdI)
 
-[![WITH OBSTACLES - RANDOM GOALS - 15 ROBOTS]](https://youtu.be/qwxTIXPNZy4)
+[WITH OBSTACLES - RANDOM GOALS - 15 ROBOTS](https://youtu.be/qwxTIXPNZy4)
 
 ## Limitations
 
