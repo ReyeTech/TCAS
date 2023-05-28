@@ -34,6 +34,15 @@ Subscribe to all robot position via: /{robot_name}/odom topic
 Publish to all robot velocity command via: /{robot_name}/cmd_vel topic
 In which robot_name is robot0, robot1, robot2, ...
 
+### Discretization of map and adjustments
+
+The current implementation of CBS only allows positive integers as inputs and outputs. To workround that, we shift the map so that every point that is inside gazebo default area is a positive integer. Also, we shrink/inflate points according to how we discretize the map. This is done before calling CBS and the other way around when reading CBS solution.
+
+![Map discretization](discretization.png)
+
+Recommended values for discretization: 1 or 2. Other values should also work.
+
+
 ### Continuously planning
 
 variable REPLAN in /planning/scripts/planner.py
@@ -47,6 +56,10 @@ Set CUSTOM_GOALS = True in planning/scripts/planner.py
 Modify goals in planning/params/custom_goals.yaml
 
 If goals of more than one robot are at the same positions, robots will pick another goal close to the original one.
+
+## Alarm
+
+The solution of CBS is published to the topic /planning_alarm as a string.
 
 ## Observations
 
@@ -67,6 +80,8 @@ Robots have to reach random or custom targets. Conflict Based Search solve for c
 [WITH OBSTACLES - RANDOM GOALS - 8 ROBOTS](https://youtu.be/HCOMOpOvJdI)
 
 [WITH OBSTACLES - RANDOM GOALS - 15 ROBOTS](https://youtu.be/qwxTIXPNZy4)
+
+[WITH MORE OBSTACLES - RANDOM GOALS - 8 ROBOTS](https://youtu.be/rtTe340uOhU)
 
 ## Limitations
 

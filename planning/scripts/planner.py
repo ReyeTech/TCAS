@@ -1,4 +1,10 @@
 #! /usr/bin/env python3
+
+'''
+This code reads positions of all robots, write positions and goals (random or custom) to cbs_input.yaml,
+calls cbs.py planner. This code also executes the plan that was written in cbs_output.yaml by cbs.py
+'''
+
 import os
 import sys
 import rclpy
@@ -18,13 +24,13 @@ import cbs
 CUSTOM_GOALS = False # True: read positions from /params/custom_goals.yaml False: Random targets
 REPLAN = True # True: Plan and execute continuosly False: Plan and execute once
 THRE_ROBOT_ON_TARGET = 0.1 # Threshold to consider that robot has reached a target
-TARGETS_RANDOM_POOL_SIZE = 3.5 # Size of target area in meters (Gazebo squares)
+TARGETS_RANDOM_POOL_SIZE = 3 # Size of target area in meters (Gazebo squares)
 KP = 0.15 # Controller "proportional" gain
 MAX_LINEAR_VELOCITY = 1
 MAX_ANGULAR_VELOCITY = 0.2
-DISCRETIZATION = 2 # Discretization of map (1: one robot per gazebo square, 2: 4 robots per gazebo square)
-SHIFT_MAP = 10*DISCRETIZATION # CBS only accepts positive values
-CBS_MAP_DIMENSION = 20*DISCRETIZATION
+DISCRETIZATION = 2 # Discretization of map (1: one point per gazebo square, 2: 4 points per gazebo square)
+SHIFT_MAP = 10*DISCRETIZATION # CBS only accepts positive integer values, all the values used by the CBS are shifted beforehand. 10 guarantees that if robots are inside gazebo dafault plane, all points sent to CBS are positive
+CBS_MAP_DIMENSION = 20*DISCRETIZATION # This calculate the whole gazebo default area
 
 class Planner(Node):
     def __init__(self):
@@ -42,13 +48,16 @@ class Planner(Node):
         self.first_time_planning = True
         self.cbs_time_schedule = 1
         self.number_of_succesfully_executed_plans = 0
-        self.obstacles=(500, 500) # Dummy obstacle (CBS code needs at least one obstacle)
+        self.obstacles=(500, 500) # Dummy obstacle (CBS code needs at least one obstacle, if no obstacle is defined, it will consider this obstacle far away that do not interfere)
         self.read_obstacle_param()
         self.create_all_subscribers()
         self.create_all_publishers()
         self.generate_new_targets()
         
     def count_robot_topics(self):
+        '''
+        Count number of robot topics to know the number of robots avoiding hardcoding it here. Return an integer
+        '''
         topic_list = Node.get_topic_names_and_types(self)
         robot_count = 0
         for item in topic_list:
@@ -57,6 +66,9 @@ class Planner(Node):
         return robot_count
         
     def create_all_subscribers(self):
+        '''
+        Create one subscriber per robot
+        '''
         for robot_name in self.robots:
             topic = f'/{robot_name}/odom'
             subscriber = self.create_subscription(Odometry, topic, lambda msg, topic=topic: self.position_callback(msg, topic), 10)
@@ -64,6 +76,9 @@ class Planner(Node):
             self.subscribers.append(subscriber)
     
     def create_all_publishers(self):
+        '''
+        Create one publishe per robot and one alarm publisher
+        '''
         for robot_name in self.robots:
             topic = f'/{robot_name}/cmd_vel'
             publisher = self.create_publisher(Twist, topic, 10)
@@ -72,10 +87,13 @@ class Planner(Node):
         self.alarm_publisher = self.create_publisher(String, alarm_topic, 10)
 
     def position_callback(self, msg, topic):
+        '''
+        Receives the position of each robot and call the controller
+        '''
         robot_index = re.search(r'/robot(\d+)/odom', topic).group(1)
         position = msg.pose.pose.position
         orientation = msg.pose.pose.orientation
-        (_, _, theta)  = euler_from_quaternion([orientation.x, orientation.y, orientation.z, orientation.w])
+        (_, _, theta)  = euler_from_quaternion([orientation.x, orientation.y, orientation.z, orientation.w]) # get orientation of robots from quaternion
         self.positions[int(robot_index)] = Point(x=position.x, y=position.y, z=position.z)
         self.orientations[int(robot_index)] = theta
         
@@ -83,13 +101,16 @@ class Planner(Node):
         self.drive_robots_to_cbs_waypoints()
         
     def all_robots_arrived_cbs_final_waypoint(self):
-        # Check if all robots arrived in cbs last waypoint
+        '''
+        Check if all robots arrived in cbs last waypoint, i.e, the goal. Return True only if all robots have arrived
+        '''
         number_of_robots_in_target = 0
         cbs_last_waypoints = []
         for robot_index, _ in enumerate(self.target_waypoints):
             cbs_last_waypoints.append(self.target_waypoints[robot_index][-1])
         for robot_index, _ in enumerate(self.robots):
             current_position = self.positions[robot_index]
+            # Points are shifted (SHIFT_MAP) by a fixed amount so that they are positive and are shrinked/inflated (DISCRETIZATION) to allow the use of CBS that only accepts positive integers
             self.distance_to_target[int(robot_index)] = self.get_distance((cbs_last_waypoints[int(robot_index)].x - SHIFT_MAP)/DISCRETIZATION - current_position.x, (cbs_last_waypoints[int(robot_index)].y - SHIFT_MAP)/DISCRETIZATION - current_position.y)
             if self.distance_to_target[int(robot_index)] < THRE_ROBOT_ON_TARGET:
                 number_of_robots_in_target += 1 
@@ -103,11 +124,14 @@ class Planner(Node):
             return False        
     
     def all_robots_arrived_in_waypoints(self):
-        # Check if all robots arrived in target positions
+        '''
+        Check if all robots arrived in a (mid) target. Return True only if all robots have arrived
+        '''
         number_of_robots_in_waypoints = 0
         for robot_index, _ in enumerate(self.robots):
             current_position = self.positions[robot_index]
             target_waypoint  = self.get_next_target_waypoint(robot_index)
+            # Points are shifted (SHIFT_MAP) by a fixed amount so that they are positive and are shrinked/inflated (DISCRETIZATION) to allow the use of CBS that only accepts positive integers
             self.distance_to_target[int(robot_index)] = self.get_distance((target_waypoint.x -SHIFT_MAP)/DISCRETIZATION - current_position.x, (target_waypoint.y-SHIFT_MAP)/DISCRETIZATION - current_position.y)
             if self.distance_to_target[int(robot_index)] < THRE_ROBOT_ON_TARGET:
                 number_of_robots_in_waypoints += 1 
@@ -141,7 +165,6 @@ class Planner(Node):
                     if self.cbs_time_schedule < max(self.max_cbs_times):
                         self.cbs_time_schedule += 1 # Next time in CBS schedule
                         self.get_logger().info(f'Going to waypoint: {self.cbs_time_schedule} | of total: {max(self.max_cbs_times)}')
-                    
                 for robot_index, robot_name in enumerate(self.robots):  
                     target_waypoint = self.get_next_target_waypoint(robot_index)
                     current_orientation = self.orientations[robot_index]             
@@ -154,10 +177,14 @@ class Planner(Node):
                     self.command_robot(robot_index, target_waypoint, current_orientation)
                     
     def command_robot(self, robot_index, target_waypoint, current_orientation):
+        '''
+        Control the robot to the desired target_waypoint
+        '''
         d = 0.1 # Virtual point outside robot center (avoid mathematical errors in the feedback linearization controller)
         current_position = self.positions[robot_index]
         cmd_vel = Twist()
-        try: # Feedback linearization controller
+        try: # Feedback linearization controller, get linear and angular desired velocities from desired X and Y
+            # Points are shifted (SHIFT_MAP) by a fixed amount so that they are positive and are shrinked/inflated (DISCRETIZATION) to allow the use of CBS that only accepts positive integers
             target_x_scaled = (target_waypoint.x - SHIFT_MAP)/DISCRETIZATION
             target_y_scaled = (target_waypoint.y - SHIFT_MAP)/DISCRETIZATION
             error_x = target_x_scaled - current_position.x
@@ -175,6 +202,9 @@ class Planner(Node):
             self.get_logger().error(error_msg)             
 
     def halt_robots(self):
+        '''
+        Send zero to the robots if they are not supposed to move, avoid robots wander around
+        '''
         cmd_vel = Twist()
         for robot_index, _ in enumerate(self.robots):
             try:
@@ -189,6 +219,9 @@ class Planner(Node):
                 self.get_logger().error(error_msg)     
 
     def get_next_target_waypoint(self, robot_index):
+        '''
+        Get the next target waypoint in the CBS schedule, if it exists
+        '''
         if len(self.target_waypoints[robot_index]) > self.cbs_time_schedule: # While new CBS waypoints exists -> Go to them
             target_waypoint = self.target_waypoints[robot_index][self.cbs_time_schedule]
         else:
@@ -196,6 +229,9 @@ class Planner(Node):
         return target_waypoint
 
     def generate_new_targets(self):
+        '''
+        Generate new targets (random or custom)
+        '''
         if CUSTOM_GOALS == False:
             self.generate_new_random_targets()
         else:
@@ -203,6 +239,9 @@ class Planner(Node):
             self.read_and_set_custom_goals()
 
     def generate_new_random_targets(self):
+        '''
+        Generate one new random target for each robot inside a square centered at (0,0) with size TARGETS_RANDOM_POOL_SIZE
+        '''
         for robot_index, _ in enumerate(self.robots):
             self.final_goal[int(robot_index)] = Point(x=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), y=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), z=0.01) # Random target positions
         while self.check_equal_points(self.final_goal) == True: # Unique targets
@@ -210,6 +249,9 @@ class Planner(Node):
         self.resolve_obstacle_conflicts()
 
     def check_equal_points(self, points):
+        '''
+        Check if target are the same
+        '''
         for i in range(len(points)):
             for j in range(i + 1, len(points)):
                 if points[i] == points[j]:
@@ -217,6 +259,9 @@ class Planner(Node):
         return False  # No equal points found
 
     def write_data_to_yaml(self):       
+        '''
+        Write robots positions, obstacles and goals to the file that will be used as an input to the planner
+        '''
         input_filename = 'scripts/params/cbs_input.yaml'
         filename = self.get_full_filename(input_filename)
         
@@ -236,6 +281,9 @@ class Planner(Node):
             yaml.dump(data, file, default_flow_style=None, indent=4)
             
     def read_obstacle_param(self):
+        '''
+        Read obstacles from custom_obstacles.yaml'
+        '''
         input_filename = 'scripts/params/custom_obstacles.yaml'
         filename = self.get_full_filename(input_filename)
         with open(filename, 'r') as file:
@@ -246,6 +294,9 @@ class Planner(Node):
             self.obstacles.append((int(obst[0]*DISCRETIZATION + SHIFT_MAP), int(obst[1]*DISCRETIZATION + SHIFT_MAP)))
     
     def read_and_set_custom_goals(self):
+        '''
+        Set goals read from file and check their validity
+        '''
         input_filename = 'scripts/params/custom_goals.yaml'
         filename = self.get_full_filename(input_filename)
         with open(filename, 'r') as file:
@@ -261,11 +312,16 @@ class Planner(Node):
         self.resolve_obstacle_conflicts()
                    
     def update_goal(self, robot_id, new_goal):
+        '''
+        Set goals read from file and check their validity
+        '''
         self.final_goal[robot_id] = new_goal
         self.get_logger().info(f"Updated Goal for robot-{robot_id}: [{new_goal.x}, {new_goal.y}]")
 
     def resolve_goal_conflicts(self):
-        # Choose another goal if two robots have chosen the same goal
+        '''
+        Choose another goal if two robots have chosen the same goal
+        '''
         conflict = True
         while conflict:
             conflict = False
@@ -278,13 +334,14 @@ class Planner(Node):
                         conflict = True
                         
     def resolve_obstacle_conflicts(self):
+        '''
+        Choose another goal if a robot's goal is inside an obstacle
+        '''
         conflict = True
         while conflict:
             conflict = False
             for robot_i, goal_i in enumerate(self.final_goal):
                 for obstacle_i in self.obstacles:
-                    # self.get_logger().info(f"Robot-{robot_i} type {type(robot_i)} goal ({goal_i}) type {type(goal_i)} is inside obstacle-{obstacle_i} type {type(obstacle_i)}")
-                    # self.get_logger().info(f"goal-{int(goal_i.x)} type {type(int(goal_i.x))} obstacle ({int(obstacle_i[0]) } type {type(int(obstacle_i[0]))}")
                     if int(goal_i.x + SHIFT_MAP) == int(obstacle_i[0]) and int(goal_i.y + SHIFT_MAP) == int(obstacle_i[1]):
                         self.get_logger().info(f"Robot-{robot_i} goal ({goal_i}) is inside obstacle-{obstacle_i}")
                         new_goal = self.generate_new_goal(goal_i)
@@ -292,12 +349,18 @@ class Planner(Node):
                         conflict = True
 
     def generate_new_goal(self, old_goal):
+        '''
+        Generate a new goal close to the old goal (randonly pick a neighboring point)
+        '''
         new_goal = Point(x=old_goal.x + random.randint(-1, 1),
                          y=old_goal.y + random.randint(-1, 1),
                          z=0.0)
         return new_goal
                 
     def get_data_from_yaml(self):
+        '''
+        Get the path planning solution from CBS: A sequence of waypoints for the robots to follow in sincrony
+        '''
         output_filename = 'scripts/params/cbs_output.yaml'
         filename = self.get_full_filename(output_filename)
         with open(filename, 'r') as file:
@@ -348,6 +411,9 @@ class Planner(Node):
             self.get_logger().info(f'Max number of waypoints to execute: {max(self.max_cbs_times)}')
     
     def get_full_filename(self, param_filename):   
+        '''
+        Get full filename (workround to get the root of a package) 
+        '''
         package_path = packages.get_package_share_directory('planning')
         substring = 'install/planning/share/'
         filename = os.path.join(package_path, param_filename)
@@ -355,6 +421,9 @@ class Planner(Node):
         return filename
     
     def all_positions_received(self):
+        '''
+        Check if the position of all robots have been received. Avoid errors of computing planning before gettting actual position, calculating with (0,0,0) initial published position
+        '''
         if self.first_time_planning == True:
             self.position_received = 0
             for robot_index, _ in enumerate(self.robots):
@@ -368,6 +437,9 @@ class Planner(Node):
         return False
         
     def verify_initial_robots_positions(self):
+        '''
+        Check if two robots start in the same position (in relation to the discretization)
+        '''
         for robot_i, _ in enumerate(self.robots):
             for robot_j, _ in enumerate(self.robots):
                 if robot_i != robot_j:
@@ -376,6 +448,9 @@ class Planner(Node):
                         self.get_logger().info('Robots are too close, CBS will not find a solution')
                         
     def call_cbs_planner(self):
+        '''
+        Compute collision free paths for all robots and read solution from file
+        '''
         self.verify_initial_robots_positions()
         self.halt_robots()
         self.get_logger().info(f'Conflict Based Search Planning')
