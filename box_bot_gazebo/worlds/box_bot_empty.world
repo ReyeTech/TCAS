@@ -9,11 +9,7 @@
     <include>
       <uri>model://ground_plane</uri>
     </include>
-    
-  </world>
-</sdf>
 
-<!-- 
     <!-- Box Obstacle 1 -->
     <model name="box_obstacle1">
       <static>true</static>
@@ -241,7 +237,7 @@
           </material>
         </visual>
       </link>
-    </model> -->
+    </model>
 
   </world>
 </sdf>

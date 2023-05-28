@@ -14,10 +14,10 @@ import yaml
 import ament_index_python.packages as packages
 import cbs
 
-CUSTOM_GOALS = True # True: read positions from /params/custom_goals.yaml False: Random targets
-REPLAN = False # True: Plan and execute continuosly False: Plan and execute once
+CUSTOM_GOALS = False # True: read positions from /params/custom_goals.yaml False: Random targets
+REPLAN = True # True: Plan and execute continuosly False: Plan and execute once
 THRE_ROBOT_ON_TARGET = 0.1 # Threshold to consider that robot has reached a target
-TARGETS_RANDOM_POOL_SIZE = 4 # Size of target area in meters (Gazebo squares)
+TARGETS_RANDOM_POOL_SIZE = 3.5 # Size of target area in meters (Gazebo squares)
 KP = 0.15 # Controller "proportional" gain
 MAX_LINEAR_VELOCITY = 1
 MAX_ANGULAR_VELOCITY = 0.2
@@ -40,12 +40,11 @@ class Planner(Node):
         self.first_time_planning = True
         self.cbs_time_schedule = 1
         self.number_of_succesfully_executed_plans = 0
-        self.obstacles=[500, 500] #Dummy obstacle
-        # self.read_obstacle_param()
+        self.obstacles=(500, 500) # Dummy obstacle (CBS code needs at least one obstacle)
+        self.read_obstacle_param()
         self.create_all_subscribers()
         self.create_all_publishers()
         self.generate_new_targets()
-        self.get_logger().info(f'New targets acquired: {self.final_goal}')
         
     def count_robot_topics(self):
         topic_list = Node.get_topic_names_and_types(self)
@@ -196,7 +195,7 @@ class Planner(Node):
         if CUSTOM_GOALS == False:
             self.generate_new_random_targets()
         else:
-            self.get_logger().info(f'custom goals')
+            self.get_logger().info(f'Custom goals')
             self.read_and_set_custom_goals()
 
     def generate_new_random_targets(self):
@@ -204,7 +203,7 @@ class Planner(Node):
             self.final_goal[int(robot_index)] = Point(x=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), y=float(random.randint(-TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION, TARGETS_RANDOM_POOL_SIZE*DISCRETIZATION)), z=0.01) # Random target positions
         while self.check_equal_points(self.final_goal) == True: # Unique targets
             self.generate_new_random_targets()     
-        # self.resolve_obstacle_conflicts()
+        self.resolve_obstacle_conflicts()
 
     def check_equal_points(self, points):
         for i in range(len(points)):
@@ -216,7 +215,6 @@ class Planner(Node):
     def write_data_to_yaml(self):       
         input_filename = 'scripts/params/cbs_input.yaml'
         filename = self.get_full_filename(input_filename)
-        self.get_logger().info(f'cbs_input path: {filename}')
         
         data = {'robots': [],
                 "map": {
@@ -240,10 +238,8 @@ class Planner(Node):
             data = yaml.safe_load(file)
         self.obstacles=[]
         for data in data['obstacles']:
-            self.get_logger().info(f"Data obstacles: {data}")
             obst = data['obstacle']
-            self.obstacles.append([int(obst[0]*DISCRETIZATION + SHIFT_MAP), int(obst[1]*DISCRETIZATION + SHIFT_MAP)])
-        self.get_logger().info(f"self.obstacles: {self.obstacles}")
+            self.obstacles.append((int(obst[0]*DISCRETIZATION + SHIFT_MAP), int(obst[1]*DISCRETIZATION + SHIFT_MAP)))
     
     def read_and_set_custom_goals(self):
         input_filename = 'scripts/params/custom_goals.yaml'
@@ -251,20 +247,21 @@ class Planner(Node):
         with open(filename, 'r') as file:
             data = yaml.safe_load(file)
         data_robots = data['robots']
-        size_custom_inputs = len(data_robots)        
         for robot_index, robot_data in enumerate(data_robots):
             if robot_index < self.number_of_robots:
                 goal = robot_data['goal']
                 self.final_goal[int(robot_index)].x = float(round(goal[0]))
                 self.final_goal[int(robot_index)].y = float(round(goal[1]))
+        # self.get_logger().info(f"Goals: {self.final_goal}")
         self.resolve_goal_conflicts()
-        # self.resolve_obstacle_conflicts()
+        self.resolve_obstacle_conflicts()
                    
     def update_goal(self, robot_id, new_goal):
         self.final_goal[robot_id] = new_goal
         self.get_logger().info(f"Updated Goal for robot-{robot_id}: [{new_goal.x}, {new_goal.y}]")
 
     def resolve_goal_conflicts(self):
+        # Choose another goal if two robots have chosen the same goal
         conflict = True
         while conflict:
             conflict = False
@@ -282,8 +279,10 @@ class Planner(Node):
             conflict = False
             for robot_i, goal_i in enumerate(self.final_goal):
                 for obstacle_i in self.obstacles:
-                    if goal_i == obstacle_i:
-                        self.get_logger().info(f"Robot-{robot_i} goal is inside obstacle-{obstacle_i}")
+                    # self.get_logger().info(f"Robot-{robot_i} type {type(robot_i)} goal ({goal_i}) type {type(goal_i)} is inside obstacle-{obstacle_i} type {type(obstacle_i)}")
+                    # self.get_logger().info(f"goal-{int(goal_i.x)} type {type(int(goal_i.x))} obstacle ({int(obstacle_i[0]) } type {type(int(obstacle_i[0]))}")
+                    if int(goal_i.x + SHIFT_MAP) == int(obstacle_i[0]) and int(goal_i.y + SHIFT_MAP) == int(obstacle_i[1]):
+                        self.get_logger().info(f"Robot-{robot_i} goal ({goal_i}) is inside obstacle-{obstacle_i}")
                         new_goal = self.generate_new_goal(goal_i)
                         self.update_goal(robot_i, new_goal)
                         conflict = True
@@ -337,7 +336,6 @@ class Planner(Node):
     
     def get_full_filename(self, param_filename):   
         package_path = packages.get_package_share_directory('planning')
-        self.get_logger().info(f'package path: {package_path}')
         substring = 'install/planning/share/'
         filename = os.path.join(package_path, param_filename)
         filename = filename.replace(substring, '')
@@ -362,7 +360,7 @@ class Planner(Node):
                 if robot_i != robot_j:
                     dist = self.get_distance((self.positions[robot_i].x - self.positions[robot_j].x), (self.positions[robot_i].y - self.positions[robot_j].y))
                     if dist < 0.8*(1/DISCRETIZATION):
-                        self.get_logger().info('Robots are to close, CBS will not find a solution')
+                        self.get_logger().info('Robots are too close, CBS will not find a solution')
                         
     def call_cbs_planner(self):
         self.verify_initial_robots_positions()

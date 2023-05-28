@@ -18,7 +18,17 @@ source install/setup.bash
 ros2 launch box_bot_gazebo multi_box_bot_launch.py
 ```
 
-## Planning
+## To launch path planner and control robots:
+
+In a new terminal:
+
+```sh
+source install/setup.bash
+
+ros2 launch planning planner_launch.py
+```
+
+## Basic Architecture
 
 Subscribe to all robot position via: /{robot_name}/odom topic
 Publish to all robot velocity command via: /{robot_name}/cmd_vel topic
@@ -30,39 +40,44 @@ variable REPLAN in /planning/scripts/planner.py
 True -> Plan and execute continuosly 
 False -> Plan and execute once
 
-### To control robots to random goals:
-
-In a new terminal:
-
-```sh
-source install/setup.bash
-
-ros2 launch planning planner_launch.py
-```
-
 ### To set custom goals:
 
 Set CUSTOM_GOALS = True in planning/scripts/planner.py
 
 Modify goals in planning/params/custom_goals.yaml
 
-If goals of more than one robot is the same, robots will pick another goal close to the original one
+If goals of more than one robot are at the same positions, robots will pick another goal close to the original one.
 
 ## Observations
 
-- Multi Agent Cetralized Conflict Search Based Path planning (CBS MAPF) 
-- Robots are differential drive (like turtlebots)
+- Multi Agent Centralized Conflict Search Based Path planning (CBS MAPF) 
+- Path planner reads start positions and goals for the robots and outputs a schedule of positions for robots to follow
 - Number of robots is hardcoded in /TCAS/box_bot_description/launch/multi_spawn_robot_launch.py
+- Robots are differential drive (like turtlebots)
 - A feedback linearization controller was implemented (To move diff drive robots from initial position X,Y to final position X,Y)
 
-## Path Planning Demo
+## Path Planning Demos
 
-Video accelerated
-Robots have to reach random targets. Conflict Based Search solve for collisions. Robots follow collision free trajectories.  
+Robots have to reach random or custom targets. Conflict Based Search solve for collisions. Robots follow collision free trajectories.
 
-[![PATH PLANNING DEMO 1](https://github.com/ReyeTech/TCAS/blob/3-Multi-agent-path-planning/gazebo_multiagent2.png?raw=true)](https://youtu.be/fz4IjyRInoU)
+[![OBSTACLE FREE - CUSTOM GOALS - 10 ROBOTS]](https://youtu.be/oolDAnwFhWY)
+
+[![OBSTACLE FREE - RANDOM GOALS - 15 ROBOTS]](https://youtu.be/EQ7SeHiKW7A)
+
+[![WITH OBSTACLES - RANDOM GOALS - 8 ROBOTS]](https://youtu.be/HCOMOpOvJdI)
+
+[![WITH OBSTACLES - RANDOM GOALS - 15 ROBOTS]](https://youtu.be/qwxTIXPNZy4)
 
 ## Limitations
-- Robots wait other robots before going to new positions, this sincronization is be needed for the path planner
-- Collisions may occur if size of robots is too big in relation with map discretization ans obstacles sizes (Path Planning is not aware of robot dynamics)
-- CBS code allows positive integers only. Workaround: shift all values, run CBS, shift values back
+
+- Robots wait other robots before going to new positions, this sincronization is be needed for correct execution of the plan
+- Collisions may occur if size of robots is too big in relation with map discretization and obstacles sizes (Path Planning is not aware of robot dynamics)
+- CBS code allows positive integers only. Workaround used: shift all values, run CBS, shift values back.
+- Robots may spawn on top of obstacles which makes the approach invalid. If this happens, relaunch ros2 launch box_bot_gazebo multi_box_bot_launch.py so that they spawn in other positions. (TODO: check this collisions)
+- Obstacles have to be added manually both in the world file (box_bot_gazebo/worlds/box_bot_empty.world) and in the file read by the planner(planning/scripts/params/custom_obstacles.yaml)
+
+## References
+
+Launch files, world files and robot files based on based on: https://bitbucket.org/theconstructcore/box_bot/src/foxy/
+CBS planner implementation: https://github.com/atb033/multi_agent_path_planning/tree/master/centralized/cbs
+CBS planner theory: https://www.sciencedirect.com/science/article/pii/S0004370214001386

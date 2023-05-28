@@ -10,8 +10,8 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, TextSubstitution
 import random
 
-SPAWN_AREA = 3
-NUMBER_OF_ROBOTS = 10
+SPAWN_AREA = 4
+NUMBER_OF_ROBOTS = 5
 
 def gen_robot_list(number_of_robots):
     robots = []
@@ -33,8 +33,8 @@ def gen_robot_list(number_of_robots):
     return robots
 
 def get_obstacles():
-    pass
-    
+    obstacles_path = os.path.join(get_package_share_directory('planning'), 'scripts/params/', 'custom_obstacles.yaml')
+    assert os.path.exists(obstacles_path), "cutom obstacles param doesnt exist in "+str(obstacles_path)
 
 def generate_launch_description():
 
