@@ -4,6 +4,7 @@ import sys
 import rclpy
 from rclpy.node import Node
 from nav_msgs.msg import Odometry
+from std_msgs.msg import String
 from geometry_msgs.msg import Twist, Point
 import re
 import math
@@ -32,6 +33,7 @@ class Planner(Node):
         self.robots = ['robot{}'.format(i) for i in range(self.number_of_robots)]
         self.subscribers = []
         self.robot_publishers = []
+        self.alarm_publisher = ''
         self.positions = [Point() for _ in range(len(self.robots))]
         self.orientations = [float for _ in range(len(self.robots))]
         self.distance_to_target = [float for _ in range(len(self.robots))]
@@ -66,6 +68,8 @@ class Planner(Node):
             topic = f'/{robot_name}/cmd_vel'
             publisher = self.create_publisher(Twist, topic, 10)
             self.robot_publishers.append(publisher)
+        alarm_topic = '/planning_alarm'
+        self.alarm_publisher = self.create_publisher(String, alarm_topic, 10)
 
     def position_callback(self, msg, topic):
         robot_index = re.search(r'/robot(\d+)/odom', topic).group(1)
@@ -299,7 +303,10 @@ class Planner(Node):
         with open(filename, 'r') as file:
             data = yaml.safe_load(file)
         if not data:
-            self.get_logger().info(f'Solution not found!')
+            alarm_msg = String()
+            alarm_msg.data = 'Solution not found!'
+            self.alarm_publisher.publish(alarm_msg)
+            self.get_logger().info('Solution not found!')
             time.sleep(2)
             self.first_time_planning = True
             self.generate_new_targets()
@@ -307,13 +314,19 @@ class Planner(Node):
         else:
             status = data["status"]
             if status == 0:
-                self.get_logger().info(f'Solution not found!')
+                alarm_msg = String()
+                alarm_msg.data = 'Solution not found!'
+                self.alarm_publisher.publish(alarm_msg)
+                self.get_logger().info('Solution not found!')
                 time.sleep(2)
                 self.first_time_planning = True
                 self.generate_new_targets()
                 return
             else:
-                self.get_logger().info(f'Solution found!')
+                alarm_msg = String()
+                alarm_msg.data = 'Solution found!'
+                self.alarm_publisher.publish(alarm_msg)
+                self.get_logger().info('Solution found!')
 
             schedule = data['schedule']
             self.target_waypoints = [[] for _ in range(len(self.robots))]
