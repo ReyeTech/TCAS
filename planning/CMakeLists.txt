@@ -23,6 +23,9 @@ find_package(rclpy REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 
+#Include directory for the header files
+include_directories(include)
+
 # Install launch
 install(
   DIRECTORY
@@ -39,12 +42,19 @@ install(PROGRAMS
   DESTINATION lib/${PROJECT_NAME}
 )
 
-add_executable(test_ros2 src/TestROS2.cc)
+add_executable(test_ros2 src/TestROS2.cc include/TestROS2.h)
 ament_target_dependencies(test_ros2  rclcpp std_msgs nav_msgs)
 
 install(TARGETS 
  test_ros2
  DESTINATION lib/${PROJECT_NAME}
+)
+
+install(
+  DIRECTORY
+    include/
+  DESTINATION
+    include/${PROJECT_NAME}
 )
 
 if(BUILD_TESTING)
