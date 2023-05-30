@@ -20,6 +20,8 @@ find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
 
 # Install launch
 install(
@@ -29,15 +31,21 @@ install(
     share/${PROJECT_NAME}/
 )
 
-
 # Install Python executables
-install(PROGRAMS
+install(PROGRAMS  
   scripts/planner.py
   scripts/cbs.py
   scripts/a_star.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
+add_executable(test_ros2 src/TestROS2.cc)
+ament_target_dependencies(test_ros2 rclcpp std_msgs nav_msgs)
+
+install(TARGETS 
+ test_ros2
+ DESTINATION lib/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

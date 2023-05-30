@@ -1,2 +1,1 @@
-source;share/planning/environment/ament_prefix_path.sh
-source;share/planning/environment/path.sh
+/home/nazneen/projects/reye_ws/src/TCAS/build/planning/ament_cmake_environment_hooks/local_setup.dsv
