@@ -1,1 +1,0 @@
-/home/nazneen/projects/reye_ws/src/TCAS/build/box_bot_description/ament_cmake_environment_hooks/local_setup.zsh

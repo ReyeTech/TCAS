@@ -1,6 +1,0 @@
-Invoking command in '/home/edson_20_04/box_bot/build/box_bot_planning': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake /home/edson_20_04/box_bot/box_bot_planning -DCMAKE_INSTALL_PREFIX=/home/edson_20_04/box_bot/install/box_bot_planning
-Invoked command in '/home/edson_20_04/box_bot/build/box_bot_planning' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake /home/edson_20_04/box_bot/box_bot_planning -DCMAKE_INSTALL_PREFIX=/home/edson_20_04/box_bot/install/box_bot_planning
-Invoking command in '/home/edson_20_04/box_bot/build/box_bot_planning': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/box_bot/build/box_bot_planning -- -j16 -l16
-Invoked command in '/home/edson_20_04/box_bot/build/box_bot_planning' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/box_bot/build/box_bot_planning -- -j16 -l16
-Invoking command in '/home/edson_20_04/box_bot/build/box_bot_planning': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/box_bot/build/box_bot_planning
-Invoked command in '/home/edson_20_04/box_bot/build/box_bot_planning' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/box_bot/build/box_bot_planning

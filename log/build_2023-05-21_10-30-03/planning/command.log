@@ -1,1 +1,0 @@
-Invoking command in '/home/edson_20_04/TCAS/build/planning': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/planning -- -j16 -l16
