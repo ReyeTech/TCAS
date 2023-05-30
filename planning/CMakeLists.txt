@@ -40,7 +40,7 @@ install(PROGRAMS
 )
 
 add_executable(test_ros2 src/TestROS2.cc)
-ament_target_dependencies(test_ros2 rclcpp std_msgs nav_msgs)
+ament_target_dependencies(test_ros2  rclcpp std_msgs nav_msgs)
 
 install(TARGETS 
  test_ros2

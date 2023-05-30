@@ -96,3 +96,11 @@ Robots have to reach random or custom targets. Conflict Based Search solve for c
 - Launch files, world files and robot files based on based on: https://bitbucket.org/theconstructcore/box_bot/src/foxy/
 - CBS planner implementation: https://github.com/atb033/multi_agent_path_planning/tree/master/centralized/cbs
 - CBS planner theory: https://www.sciencedirect.com/science/article/pii/S0004370214001386
+
+
+## CPP
+To run ros2 node in cpp 
+
+ros2 run planning test_ros2
+
+This command runs the ros node with subscribes to one topic and publishes data to another topic 

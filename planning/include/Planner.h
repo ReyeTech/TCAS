@@ -1,9 +1,11 @@
 #ifndef PLANNING_H
 #define PLANNING_H
 
-namespace TCAS{
-class Planning{
-
+namespace TCAS {
+class Planning {
+  void init();
+  void createAllSubscribers();
+  void createAllPublishers();
 };
-} // namespace TCAS
+}  // namespace TCAS
 #endif
