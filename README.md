@@ -103,4 +103,4 @@ To run ros2 node in cpp
 
 ros2 run planning test_ros2
 
-This command runs the ros node with subscribes to one topic and publishes data to another topic 
+This command runs the ros node which subscribes to one topic and publishes the data in another topic 
