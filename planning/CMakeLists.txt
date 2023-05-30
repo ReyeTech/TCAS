@@ -15,6 +15,8 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+
+
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
@@ -22,9 +24,18 @@ find_package(rclcpp REQUIRED)
 find_package(rclpy REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
+
+include_directories(
+  include
+  ${ament_INCLUDE_DIRS}
+  ${tf2_ros_INCLUDE_DIRS}
+)
 
 #Include directory for the header files
 include_directories(include)
+
 
 # Install launch
 install(
@@ -48,6 +59,15 @@ ament_target_dependencies(test_ros2  rclcpp std_msgs nav_msgs)
 install(TARGETS 
  test_ros2
  DESTINATION lib/${PROJECT_NAME}
+)
+
+# Add executable for Planner_cpp
+add_executable(Planner_cpp src/Planner.cc include/Planner.h)
+ament_target_dependencies(Planner_cpp rclcpp std_msgs nav_msgs tf2 tf2_ros)
+
+install(TARGETS
+  Planner_cpp
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 install(

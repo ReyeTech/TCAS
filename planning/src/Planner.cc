@@ -11,6 +11,7 @@ Planner::Planner() : Node("Planner") {
 void Planner::init() {
   // Initialize the Planner object
   // Add your initialization code here
+  number_of_robots_ = countRobotTopics();
 }
 
 void Planner::createAllSubscribers() {
@@ -21,6 +22,11 @@ void Planner::createAllSubscribers() {
 void Planner::createAllPublishers() {
   // Create all publishers
   // Add your publisher creation code here
+}
+unsigned short Planner::countRobotTopics() {
+  // Count number of robot topics to know the number of robots avoiding
+  // hardcoding it here. Returns a short
+  return 0;
 }
 
 }  // namespace TCAS

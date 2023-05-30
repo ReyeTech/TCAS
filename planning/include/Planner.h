@@ -4,7 +4,7 @@
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf2_ros/transform_broadcaster.h>
-#include <tf2_ros/transform_datatypes.h>
+#include <tf2/transform_datatypes.h>
 #include <tf2_ros/transform_listener.h>
 #include <yaml-cpp/yaml.h>
 
@@ -29,12 +29,13 @@ class Planner : public rclcpp::Node {
   void init();
   void createAllSubscribers();
   void createAllPublishers();
+  unsigned short countRobotTopics();
 
   bool custom_goals_ =
-      False;  // True: read positions from /params/custom_goals.yaml
+      false;  // True: read positions from /params/custom_goals.yaml
               // False: Random targets
   bool replan_ =
-      True;  // True: Plan and execute continuosly False: Plan and execute once
+      true;  // True: Plan and execute continuosly False: Plan and execute once
   float threshold_bot_on_target_ =
       0.1;  // Threshold to consider that robot has reached a target
   unsigned short targets_random_pool_size_ =
@@ -53,6 +54,8 @@ class Planner : public rclcpp::Node {
                         // dafault plane,all points sent to CBS are positive
   unsigned short cbs_map_dimension_ =
       20 * discretization_;  // This calculate the whole gazebo default area
+
+  unsigned short number_of_robots_;
 };
 }  // namespace TCAS
 #endif
