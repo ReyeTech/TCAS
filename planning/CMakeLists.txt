@@ -27,6 +27,11 @@ find_package(nav_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 
+# for CBS
+find_package(Boost 1.58 REQUIRED COMPONENTS program_options)
+find_package(PkgConfig)
+pkg_check_modules(YamlCpp yaml-cpp)
+
 include_directories(
   include
   ${ament_INCLUDE_DIRS}
@@ -61,9 +66,28 @@ install(TARGETS
  DESTINATION lib/${PROJECT_NAME}
 )
 
+# Add CBS library
+add_library(cbs_lib
+ src/CBS.cc 
+ src/Astar.cc 
+ include/CBS.h 
+ include/Astar.h 
+ include/Neighbor.h 
+ include/PlanResult.h 
+ include/Timer.h
+)
+
+target_link_libraries(cbs_lib
+  ${Boost_LIBRARIES} 
+  yaml-cpp
+)
+
 # Add executable for Planner_cpp
 add_executable(Planner_cpp src/Planner.cc include/Planner.h)
 ament_target_dependencies(Planner_cpp rclcpp std_msgs nav_msgs tf2 tf2_ros)
+
+# Link CBS lib with executable planner
+target_link_libraries(Planner_cpp cbs_lib)
 
 install(TARGETS
   Planner_cpp

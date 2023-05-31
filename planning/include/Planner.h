@@ -20,7 +20,7 @@
 #include <tuple>
 #include <vector>
 
-#include "cbs.h"
+#include "CBS.h"
 
 namespace TCAS {
 class Planner : public rclcpp::Node {
