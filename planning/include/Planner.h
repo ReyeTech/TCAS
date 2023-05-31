@@ -2,9 +2,9 @@
 #define PLANNER_H
 
 #include <tf2/LinearMath/Quaternion.h>
+#include <tf2/transform_datatypes.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf2_ros/transform_broadcaster.h>
-#include <tf2/transform_datatypes.h>
 #include <tf2_ros/transform_listener.h>
 #include <yaml-cpp/yaml.h>
 
@@ -17,6 +17,8 @@
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
 #include <string>
+#include <tuple>
+#include <vector>
 
 #include "cbs.h"
 
@@ -26,9 +28,14 @@ class Planner : public rclcpp::Node {
   Planner();
 
  private:
+  // Initialize the Planner object
   void init();
+  // Create all subscribers
   void createAllSubscribers();
+  // Create all publishers
   void createAllPublishers();
+  // Count number of robot topics to know the number of robots avoiding
+  // hardcoding it here. Returns a short
   unsigned short countRobotTopics();
 
   bool custom_goals_ =
@@ -56,6 +63,18 @@ class Planner : public rclcpp::Node {
       20 * discretization_;  // This calculate the whole gazebo default area
 
   unsigned short number_of_robots_;
+  std::vector<std::string> robots_;
+  std::vector<rclcpp::SubscriptionBase::SharedPtr> subscribers_;
+  std::vector<rclcpp::PublisherBase::SharedPtr> robot_publishers_;
+  std::vector<geometry_msgs::msg::Point> positions_;
+  std::vector<float> orientations_;
+  std::vector<float> distance_to_target_;
+  std::vector<geometry_msgs::msg::Point> final_goal_;
+  unsigned short position_received_;
+  bool first_time_planning_;
+  unsigned short cbs_time_schedule_;
+  unsigned short number_of_successfully_executed_plans_;
+  std::tuple<unsigned short, unsigned short> obstacles_;
 };
 }  // namespace TCAS
 #endif
