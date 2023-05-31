@@ -94,4 +94,5 @@ CATKIN_IGNORE
 **/build
 
 #.vscode extensions
+.vscode/
 .vscode/extensions.json
