@@ -13,9 +13,11 @@ void Planner::init() {
   robots_.resize(number_of_robots_);
   subscribers_.resize(number_of_robots_);
   robot_publishers_.resize(number_of_robots_);
+  target_waypoints_.resize(number_of_robots_);
   positions_.resize(number_of_robots_);
   orientations_.resize(number_of_robots_);
   distance_to_target_.resize(number_of_robots_);
+  max_cbs_times_.resize(number_of_robots_);
   final_goal_.resize(number_of_robots_);
 
   for (int i = 0; i < number_of_robots_; ++i) {
@@ -23,6 +25,7 @@ void Planner::init() {
     positions_[i] = geometry_msgs::msg::Point();
     orientations_[i] = 0.0;
     distance_to_target_[i] = 0.0;
+    max_cbs_times_[i] = 0;
     final_goal_[i] = geometry_msgs::msg::Point();
   }
 
@@ -64,6 +67,83 @@ void Planner::positionCallback(const nav_msgs::msg::Odometry::SharedPtr msg,
 
     // Compute a new control input for every update in position
     driveRobotstoCbsWaypoints();
+  }
+}
+
+bool Planner::allRobotsArrivedCBSFinalWaypoint() {
+  int number_of_robots_in_target = 0;
+  std::vector<geometry_msgs::msg::Point> cbs_last_waypoints;
+
+  for (size_t robot_index = 0; robot_index < target_waypoints_.size();
+       ++robot_index) {
+    cbs_last_waypoints.emplace_back(target_waypoints_[robot_index].back());
+  }
+
+  for (size_t robot_index = 0; robot_index < robots_.size(); ++robot_index) {
+    auto current_position = positions_[robot_index];
+
+    // Points are shifted (shift_map_) by a fixed amount so that they are
+    // positive and are shrinked/inflated (discretization_) to allow the use of
+    // CBS that only accepts positive integers
+    distance_to_target_[robot_index] = getDistance(
+        (cbs_last_waypoints[robot_index].x - shift_map_) / discretization_ -
+            current_position.x,
+        (cbs_last_waypoints[robot_index].y - shift_map_) / discretization_ -
+            current_position.y);
+
+    if (distance_to_target_[robot_index] < threshold_bot_on_target_) {
+      number_of_robots_in_target++;
+    }
+  }
+
+  // All robots on last waypoint
+  if (static_cast<size_t>(number_of_robots_in_target) == robots_.size()) {
+    haltRobots();
+    number_of_successfully_executed_plans_++;
+    RCLCPP_WARN(get_logger(),
+                "Number of successfully executed plans: " +
+                    std::to_string(number_of_successfully_executed_plans_));
+    cbs_time_schedule_ = 1;  // Plan again
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool Planner::allRobotsArrivedInWaypoints() {
+  size_t number_of_robots_in_waypoints = 0;
+
+  for (size_t robot_index = 0; robot_index < robots_.size(); ++robot_index) {
+    auto current_position = positions_[robot_index];
+    auto target_waypoint = getNextTargetWaypoints(robot_index);
+    // Points are shifted (SHIFT_MAP) by a fixed amount so that they are
+    // positive and are shrinked/inflated (DISCRETIZATION) to allow the use of
+    // CBS that only accepts positive integers
+    distance_to_target_[robot_index] = getDistance(
+        (target_waypoint.x - shift_map_) / discretization_ - current_position.x,
+        (target_waypoint.y - shift_map_) / discretization_ -
+            current_position.y);
+
+    if (distance_to_target_[robot_index] < threshold_bot_on_target_) {
+      number_of_robots_in_waypoints++;
+    }
+  }
+
+  if (number_of_robots_in_waypoints == robots_.size()) {
+    RCLCPP_INFO(get_logger(), "Robots Arrived in waypoint: " +
+                                  std::to_string(cbs_time_schedule_));
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const geometry_msgs::msg::Point& Planner::getNextTargetWaypoints(
+    const unsigned short robot_index) {
+  if (target_waypoints_[robot_index].size() > cbs_time_schedule_) {
+    return target_waypoints_[robot_index][cbs_time_schedule_];
+  } else {
+    return target_waypoints_[robot_index][max_cbs_times_[robot_index]];
   }
 }
 
@@ -128,21 +208,21 @@ void Planner::haltRobots() {
 }
 
 bool Planner::allPositionsReceived() {
-    if (first_time_planning_) {
-        position_received_ = 0;
-        for (size_t robot_index = 0; robot_index < robots_.size(); ++robot_index) {
-            auto current_position = positions_[robot_index];
-            if (current_position.x != 0 && current_position.y != 0) {
-                position_received_++;
-            }
-        }
-        if (position_received_ == robots_.size()) {  // All positions received
-            RCLCPP_INFO(get_logger(),"All positions received");
-            first_time_planning_ = false;
-            return true;
-        }
+  if (first_time_planning_) {
+    position_received_ = 0;
+    for (size_t robot_index = 0; robot_index < robots_.size(); ++robot_index) {
+      auto current_position = positions_[robot_index];
+      if (current_position.x != 0 && current_position.y != 0) {
+        position_received_++;
+      }
     }
-    return false;
+    if (position_received_ == robots_.size()) {  // All positions received
+      RCLCPP_INFO(get_logger(), "All positions received");
+      first_time_planning_ = false;
+      return true;
+    }
+  }
+  return false;
 }
 
 void Planner::verifyInitialRobotPositions() {

@@ -38,9 +38,29 @@ class Planner : public rclcpp::Node {
   // Subsriber Position callback function- Recieves position of each robot and
   // call the controller
   void positionCallback(const nav_msgs::msg::Odometry::SharedPtr,
-                        const std::string&);
+                        const std::string &);
+
+  /**
+   * Check if all robots arrived in CBS last waypoint, i.e., the goal. Return
+   * true only if all robots have arrived.
+   */
+  bool allRobotsArrivedCBSFinalWaypoint();
+
+  /**
+   *  Check if all robots arrived in a (mid) target. Return true only if all
+   robots have arrived.
+
+  */
+  bool allRobotsArrivedInWaypoints();
+
+  /**
+   *  Get the next target waypoint in the CBS schedule, if it exists
+   */
+  const geometry_msgs::msg::Point &getNextTargetWaypoints(
+      const unsigned short robot_index);
+
   // Getting the robot index for positionCallback function
-  unsigned short getRobotIndex(const std::string&) const;
+  unsigned short getRobotIndex(const std::string &) const;
   // Count number of robot topics to know the number of robots avoiding
   // hardcoding it here. Returns a short
   unsigned short countRobotTopics();
@@ -66,7 +86,7 @@ class Planner : public rclcpp::Node {
   void verifyInitialRobotPositions();
 
   void callCbsPlanner();
-  
+
   bool custom_goals_ =
       false;  // True: read positions from /params/custom_goals.yaml
               // False: Random targets
@@ -96,8 +116,10 @@ class Planner : public rclcpp::Node {
   std::vector<rclcpp::SubscriptionBase::SharedPtr> subscribers_;
   std::vector<rclcpp::PublisherBase::SharedPtr> robot_publishers_;
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr alarm_publisher_;
+  std::vector<std::vector<geometry_msgs::msg::Point>> target_waypoints_;
   std::vector<geometry_msgs::msg::Point> positions_;
   std::vector<float> orientations_;  // stores the yaw value
+  std::vector<int> max_cbs_times_;
   std::vector<float> distance_to_target_;
   std::vector<geometry_msgs::msg::Point> final_goal_;
   unsigned short position_received_;
