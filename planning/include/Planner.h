@@ -48,15 +48,24 @@ class Planner : public rclcpp::Node {
   // Main driving function to go through cbs waypoints. Drive robots to the
   // waypoints that are solution of the CBS planner.
   void driveRobotstoCbsWaypoints();
+
   /**
-   *  Send zero to the robots if they are not supposed to move, avoid robots wander around
-  */
-   void haltRobots();
+   *  Send zero to the robots if they are not supposed to move, avoid robots
+   * wander around
+   */
+  void haltRobots();
+  /**
+   *  Check if the position of all robots have been received. Avoid errors of
+   * computing planning before getting the actual position, calculating with
+   * (0,0,0) initial published position
+   */
+  bool allPositionsReceived();
   /**
    * Check if two robots start in the same position (in relation to the
    * discretization)
    */
   void verifyInitialRobotPositions();
+  
   bool custom_goals_ =
       false;  // True: read positions from /params/custom_goals.yaml
               // False: Random targets

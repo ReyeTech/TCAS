@@ -122,6 +122,24 @@ void Planner::haltRobots() {
   }
 }
 
+bool Planner::allPositionsReceived() {
+    if (first_time_planning_) {
+        position_received_ = 0;
+        for (size_t robot_index = 0; robot_index < robots_.size(); ++robot_index) {
+            auto current_position = positions_[robot_index];
+            if (current_position.x != 0 && current_position.y != 0) {
+                position_received_++;
+            }
+        }
+        if (position_received_ == robots_.size()) {  // All positions received
+            RCLCPP_INFO(get_logger(),"All positions received");
+            first_time_planning_ = false;
+            return true;
+        }
+    }
+    return false;
+}
+
 void Planner::verifyInitialRobotPositions() {
   for (size_t robot_i = 0; robot_i < robots_.size(); ++robot_i) {
     for (size_t robot_j = 0; robot_j < robots_.size(); ++robot_j) {
