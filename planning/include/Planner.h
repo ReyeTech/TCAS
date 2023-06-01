@@ -69,7 +69,7 @@ class Planner : public rclcpp::Node {
       false;  // True: read positions from /params/custom_goals.yaml
               // False: Random targets
   bool replan_ =
-      true;  // True: Plan and execute continuosly False: Plan and execute once
+      false;  // True: Plan and execute continuosly False: Plan and execute once
   float threshold_bot_on_target_ =
       0.1;  // Threshold to consider that robot has reached a target
   unsigned short targets_random_pool_size_ =
@@ -92,7 +92,7 @@ class Planner : public rclcpp::Node {
   unsigned short number_of_robots_;
   std::vector<std::string> robots_;
   std::vector<rclcpp::SubscriptionBase::SharedPtr> subscribers_;
-  std::vector<rclcpp::PublisherBase::SharedPtr> robot_publishers_;
+  std::vector<rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr> robot_publishers_;
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr alarm_publisher_;
   std::vector<geometry_msgs::msg::Point> positions_;
   std::vector<float> orientations_;  // stores the yaw value

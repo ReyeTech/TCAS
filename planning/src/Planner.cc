@@ -119,8 +119,29 @@ bool Planner::allPositionsReceived() {
   }
   return false;
 }
+void Planner::haltRobots() {
+  geometry_msgs::msg::Twist cmd_vel;
+  cmd_vel.linear.x = 0.0;
+  cmd_vel.linear.y = 0.0;
+  cmd_vel.angular.x = 0.0;
+  cmd_vel.angular.y = 0.0;
+  cmd_vel.angular.z = 0.0;
+
+  for (unsigned short robot_index = 0; robot_index < robots_.size();
+       ++robot_index) {
+    try {
+      robot_publishers_[robot_index]->publish(cmd_vel);
+    } catch (const std::exception& e) {
+      std::string error_msg = "Error halting robots: " + std::string(e.what());
+      RCLCPP_ERROR(this->get_logger(), error_msg);
+    }
+  }
+}
 void Planner::driveRobotstoCbsWaypoints() {}
-void Planner::callCbsPlanner() {}
+void Planner::callCbsPlanner() {
+  verifyRobotsInitialPositions();
+  haltRobots();
+}
 void Planner::verifyRobotsInitialPositions() {
   for (unsigned short robot_i = 0; robot_i < robots_.size(); ++robot_i) {
     for (unsigned short robot_j = 0; robot_j < robots_.size(); ++robot_j) {
@@ -128,7 +149,7 @@ void Planner::verifyRobotsInitialPositions() {
         float dist = getDistance(positions_[robot_i].x - positions_[robot_j].x,
                                  positions_[robot_i].y - positions_[robot_j].y);
 
-            if (dist < 0.8 * (1 / discretization_)) {
+        if (dist < 0.8 * (1 / discretization_)) {
           RCLCPP_INFO(this->get_logger(),
                       "Robots are too close, CBS will not find a solution");
         }
