@@ -100,7 +100,45 @@ unsigned short Planner::countRobotTopics() {
 
   return robot_count;
 }
+bool Planner::allPositionsReceived() {
+  if (first_time_planning_) {
+    position_received_ = 0;
+    for (unsigned short robot_index = 0; robot_index < robots_.size();
+         ++robot_index) {
+      const geometry_msgs::msg::Point& current_position =
+          positions_[robot_index];
+      if (current_position.x != 0.0 && current_position.y != 0.0) {
+        position_received_++;
+      }
+    }
+    if (position_received_ == robots_.size()) {
+      RCLCPP_INFO(this->get_logger(), "All positions received");
+      first_time_planning_ = false;
+      return true;
+    }
+  }
+  return false;
+}
 void Planner::driveRobotstoCbsWaypoints() {}
+void Planner::callCbsPlanner() {}
+void Planner::verifyRobotsInitialPositions() {
+  for (unsigned short robot_i = 0; robot_i < robots_.size(); ++robot_i) {
+    for (unsigned short robot_j = 0; robot_j < robots_.size(); ++robot_j) {
+      if (robot_i != robot_j) {
+        float dist = getDistance(positions_[robot_i].x - positions_[robot_j].x,
+                                 positions_[robot_i].y - positions_[robot_j].y);
+
+            if (dist < 0.8 * (1 / discretization_)) {
+          RCLCPP_INFO(this->get_logger(),
+                      "Robots are too close, CBS will not find a solution");
+        }
+      }
+    }
+  }
+}
+float Planner::getDistance(float dx, float dy) {
+  return std::sqrt(dx * dx + dy * dy);
+}
 
 void Planner::haltRobots() {
   geometry_msgs::msg::Twist cmd_vel;

@@ -48,7 +48,6 @@ class Planner : public rclcpp::Node {
   // Main driving function to go through cbs waypoints. Drive robots to the
   // waypoints that are solution of the CBS planner.
   void driveRobotstoCbsWaypoints();
-
   /**
    *  Send zero to the robots if they are not supposed to move, avoid robots
    * wander around
