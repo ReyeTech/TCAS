@@ -64,6 +64,8 @@ class Planner : public rclcpp::Node {
    * discretization)
    */
   void verifyInitialRobotPositions();
+
+  void callCbsPlanner();
   
   bool custom_goals_ =
       false;  // True: read positions from /params/custom_goals.yaml
@@ -92,7 +94,7 @@ class Planner : public rclcpp::Node {
   unsigned short number_of_robots_;
   std::vector<std::string> robots_;
   std::vector<rclcpp::SubscriptionBase::SharedPtr> subscribers_;
-  std::vector<rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr> robot_publishers_;
+  std::vector<rclcpp::PublisherBase::SharedPtr> robot_publishers_;
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr alarm_publisher_;
   std::vector<geometry_msgs::msg::Point> positions_;
   std::vector<float> orientations_;  // stores the yaw value
