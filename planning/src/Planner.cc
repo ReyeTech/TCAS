@@ -102,6 +102,23 @@ unsigned short Planner::countRobotTopics() {
 }
 void Planner::driveRobotstoCbsWaypoints() {}
 
+void Planner::verifyInitialRobotPositions() {
+    for (int robot_i = 0; robot_i < static_cast<int>(robots_.size()); ++robot_i) {
+        for (int robot_j = 0; robot_j < static_cast<int>(robots_.size()); ++robot_j) {
+            if (robot_i != robot_j) {
+                double dist = getDistance(positions_[robot_i].x - positions_[robot_j].x, positions_[robot_i].y - positions_[robot_j].y);
+                if (dist < 0.8 * (1 / discretization_)) {
+                   RCLCPP_INFO(get_logger(),"Robots are too close, CBS will not find a solution");
+                }
+            }
+        }
+    }
+}
+
+float Planner::getDistance(const float dx, const float dy){
+  return sqrt(dx*dx + dy*dy);
+}
+
 }  // namespace TCAS
 int main(int argc, char* argv[]) {
   rclcpp::init(argc, argv);

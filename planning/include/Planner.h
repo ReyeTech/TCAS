@@ -44,9 +44,15 @@ class Planner : public rclcpp::Node {
   // Count number of robot topics to know the number of robots avoiding
   // hardcoding it here. Returns a short
   unsigned short countRobotTopics();
-  // Main driving function to go through cbs waypoints. Drive robots to the waypoints that are solution of the CBS planner. 
+  float getDistance(const float dx, const float dy);
+  // Main driving function to go through cbs waypoints. Drive robots to the
+  // waypoints that are solution of the CBS planner.
   void driveRobotstoCbsWaypoints();
-
+  /**
+   * Check if two robots start in the same position (in relation to the
+   * discretization)
+   */
+  void verifyInitialRobotPositions();
   bool custom_goals_ =
       false;  // True: read positions from /params/custom_goals.yaml
               // False: Random targets
