@@ -32,6 +32,10 @@ find_package(Boost 1.58 REQUIRED COMPONENTS program_options)
 find_package(PkgConfig)
 pkg_check_modules(YamlCpp yaml-cpp)
 
+# Find and include Boost library for regular expressions
+find_package(Boost REQUIRED COMPONENTS regex)
+include_directories(${Boost_INCLUDE_DIRS})
+
 include_directories(
   include
   ${ament_INCLUDE_DIRS}
@@ -85,6 +89,7 @@ target_link_libraries(cbs_lib
 # Add executable for Planner_cpp
 add_executable(Planner_cpp src/Planner.cc include/Planner.h)
 ament_target_dependencies(Planner_cpp rclcpp std_msgs nav_msgs tf2 tf2_ros)
+target_link_libraries(Planner_cpp ${Boost_LIBRARIES})
 
 # Link CBS lib with executable planner
 target_link_libraries(Planner_cpp cbs_lib)

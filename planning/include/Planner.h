@@ -15,6 +15,7 @@
 #include <memory>
 #include <nav_msgs/msg/odometry.hpp>
 #include <rclcpp/rclcpp.hpp>
+#include <regex>
 #include <std_msgs/msg/string.hpp>
 #include <string>
 #include <tuple>
@@ -34,14 +35,17 @@ class Planner : public rclcpp::Node {
   void createAllSubscribers();
   // Create one publisher per robot for /cmd_vel and a common alarm topic
   void createAllPublishers();
-  // Subsriber Position callback function
+  // Subsriber Position callback function- Recieves position of each robot and
+  // call the controller
   void positionCallback(const nav_msgs::msg::Odometry::SharedPtr,
-                        const std::string&, const std::string&);
+                        const std::string&);
   // Getting the robot index for positionCallback function
-  //unsigned short getRobotIndex(const std::string&) const;
+  unsigned short getRobotIndex(const std::string&) const;
   // Count number of robot topics to know the number of robots avoiding
   // hardcoding it here. Returns a short
   unsigned short countRobotTopics();
+  // Main driving function to go through cbs waypoints. Drive robots to the waypoints that are solution of the CBS planner. 
+  void driveRobotstoCbsWaypoints();
 
   bool custom_goals_ =
       false;  // True: read positions from /params/custom_goals.yaml
@@ -73,7 +77,7 @@ class Planner : public rclcpp::Node {
   std::vector<rclcpp::PublisherBase::SharedPtr> robot_publishers_;
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr alarm_publisher_;
   std::vector<geometry_msgs::msg::Point> positions_;
-  std::vector<float> orientations_;
+  std::vector<float> orientations_;  // stores the yaw value
   std::vector<float> distance_to_target_;
   std::vector<geometry_msgs::msg::Point> final_goal_;
   unsigned short position_received_;

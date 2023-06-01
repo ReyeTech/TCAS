@@ -36,47 +36,47 @@ void Planner::createAllSubscribers() {
   for (const auto& robot_name : robots_) {
     std::string topic = "/" + robot_name + "/odom";
     auto subscriber = create_subscription<nav_msgs::msg::Odometry>(
-        topic, 10,
-        [this, topic,
-         robot_name](const nav_msgs::msg::Odometry::SharedPtr msg) {
-          positionCallback(msg, topic, robot_name);
+        topic, 10, [this, topic](const nav_msgs::msg::Odometry::SharedPtr msg) {
+          positionCallback(msg, topic);
         });
     subscribers_.push_back(subscriber);
   }
 }
-void Planner::positionCallback(
-    const nav_msgs::msg::Odometry::SharedPtr msg, const std::string& topic,
-    const std::string& robot_name) {  // Extract the position and orientation
-  //                                     // information from the Odometry
-  //                                     message
-  // geometry_msgs::msg::Point position = msg->pose.pose.position;
-  // geometry_msgs::msg::Quaternion orientation = msg->pose.pose.orientation;
+void Planner::positionCallback(const nav_msgs::msg::Odometry::SharedPtr msg,
+                               const std::string& topic) {
+  std::regex robot_regex("/robot(\\d+)/odom");
+  std::smatch match;
+  if (std::regex_search(topic, match, robot_regex)) {
+    std::string robot_index_str = match[1].str();
+    unsigned int robot_index = std::stoi(robot_index_str);
 
-  // // Update the internal state variables with the received position
-  // information unsigned short robot_index = getRobotIndex(robot_name); if
-  // (robot_index < positions_.size()) {
-  //   positions_[robot_index].x = position.x;
-  //   positions_[robot_index].y = position.y;
-  //   positions_[robot_index].z = position.z;
-  //   orientations_[robot_index] = orientation;
-  // }
+    geometry_msgs::msg::Point position = msg->pose.pose.position;
+    geometry_msgs::msg::Quaternion orientation = msg->pose.pose.orientation;
+    tf2::Quaternion quat(orientation.x, orientation.y, orientation.z,
+                         orientation.w);
+    double roll, pitch, yaw;
+    tf2::Matrix3x3(quat).getRPY(roll, pitch, yaw);
 
-  // // Publish a message using the class publisher
-  // // Example: Publishing a Twist message with zero linear and angular
-  // velocities auto twist_msg = std::make_shared<geometry_msgs::msg::Twist>();
-  // robot_publishers_[robot_index]->publish(*twist_msg);
+    positions_[robot_index].x = position.x;
+    positions_[robot_index].y = position.y;
+    positions_[robot_index].z = position.z;
+    orientations_[robot_index] = yaw;
+
+    // Compute a new control input for every update in position
+    driveRobotstoCbsWaypoints();
+  }
 }
-// unsigned short Planner::getRobotIndex(const std::string& robot_name) const {
-//   for (size_t i = 0; i < robots_.size(); ++i) {
-//     if (robots_[i] == robot_name) {
-//       return i;
-//     }
-//   }
-//   return std::numeric_limits<unsigned short>::max();  // Return an invalid
-//   index
-//                                                       // if the robot name is
-//                                                       // not found
-// }
+
+unsigned short Planner::getRobotIndex(const std::string& robot_name) const {
+  for (size_t i = 0; i < robots_.size(); ++i) {
+    if (robots_[i] == robot_name) {
+      return i;
+    }
+  }
+  return std::numeric_limits<unsigned short>::max();  // Return an invalid index
+  // if the robot name is
+  // not found
+}
 void Planner::createAllPublishers() {
   for (const auto& robot_name : robots_) {
     std::string topic = "/" + robot_name + "/cmd_vel";
@@ -100,6 +100,7 @@ unsigned short Planner::countRobotTopics() {
 
   return robot_count;
 }
+void Planner::driveRobotstoCbsWaypoints() {}
 
 }  // namespace TCAS
 int main(int argc, char* argv[]) {
