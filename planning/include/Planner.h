@@ -49,6 +49,10 @@ class Planner : public rclcpp::Node {
   // waypoints that are solution of the CBS planner.
   void driveRobotstoCbsWaypoints();
   /**
+   *  Send zero to the robots if they are not supposed to move, avoid robots wander around
+  */
+   void haltRobots();
+  /**
    * Check if two robots start in the same position (in relation to the
    * discretization)
    */

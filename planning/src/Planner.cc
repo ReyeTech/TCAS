@@ -102,21 +102,44 @@ unsigned short Planner::countRobotTopics() {
 }
 void Planner::driveRobotstoCbsWaypoints() {}
 
-void Planner::verifyInitialRobotPositions() {
-    for (int robot_i = 0; robot_i < static_cast<int>(robots_.size()); ++robot_i) {
-        for (int robot_j = 0; robot_j < static_cast<int>(robots_.size()); ++robot_j) {
-            if (robot_i != robot_j) {
-                double dist = getDistance(positions_[robot_i].x - positions_[robot_j].x, positions_[robot_i].y - positions_[robot_j].y);
-                if (dist < 0.8 * (1 / discretization_)) {
-                   RCLCPP_INFO(get_logger(),"Robots are too close, CBS will not find a solution");
-                }
-            }
-        }
+void Planner::haltRobots() {
+  geometry_msgs::msg::Twist cmd_vel;
+  for (size_t robot_index = 0; robot_index < robots_.size(); ++robot_index) {
+    try {
+      cmd_vel.linear.x = 0.0;
+      cmd_vel.linear.y = 0.0;
+      cmd_vel.angular.x = 0.0;
+      cmd_vel.angular.y = 0.0;
+      cmd_vel.angular.z = 0.0;
+      auto publisher = std::static_pointer_cast<
+          rclcpp::Publisher<geometry_msgs::msg::Twist>>(
+          robot_publishers_[robot_index]);
+      publisher->publish(cmd_vel);
+    } catch (const std::exception& e) {
+      std::string error_msg = "Error halting robots: " + std::string(e.what());
+      RCLCPP_ERROR(get_logger(), error_msg);
     }
+  }
 }
 
-float Planner::getDistance(const float dx, const float dy){
-  return sqrt(dx*dx + dy*dy);
+void Planner::verifyInitialRobotPositions() {
+  for (size_t robot_i = 0; robot_i < robots_.size(); ++robot_i) {
+    for (size_t robot_j = 0; robot_j < robots_.size(); ++robot_j) {
+      if (robot_i != robot_j) {
+        double dist =
+            getDistance(positions_[robot_i].x - positions_[robot_j].x,
+                        positions_[robot_i].y - positions_[robot_j].y);
+        if (dist < 0.8 * (1 / discretization_)) {
+          RCLCPP_INFO(get_logger(),
+                      "Robots are too close, CBS will not find a solution");
+        }
+      }
+    }
+  }
+}
+
+float Planner::getDistance(const float dx, const float dy) {
+  return sqrt(dx * dx + dy * dy);
 }
 
 }  // namespace TCAS
