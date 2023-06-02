@@ -33,7 +33,7 @@ void Planner::init() {
   first_time_planning_ = true;
   cbs_time_schedule_ = 1;
   number_of_successfully_executed_plans_ = 0;
-  obstacles_ = std::make_pair(500, 500);  // Dummy obstacle
+  obstacles_.push_back(std::make_tuple(500, 500));  // Dummy obstacle
 }
 void Planner::createAllSubscribers() {
   for (const auto& robot_name : robots_) {
@@ -111,7 +111,7 @@ bool Planner::allRobotsArrivedCBSFinalWaypoint() {
 }
 
 bool Planner::allRobotsArrivedInWaypoints() {
-  size_t number_of_robots_in_waypoints = 0;
+  int number_of_robots_in_waypoints = 0;
 
   for (size_t robot_index = 0; robot_index < robots_.size(); ++robot_index) {
     auto current_position = positions_[robot_index];
@@ -129,7 +129,7 @@ bool Planner::allRobotsArrivedInWaypoints() {
     }
   }
 
-  if (number_of_robots_in_waypoints == robots_.size()) {
+  if (number_of_robots_in_waypoints == static_cast<int>(robots_.size())) {
     RCLCPP_INFO(get_logger(), "Robots Arrived in waypoint: " +
                                   std::to_string(cbs_time_schedule_));
     return true;
@@ -139,21 +139,21 @@ bool Planner::allRobotsArrivedInWaypoints() {
 }
 
 const geometry_msgs::msg::Point& Planner::getNextTargetWaypoints(
-    const unsigned short robot_index) {
-  if (target_waypoints_[robot_index].size() > cbs_time_schedule_) {
+    const int robot_index) {
+  if (static_cast<int>(target_waypoints_[robot_index].size()) > cbs_time_schedule_) {
     return target_waypoints_[robot_index][cbs_time_schedule_];
   } else {
     return target_waypoints_[robot_index][max_cbs_times_[robot_index]];
   }
 }
 
-unsigned short Planner::getRobotIndex(const std::string& robot_name) const {
+int Planner::getRobotIndex(const std::string& robot_name) const {
   for (size_t i = 0; i < robots_.size(); ++i) {
     if (robots_[i] == robot_name) {
       return i;
     }
   }
-  return std::numeric_limits<unsigned short>::max();  // Return an invalid index
+  return std::numeric_limits<int>::max();  // Return an invalid index
   // if the robot name is
   // not found
 }
@@ -167,9 +167,9 @@ void Planner::createAllPublishers() {
   std::string alarm_topic = "/planning_alarm";
   alarm_publisher_ = create_publisher<std_msgs::msg::String>(alarm_topic, 10);
 }
-unsigned short Planner::countRobotTopics() {
+int Planner::countRobotTopics() {
   auto topic_list = this->get_topic_names_and_types();
-  unsigned short robot_count = 0;
+  int robot_count = 0;
 
   for (const auto& item : topic_list) {
     if (item.first.find("/robot") == 0 &&
@@ -180,11 +180,19 @@ unsigned short Planner::countRobotTopics() {
 
   return robot_count;
 }
+void Planner::updateGoal(int robot_id,
+                         const geometry_msgs::msg::Point& new_goal) {
+  final_goal_[robot_id] = new_goal;
+  RCLCPP_INFO(get_logger(), "Updated Goal for robot-%d: [%f, %f]", robot_id,
+              new_goal.x, new_goal.y);
+}
 
 void Planner::driveRobotstoCbsWaypoints() {}
 void Planner::callCbsPlanner() {
   verifyInitialRobotPositions();
   haltRobots();
+  RCLCPP_INFO(get_logger(), "Conflict Based Search Planning");
+  RCLCPP_INFO(get_logger(), "Searching for solution...");
 }
 
 void Planner::haltRobots() {
@@ -216,13 +224,63 @@ bool Planner::allPositionsReceived() {
         position_received_++;
       }
     }
-    if (position_received_ == robots_.size()) {  // All positions received
+    if (position_received_ == static_cast<int>(robots_.size())) {  // All positions received
       RCLCPP_INFO(get_logger(), "All positions received");
       first_time_planning_ = false;
       return true;
     }
   }
   return false;
+}
+void Planner::resolveGoalConflicts() {
+  bool conflict = true;
+  while (conflict) {
+    conflict = false;
+    for (size_t robot_i = 0; robot_i < final_goal_.size(); ++robot_i) {
+      for (size_t robot_j = 0; robot_j < final_goal_.size(); ++robot_j) {
+        if (robot_i > robot_j && final_goal_[robot_i] == final_goal_[robot_j]) {
+          RCLCPP_INFO(get_logger(), "Same goal for robot-" + std::to_string(robot_i) + " and robot-" + std::to_string(robot_j));
+         geometry_msgs::msg::Point new_goal = generateNewGoal(final_goal_[robot_i]);
+          updateGoal(robot_i, new_goal);
+          conflict = true;
+        }
+      }
+    }
+  }
+}
+
+geometry_msgs::msg::Point Planner::generateNewGoal(
+    const geometry_msgs::msg::Point& old_goal) {
+  geometry_msgs::msg::Point new_goal;
+  new_goal.x = old_goal.x + std::rand() % 3 - 1;
+  new_goal.y = old_goal.y + std::rand() % 3 - 1;
+  new_goal.z = 0.0;
+  return new_goal;
+}
+void Planner::resolveObstacleConflicts() {
+  bool conflict = true;
+  while (conflict) {
+    conflict = false;
+    for (size_t robot_i = 0; robot_i < final_goal_.size(); ++robot_i) {
+      for (const auto& obstacle_i : obstacles_) {
+        if (static_cast<int>(final_goal_[robot_i].x + shift_map_) ==
+                std::get<0>(obstacle_i) &&
+            static_cast<int>(final_goal_[robot_i].y + shift_map_) ==
+                std::get<1>(obstacle_i)) {
+          RCLCPP_INFO(get_logger(),
+                      "Robot-" + std::to_string(robot_i) + " goal (" +
+                          std::to_string(final_goal_[robot_i].x) + ", " +
+                          std::to_string(final_goal_[robot_i].y) +
+                          ") is inside obstacle-(" +
+                          std::to_string(std::get<0>(obstacle_i)) + ", " +
+                          std::to_string(std::get<1>(obstacle_i)) + ")");
+          geometry_msgs::msg::Point new_goal = generateNewGoal(final_goal_[robot_i]);
+          updateGoal(robot_i, new_goal);
+          conflict = true;
+        }
+      }
+    }
+  }
 }
 
 void Planner::verifyInitialRobotPositions() {

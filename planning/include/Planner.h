@@ -57,13 +57,13 @@ class Planner : public rclcpp::Node {
    *  Get the next target waypoint in the CBS schedule, if it exists
    */
   const geometry_msgs::msg::Point &getNextTargetWaypoints(
-      const unsigned short robot_index);
+      const int robot_index);
 
   // Getting the robot index for positionCallback function
-  unsigned short getRobotIndex(const std::string &) const;
+  int getRobotIndex(const std::string &) const;
   // Count number of robot topics to know the number of robots avoiding
   // hardcoding it here. Returns a short
-  unsigned short countRobotTopics();
+  int countRobotTopics();
   float getDistance(const float dx, const float dy);
   // Main driving function to go through cbs waypoints. Drive robots to the
   // waypoints that are solution of the CBS planner.
@@ -86,7 +86,24 @@ class Planner : public rclcpp::Node {
   void verifyInitialRobotPositions();
 
   void callCbsPlanner();
-
+  /**
+   * Generates a new goal close to the old one in case of any conflicts like two
+   * bot goals coinciding or the goal being inside an obstacle
+   */
+  geometry_msgs::msg::Point generateNewGoal(const geometry_msgs::msg::Point &);
+  /**
+   * Assign new x, y coordinates to the goal position
+   */
+  void updateGoal(int, const geometry_msgs::msg::Point &);
+  /**
+   * Checks if a goal given, lies within an obstacle and then finds a point
+   * close by as the new goal
+   */
+  void resolveObstacleConflicts();
+  /**
+   * Checks if two bots have the same destination, assigns a point close to the destination to one of them
+  */
+  void resolveGoalConflicts() ;
   bool custom_goals_ =
       false;  // True: read positions from /params/custom_goals.yaml
               // False: Random targets
@@ -94,24 +111,23 @@ class Planner : public rclcpp::Node {
       false;  // True: Plan and execute continuosly False: Plan and execute once
   float threshold_bot_on_target_ =
       0.1;  // Threshold to consider that robot has reached a target
-  unsigned short targets_random_pool_size_ =
+  int targets_random_pool_size_ =
       3;             // Size of target area in meters (Gazebo squares)
   float Kp_ = 0.15;  // Controller "proportional" gain
-  unsigned short max_linear_velocity_ = 1;
+  int max_linear_velocity_ = 1;
   float max_angular_velocity_ = 0.2;
-  unsigned short discretization_ =
-      2;  // Discretization of map(1: one point per gazebo square,
-          // 2 : 4 points per gazebo square)
-  unsigned short shift_map_ =
+  int discretization_ = 2;  // Discretization of map(1: one point per gazebo
+                            // square, 2 : 4 points per gazebo square)
+  int shift_map_ =
       10 *
       discretization_;  // CBS only accepts positive integer values, all the
                         // values used by the CBS are shifted beforehand.10
                         // guarantees that if robots are inside gazebo
                         // dafault plane,all points sent to CBS are positive
-  unsigned short cbs_map_dimension_ =
+  int cbs_map_dimension_ =
       20 * discretization_;  // This calculate the whole gazebo default area
 
-  unsigned short number_of_robots_;
+  int number_of_robots_;
   std::vector<std::string> robots_;
   std::vector<rclcpp::SubscriptionBase::SharedPtr> subscribers_;
   std::vector<rclcpp::PublisherBase::SharedPtr> robot_publishers_;
@@ -122,11 +138,11 @@ class Planner : public rclcpp::Node {
   std::vector<int> max_cbs_times_;
   std::vector<float> distance_to_target_;
   std::vector<geometry_msgs::msg::Point> final_goal_;
-  unsigned short position_received_;
+  int position_received_;
   bool first_time_planning_;
-  unsigned short cbs_time_schedule_;
-  unsigned short number_of_successfully_executed_plans_;
-  std::tuple<unsigned short, unsigned short> obstacles_;
+  int cbs_time_schedule_;
+  int number_of_successfully_executed_plans_;
+ std::vector<std::tuple<int, int>> obstacles_;  //(x,y) coordinates of the obstacles
 };
 }  // namespace TCAS
 #endif
