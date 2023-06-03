@@ -101,9 +101,14 @@ class Planner : public rclcpp::Node {
    */
   void resolveObstacleConflicts();
   /**
-   * Checks if two bots have the same destination, assigns a point close to the destination to one of them
-  */
-  void resolveGoalConflicts() ;
+   * Checks if two bots have the same destination, assigns a point close to the
+   * destination to one of them
+   */
+  void resolveGoalConflicts();
+/**
+ * Set velocity for the robots, based on the distance between target waypoint and the current position
+*/
+  void commandRobot(int, const geometry_msgs::msg::Point &, double);
   bool custom_goals_ =
       false;  // True: read positions from /params/custom_goals.yaml
               // False: Random targets
@@ -142,7 +147,8 @@ class Planner : public rclcpp::Node {
   bool first_time_planning_;
   int cbs_time_schedule_;
   int number_of_successfully_executed_plans_;
- std::vector<std::tuple<int, int>> obstacles_;  //(x,y) coordinates of the obstacles
+  std::vector<std::tuple<int, int>>
+      obstacles_;  //(x,y) coordinates of the obstacles
 };
 }  // namespace TCAS
 #endif

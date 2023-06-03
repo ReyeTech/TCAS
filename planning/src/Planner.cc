@@ -140,7 +140,8 @@ bool Planner::allRobotsArrivedInWaypoints() {
 
 const geometry_msgs::msg::Point& Planner::getNextTargetWaypoints(
     const int robot_index) {
-  if (static_cast<int>(target_waypoints_[robot_index].size()) > cbs_time_schedule_) {
+  if (static_cast<int>(target_waypoints_[robot_index].size()) >
+      cbs_time_schedule_) {
     return target_waypoints_[robot_index][cbs_time_schedule_];
   } else {
     return target_waypoints_[robot_index][max_cbs_times_[robot_index]];
@@ -214,6 +215,44 @@ void Planner::haltRobots() {
     }
   }
 }
+void Planner::commandRobot(int robot_index,
+                           const geometry_msgs::msg::Point& target_waypoint,
+                           double current_orientation) {
+  double d = 0.1;  // Virtual point outside robot center (avoid mathematical
+                   // errors in the feedback linearization controller)
+  geometry_msgs::msg::Point current_position = positions_[robot_index];
+  geometry_msgs::msg::Twist cmd_vel;
+  try {
+    // Feedback linearization controller, get linear and angular desired
+    // velocities from desired X and Y Points are shifted (SHIFT_MAP) by a fixed
+    // amount so that they are positive and are shrinked/inflated
+    // (DISCRETIZATION) to allow the use of CBS that only accepts positive
+    // integers
+    double target_x_scaled = (target_waypoint.x - shift_map_) / discretization_;
+    double target_y_scaled = (target_waypoint.y - shift_map_) / discretization_;
+    double error_x = target_x_scaled - current_position.x;
+    double error_y = target_y_scaled - current_position.y;
+    cmd_vel.linear.x =
+        (error_x)*cos(current_orientation) + (error_y)*sin(current_orientation);
+    cmd_vel.angular.z = -(error_x)*sin(current_orientation) / d +
+                        (error_y)*cos(current_orientation) / d;
+    cmd_vel.linear.x = Kp_ * cmd_vel.linear.x;
+    cmd_vel.angular.z = Kp_ * cmd_vel.angular.z;
+    // Limit the velocities
+    cmd_vel.linear.x =
+        std::min(cmd_vel.linear.x, static_cast<double>(max_linear_velocity_));
+    cmd_vel.angular.z =
+        std::min(cmd_vel.angular.z, static_cast<double>(max_angular_velocity_));
+    auto publisher =
+        std::static_pointer_cast<rclcpp::Publisher<geometry_msgs::msg::Twist>>(
+            robot_publishers_[robot_index]);
+    publisher->publish(cmd_vel);
+  } catch (const std::exception& e) {
+    std::string error_msg =
+        "Error occurred during computation: " + std::string(e.what());
+    RCLCPP_ERROR(get_logger(), error_msg);
+  }
+}
 
 bool Planner::allPositionsReceived() {
   if (first_time_planning_) {
@@ -224,7 +263,8 @@ bool Planner::allPositionsReceived() {
         position_received_++;
       }
     }
-    if (position_received_ == static_cast<int>(robots_.size())) {  // All positions received
+    if (position_received_ ==
+        static_cast<int>(robots_.size())) {  // All positions received
       RCLCPP_INFO(get_logger(), "All positions received");
       first_time_planning_ = false;
       return true;
@@ -239,8 +279,11 @@ void Planner::resolveGoalConflicts() {
     for (size_t robot_i = 0; robot_i < final_goal_.size(); ++robot_i) {
       for (size_t robot_j = 0; robot_j < final_goal_.size(); ++robot_j) {
         if (robot_i > robot_j && final_goal_[robot_i] == final_goal_[robot_j]) {
-          RCLCPP_INFO(get_logger(), "Same goal for robot-" + std::to_string(robot_i) + " and robot-" + std::to_string(robot_j));
-         geometry_msgs::msg::Point new_goal = generateNewGoal(final_goal_[robot_i]);
+          RCLCPP_INFO(get_logger(),
+                      "Same goal for robot-" + std::to_string(robot_i) +
+                          " and robot-" + std::to_string(robot_j));
+          geometry_msgs::msg::Point new_goal =
+              generateNewGoal(final_goal_[robot_i]);
           updateGoal(robot_i, new_goal);
           conflict = true;
         }
@@ -274,7 +317,8 @@ void Planner::resolveObstacleConflicts() {
                           ") is inside obstacle-(" +
                           std::to_string(std::get<0>(obstacle_i)) + ", " +
                           std::to_string(std::get<1>(obstacle_i)) + ")");
-          geometry_msgs::msg::Point new_goal = generateNewGoal(final_goal_[robot_i]);
+          geometry_msgs::msg::Point new_goal =
+              generateNewGoal(final_goal_[robot_i]);
           updateGoal(robot_i, new_goal);
           conflict = true;
         }
