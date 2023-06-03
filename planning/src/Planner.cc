@@ -72,7 +72,8 @@ void Planner::positionCallback(const nav_msgs::msg::Odometry::SharedPtr msg,
 
 bool Planner::allRobotsArrivedCBSFinalWaypoint() {
   int number_of_robots_in_target = 0;
-  //This will store the coordinates of the waypoints for the goal for each robot
+  // This will store the coordinates of the waypoints for the goal for each
+  // robot
   std::vector<geometry_msgs::msg::Point> cbs_last_waypoints;
 
   for (size_t robot_index = 0; robot_index < target_waypoints_.size();
@@ -83,8 +84,8 @@ bool Planner::allRobotsArrivedCBSFinalWaypoint() {
   for (size_t robot_index = 0; robot_index < robots_.size(); ++robot_index) {
     auto current_position = positions_[robot_index];
 
-   //The odom topic gives coordinates in real frame, but cbs goal is in cbs coordinates
-   //these have to be converted before finding out the distance
+    // The odom topic gives coordinates in real frame, but cbs goal is in cbs
+    // coordinates these have to be converted before finding out the distance
     distance_to_target_[robot_index] = getDistance(
         (cbs_last_waypoints[robot_index].x - shift_map_) / discretization_ -
             current_position.x,
@@ -193,7 +194,12 @@ void Planner::callCbsPlanner() {
   verifyInitialRobotPositions();
   haltRobots();
   RCLCPP_INFO(get_logger(), "Conflict Based Search Planning");
+  std::string &filename;
+  writeDataToYaml(filename);
+  std::this_thread::sleep_for(std::chrono::seconds(1));
   RCLCPP_INFO(get_logger(), "Searching for solution...");
+  TCAS::CBS::executeCbs(filename);
+  std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 
 void Planner::haltRobots() {
@@ -345,6 +351,70 @@ void Planner::verifyInitialRobotPositions() {
 
 float Planner::getDistance(const float dx, const float dy) {
   return sqrt(dx * dx + dy * dy);
+}
+std::string Planner::getFullFilename(const std::string& paramFilename) {
+  std::string packagePath =
+      ament_index_cpp::get_package_share_directory("planning");
+  std::string substring = "install/planning/share/";
+  std::string filename = packagePath + "/" + paramFilename;
+  size_t pos = filename.find(substring);
+  if (pos != std::string::npos) {
+    filename.replace(pos, substring.length(), "");
+  }
+  return filename;
+}
+
+void Planner::writeDataToYaml(std::string &filename) {
+  std::string inputFilename = "scripts/params/cbs_input.yaml";
+  std::string filename = getFullFilename(inputFilename);
+
+  YAML::Node yamlData;
+  YAML::Node robotsData;
+  YAML::Node mapData;
+  YAML::Node obstaclesData;
+
+  for (size_t robotIndex = 0; robotIndex < robots_.size(); ++robotIndex) {
+    int startX = static_cast<int>(
+        std::round(positions_[robotIndex].x * discretization_));
+    int startY = static_cast<int>(
+        std::round(positions_[robotIndex].y * discretization_));
+    int goalX = static_cast<int>(std::round(final_goal_[robotIndex].x));
+    int goalY = static_cast<int>(std::round(final_goal_[robotIndex].y));
+
+    YAML::Node agentData;
+    agentData["start"] = YAML::Node(YAML::NodeType::Sequence);
+    agentData["start"].push_back(startX + shift_map_);
+    agentData["start"].push_back(startY + shift_map_);
+    agentData["goal"] = YAML::Node(YAML::NodeType::Sequence);
+    agentData["goal"].push_back(goalX + shift_map_);
+    agentData["goal"].push_back(goalY + shift_map_);
+    agentData["name"] = robots_[robotIndex];
+
+    robotsData.push_back(agentData);
+  }
+
+  for (const auto& obstacle : obstacles_) {
+    YAML::Node obstacleData;
+    obstacleData.push_back(std::get<0>(obstacle));
+    obstacleData.push_back(std::get<1>(obstacle));
+    obstaclesData.push_back(obstacleData);
+  }
+
+  mapData["dimensions"] = YAML::Node(YAML::NodeType::Sequence);
+  mapData["dimensions"].push_back(cbs_map_dimension_);
+  mapData["dimensions"].push_back(cbs_map_dimension_);
+  mapData["obstacles"] = obstaclesData;
+
+  yamlData["robots"] = robotsData;
+  yamlData["map"] = mapData;
+
+  std::ofstream file(filename);
+  if (file.is_open()) {
+    file << yamlData;
+    file.close();
+  } else {
+    std::cerr << "Failed to open file: " << filename << std::endl;
+  }
 }
 
 }  // namespace TCAS

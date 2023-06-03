@@ -170,6 +170,7 @@ class CBS {
 
     return false;
   }
+  bool executeCbs(const std::string &inputFile);
 
  private:
   struct HighLevelNode {

@@ -8,10 +8,13 @@
 #include <tf2_ros/transform_listener.h>
 #include <yaml-cpp/yaml.h>
 
+#include <ament_index_cpp/get_package_share_directory.hpp>
 #include <chrono>
 #include <cmath>
+#include <fstream>
 #include <geometry_msgs/msg/point.hpp>
 #include <geometry_msgs/msg/twist.hpp>
+#include <iostream>
 #include <memory>
 #include <nav_msgs/msg/odometry.hpp>
 #include <rclcpp/rclcpp.hpp>
@@ -20,7 +23,7 @@
 #include <string>
 #include <tuple>
 #include <vector>
-
+#include <thread>
 #include "CBS.h"
 
 namespace TCAS {
@@ -43,8 +46,9 @@ class Planner : public rclcpp::Node {
    */
   void createAllPublishers();
   /**
-   * Subsriber Position callback function- Recieves position and orientation of each robot and
-   * call the controller. Now this odom data is processed at some frequency, the robot may or may not be at a waypoint
+   * Subsriber Position callback function- Recieves position and orientation of
+   * each robot and call the controller. Now this odom data is processed at some
+   * frequency, the robot may or may not be at a waypoint
    */
   void positionCallback(const nav_msgs::msg::Odometry::SharedPtr,
                         const std::string &);
@@ -81,9 +85,9 @@ class Planner : public rclcpp::Node {
   int countRobotTopics();
   /**
    * Gets the eucledian distance
-  */
+   */
   float getDistance(const float dx, const float dy);
-  
+
   void driveRobotstoCbsWaypoints();
   /**
    *  Send zero to the robots if they are not supposed to move, avoid robots
@@ -127,6 +131,14 @@ class Planner : public rclcpp::Node {
    * and the current position
    */
   void commandRobot(int, const geometry_msgs::msg::Point &, double);
+  /**
+   * Method to get the full file path
+   */
+  std::string getFullFilename(const std::string &paramFilename);
+  /**
+   * Creating the cbs_input.yaml file with data necessary for cbs algo
+  */
+ void writeDataToYaml(std::string &filename);
   bool custom_goals_ =
       false;  // True: read positions from /params/custom_goals.yaml
               // False: Random targets
@@ -162,7 +174,8 @@ class Planner : public rclcpp::Node {
   std::vector<std::string> robots_;
   /**
    * Each robot can subsribe to the topics it likes. The size of the vector is
-   * equal to the number of robots. The subsriber itself is stored in the vector entries
+   * equal to the number of robots. The subsriber itself is stored in the vector
+   * entries
    */
   std::vector<rclcpp::SubscriptionBase::SharedPtr> subscribers_;
   /**
@@ -188,7 +201,9 @@ class Planner : public rclcpp::Node {
    */
   std::vector<float> orientations_;
   /**
-   * Set of waypoints is different for different robots and time to reach goal is also different for each of them. The goal reaching time is the max cbs time
+   * Set of waypoints is different for different robots and time to reach goal
+   * is also different for each of them. The goal reaching time is the max cbs
+   * time
    */
   std::vector<int> max_cbs_times_;
   /**
@@ -208,7 +223,8 @@ class Planner : public rclcpp::Node {
    */
   bool first_time_planning_;
   /**
-   * Stores what stage or time corresponding to a waypoint number the bot has reached
+   * Stores what stage or time corresponding to a waypoint number the bot has
+   * reached
    */
   int cbs_time_schedule_;
   /**
