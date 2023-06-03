@@ -5,7 +5,6 @@
 #include <boost/functional/hash.hpp>
 #include <boost/program_options.hpp>
 #include <fstream>
-#include <iostream>
 
 #include "Timer.h"
 
@@ -273,19 +272,7 @@ class Environment {
       }
     }
   }
-  bool executeCbs(std::string &inputFile,std::string &outputFile) {
-
-    namespace po = boost::program_options;
-    // Declare the supported options.
-    po::options_description desc("Allowed options");
-    bool disappearAtGoal;
-    desc.add_options()("help", "produce help message")(
-        "input,i", po::value<std::string>(&inputFile)->required(),
-        "input file (YAML)")("output,o",
-                             po::value<std::string>(&outputFile)->required(),
-                             "output file (YAML)")(
-        "disappear-at-goal", po::bool_switch(&disappearAtGoal),
-        "make agents to disappear at goal rather than staying there");
+  bool executeCbs(const std::string& inputFile) {
     YAML::Node config = YAML::LoadFile(inputFile);
 
     std::unordered_set<Location> obstacles;
@@ -320,7 +307,7 @@ class Environment {
       startStatesSet.insert(s);
     }
 
-    Environment mapf(dimx, dimy, obstacles, goals, disappearAtGoal);
+    Environment mapf(dimx, dimy, obstacles, goals, m_disappearAtGoal);
     CBS<State, Action, int, Conflict, Constraints, Environment> cbs(mapf);
     std::vector<PlanResult<State, Action, int> > solution;
 
@@ -336,6 +323,7 @@ class Environment {
         cost += s.cost;
         makespan = std::max<int>(makespan, s.cost);
       }
+      const std::string outputFile;
       std::ofstream out(outputFile);
       out << "statistics:" << std::endl;
       out << "  cost: " << cost << std::endl;
