@@ -29,14 +29,23 @@ class Planner : public rclcpp::Node {
   Planner();
 
  private:
-  // Initialize the Planner object
+  /**
+   * Initializes the planner object
+   */
   void init();
-  // Create one subscriber per robot for /odom
+  /**
+   * Create one subscriber per robot for /odom, need to subscribe to more topics
+   * from here
+   */
   void createAllSubscribers();
-  // Create one publisher per robot for /cmd_vel and a common alarm topic
+  /**
+   * Create one publisher per robot for /cmd_vel and a common alarm topic
+   */
   void createAllPublishers();
-  // Subsriber Position callback function- Recieves position of each robot and
-  // call the controller
+  /**
+   * Subsriber Position callback function- Recieves position and orientation of each robot and
+   * call the controller. Now this odom data is processed at some frequency, the robot may or may not be at a waypoint
+   */
   void positionCallback(const nav_msgs::msg::Odometry::SharedPtr,
                         const std::string &);
 
@@ -59,14 +68,22 @@ class Planner : public rclcpp::Node {
   const geometry_msgs::msg::Point &getNextTargetWaypoints(
       const int robot_index);
 
-  // Getting the robot index for positionCallback function
+  /**
+   * Getting the robot index for positionCallback function
+   */
+
   int getRobotIndex(const std::string &) const;
-  // Count number of robot topics to know the number of robots avoiding
-  // hardcoding it here. Returns a short
+  /**
+   * Count number of robot topics. These topics are intialised by the multi
+   * robot launch file which launches a gazebo world
+   */
+
   int countRobotTopics();
+  /**
+   * Gets the eucledian distance
+  */
   float getDistance(const float dx, const float dy);
-  // Main driving function to go through cbs waypoints. Drive robots to the
-  // waypoints that are solution of the CBS planner.
+  
   void driveRobotstoCbsWaypoints();
   /**
    *  Send zero to the robots if they are not supposed to move, avoid robots
@@ -105,9 +122,10 @@ class Planner : public rclcpp::Node {
    * destination to one of them
    */
   void resolveGoalConflicts();
-/**
- * Set velocity for the robots, based on the distance between target waypoint and the current position
-*/
+  /**
+   * Set velocity for the robots, based on the distance between target waypoint
+   * and the current position
+   */
   void commandRobot(int, const geometry_msgs::msg::Point &, double);
   bool custom_goals_ =
       false;  // True: read positions from /params/custom_goals.yaml
@@ -132,23 +150,75 @@ class Planner : public rclcpp::Node {
   int cbs_map_dimension_ =
       20 * discretization_;  // This calculate the whole gazebo default area
 
+  /*
+   * Number of robots in the gazebo world. Initialized in the multi_robot launch
+   * file.
+   */
   int number_of_robots_;
+  /*
+   * A vector containing the robot names: robot0, robot1 , etc . Equal in size
+   * to the number of robots
+   */
   std::vector<std::string> robots_;
+  /**
+   * Each robot can subsribe to the topics it likes. The size of the vector is
+   * equal to the number of robots. The subsriber itself is stored in the vector entries
+   */
   std::vector<rclcpp::SubscriptionBase::SharedPtr> subscribers_;
+  /**
+   * Each robot can publish to the topics it likes. The size of the vector is
+   * equal to the number of robots
+   */
   std::vector<rclcpp::PublisherBase::SharedPtr> robot_publishers_;
+  /**
+   * Creating a common publisher for the system, publishing to the planning
+   * alarm. The topic is created in the create publisher code
+   */
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr alarm_publisher_;
+  /**
+   * Stores the set of waypoints for each robot. Vector of Vectors
+   */
   std::vector<std::vector<geometry_msgs::msg::Point>> target_waypoints_;
+  /**
+   * Stores the current position of each robot, using ROS2 point type (x,y)
+   */
   std::vector<geometry_msgs::msg::Point> positions_;
-  std::vector<float> orientations_;  // stores the yaw value
+  /**
+   * Stores the yaw value for each of the robots
+   */
+  std::vector<float> orientations_;
+  /**
+   * Set of waypoints is different for different robots and time to reach goal is also different for each of them. The goal reaching time is the max cbs time
+   */
   std::vector<int> max_cbs_times_;
+  /**
+   * Stores the distance remaining distance to the next waypoint for each robot
+   */
   std::vector<float> distance_to_target_;
+  /**
+   * Stores the (x,y) coordinates of the goal for each robot
+   */
   std::vector<geometry_msgs::msg::Point> final_goal_;
+  /**
+   * In case continuous planning is there, what is the current plan number
+   */
   int position_received_;
+  /**
+   * True if plan number is 1
+   */
   bool first_time_planning_;
+  /**
+   * Stores what stage or time corresponding to a waypoint number the bot has reached
+   */
   int cbs_time_schedule_;
+  /**
+   * Successfully completed plans
+   */
   int number_of_successfully_executed_plans_;
-  std::vector<std::tuple<int, int>>
-      obstacles_;  //(x,y) coordinates of the obstacles
+  /**
+   * stores the (x,y) coordinates of all the obstacles, in the form of an int
+   */
+  std::vector<std::tuple<int, int>> obstacles_;
 };
 }  // namespace TCAS
 #endif

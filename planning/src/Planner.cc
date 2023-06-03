@@ -72,6 +72,7 @@ void Planner::positionCallback(const nav_msgs::msg::Odometry::SharedPtr msg,
 
 bool Planner::allRobotsArrivedCBSFinalWaypoint() {
   int number_of_robots_in_target = 0;
+  //This will store the coordinates of the waypoints for the goal for each robot
   std::vector<geometry_msgs::msg::Point> cbs_last_waypoints;
 
   for (size_t robot_index = 0; robot_index < target_waypoints_.size();
@@ -82,9 +83,8 @@ bool Planner::allRobotsArrivedCBSFinalWaypoint() {
   for (size_t robot_index = 0; robot_index < robots_.size(); ++robot_index) {
     auto current_position = positions_[robot_index];
 
-    // Points are shifted (shift_map_) by a fixed amount so that they are
-    // positive and are shrinked/inflated (discretization_) to allow the use of
-    // CBS that only accepts positive integers
+   //The odom topic gives coordinates in real frame, but cbs goal is in cbs coordinates
+   //these have to be converted before finding out the distance
     distance_to_target_[robot_index] = getDistance(
         (cbs_last_waypoints[robot_index].x - shift_map_) / discretization_ -
             current_position.x,
