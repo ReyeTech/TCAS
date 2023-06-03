@@ -44,6 +44,15 @@ void Planner::createAllSubscribers() {
         });
     subscribers_.push_back(subscriber);
   }
+  for (const auto& robot_name : robots_) {
+    std::string topic = "/" + robot_name + "/goal";
+    auto subscriber = create_subscription<geometry_msgs::msg::Point>(
+        topic, 10,
+        [this, topic](const geometry_msgs::msg::Point::SharedPtr msg) {
+          goalCallback(msg, topic);
+        });
+    subscribers_.push_back(subscriber);
+  }
 }
 void Planner::positionCallback(const nav_msgs::msg::Odometry::SharedPtr msg,
                                const std::string& topic) {
@@ -67,6 +76,17 @@ void Planner::positionCallback(const nav_msgs::msg::Odometry::SharedPtr msg,
 
     // Compute a new control input for every update in position
     driveRobotstoCbsWaypoints();
+  }
+}
+void Planner::goalCallback(const geometry_msgs::msg::Point::SharedPtr msg,
+                           const std::string& topic) {
+  std::regex robot_regex("/robot(\\d+)/goal");
+  std::smatch match;
+  if (std::regex_search(topic, match, robot_regex)) {
+    std::string robot_index_str = match[1].str();
+    unsigned int robot_index = std::stoi(robot_index_str);
+    geometry_msgs::msg::Point new_goal = *msg;
+    updateGoal(robot_index, new_goal);
   }
 }
 
