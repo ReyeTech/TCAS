@@ -194,12 +194,14 @@ void Planner::callCbsPlanner() {
   verifyInitialRobotPositions();
   haltRobots();
   RCLCPP_INFO(get_logger(), "Conflict Based Search Planning");
-  std::string &filename;
-  writeDataToYaml(filename);
+  std::string inputFile;
+  std::string outputFile;
+  writeDataToYaml(inputFile);
   std::this_thread::sleep_for(std::chrono::seconds(1));
   RCLCPP_INFO(get_logger(), "Searching for solution...");
-  TCAS::CBS::executeCbs(filename);
+  // CBS::Environment::executeCbs(inputFile, outputFile);
   std::this_thread::sleep_for(std::chrono::seconds(1));
+  getDataFromYaml(outputFile);
 }
 
 void Planner::haltRobots() {
@@ -364,9 +366,9 @@ std::string Planner::getFullFilename(const std::string& paramFilename) {
   return filename;
 }
 
-void Planner::writeDataToYaml(std::string &filename) {
+void Planner::writeDataToYaml(std::string& filename) {
   std::string inputFilename = "scripts/params/cbs_input.yaml";
-  std::string filename = getFullFilename(inputFilename);
+  filename = getFullFilename(inputFilename);
 
   YAML::Node yamlData;
   YAML::Node robotsData;
@@ -416,6 +418,77 @@ void Planner::writeDataToYaml(std::string &filename) {
     std::cerr << "Failed to open file: " << filename << std::endl;
   }
 }
+void Planner::getDataFromYaml(std::string& filename) {
+  std::string outputFilename = "scripts/params/cbs_output.yaml";
+  filename = getFullFilename(outputFilename);
+
+  YAML::Node data = YAML::LoadFile(filename);
+  if (!data) {
+    std_msgs::msg::String alarmMsg;
+    alarmMsg.data = "Solution not found!";
+    alarm_publisher_->publish(alarmMsg);
+    RCLCPP_INFO(get_logger(), "Solution not found!");
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    first_time_planning_ = true;
+    generateNewTargets();
+    return;
+  } else {
+    int status = data["status"].as<int>();
+    if (status == 0) {
+      std_msgs::msg::String alarmMsg;
+      alarmMsg.data = "Solution not found!";
+      alarm_publisher_->publish(alarmMsg);
+      RCLCPP_INFO(get_logger(), "Solution not found!");
+      std::this_thread::sleep_for(std::chrono::seconds(2));
+      first_time_planning_ = true;
+      generateNewTargets();
+      return;
+    } else {
+      std_msgs::msg::String alarmMsg;
+      alarmMsg.data = "Solution found!";
+      alarm_publisher_->publish(alarmMsg);
+      RCLCPP_INFO(get_logger(), "Solution found!");
+    }
+  }
+
+  YAML::Node schedule = data["schedule"];
+  target_waypoints_.resize(robots_.size());
+  max_cbs_times_.resize(robots_.size());
+
+  for (const auto& robot : schedule) {
+    std::string robotName = robot.first.as<std::string>();
+    int robotIndex = std::stoi(robotName.substr(5));
+
+    for (const auto& wp : robot.second) {
+      double xValue, yValue;
+      int tValue;
+
+      for (const auto& item : wp) {
+        std::string key = item.first.as<std::string>();
+        if (key == "x") {
+          xValue = item.second.as<double>();
+        } else if (key == "y") {
+          yValue = item.second.as<double>();
+        } else if (key == "t") {
+          tValue = item.second.as<int>();
+          max_cbs_times_[robotIndex] = tValue;
+        }
+      }
+
+      geometry_msgs::msg::Point waypoint;
+      waypoint.x = xValue;
+      waypoint.y = yValue;
+      waypoint.z = 0.01;
+      target_waypoints_[robotIndex].push_back(waypoint);
+    }
+  }
+
+  int maxWaypoints =
+      *std::max_element(max_cbs_times_.begin(), max_cbs_times_.end());
+  RCLCPP_INFO(get_logger(), "Max number of waypoints to execute: %d",
+              maxWaypoints);
+}
+void Planner::generateNewTargets() {}
 
 }  // namespace TCAS
 int main(int argc, char* argv[]) {

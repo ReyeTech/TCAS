@@ -273,7 +273,19 @@ class Environment {
       }
     }
   }
-  bool executeCbs(const std::string &inputFile) {
+  bool executeCbs(std::string &inputFile,std::string &outputFile) {
+
+    namespace po = boost::program_options;
+    // Declare the supported options.
+    po::options_description desc("Allowed options");
+    bool disappearAtGoal;
+    desc.add_options()("help", "produce help message")(
+        "input,i", po::value<std::string>(&inputFile)->required(),
+        "input file (YAML)")("output,o",
+                             po::value<std::string>(&outputFile)->required(),
+                             "output file (YAML)")(
+        "disappear-at-goal", po::bool_switch(&disappearAtGoal),
+        "make agents to disappear at goal rather than staying there");
     YAML::Node config = YAML::LoadFile(inputFile);
 
     std::unordered_set<Location> obstacles;
@@ -324,7 +336,6 @@ class Environment {
         cost += s.cost;
         makespan = std::max<int>(makespan, s.cost);
       }
-
       std::ofstream out(outputFile);
       out << "statistics:" << std::endl;
       out << "  cost: " << cost << std::endl;

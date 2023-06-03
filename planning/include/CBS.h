@@ -1,7 +1,7 @@
 #pragma once
 
 #include <map>
-
+#include <iostream>
 #include "Astar.h"
 
 namespace TCAS {
@@ -170,7 +170,7 @@ class CBS {
 
     return false;
   }
-  bool executeCbs(const std::string &inputFile);
+  bool executeCbs(std::string &inputFile,std::string &outputFile);
 
  private:
   struct HighLevelNode {

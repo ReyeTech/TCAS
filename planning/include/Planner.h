@@ -139,6 +139,8 @@ class Planner : public rclcpp::Node {
    * Creating the cbs_input.yaml file with data necessary for cbs algo
   */
  void writeDataToYaml(std::string &filename);
+ void getDataFromYaml(std::string &filename);
+ void generateNewTargets();
   bool custom_goals_ =
       false;  // True: read positions from /params/custom_goals.yaml
               // False: Random targets
