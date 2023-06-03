@@ -188,6 +188,11 @@ void Planner::createAllPublishers() {
 
   std::string alarm_topic = "/planning_alarm";
   alarm_publisher_ = create_publisher<std_msgs::msg::String>(alarm_topic, 10);
+  for (const auto& robot_name : robots_) {
+    std::string topic = "/" + robot_name + "/waypoints";
+    auto publisher = create_publisher<geometry_msgs::msg::Point>(topic, 10);
+    robot_publishers_.push_back(publisher);
+  }
 }
 int Planner::countRobotTopics() {
   auto topic_list = this->get_topic_names_and_types();
@@ -507,6 +512,15 @@ void Planner::getDataFromYaml(std::string& filename) {
       *std::max_element(max_cbs_times_.begin(), max_cbs_times_.end());
   RCLCPP_INFO(get_logger(), "Max number of waypoints to execute: %d",
               maxWaypoints);
+  for (size_t robot_index = 0; robot_index < target_waypoints_.size();
+       ++robot_index) {
+    const auto& waypoints = target_waypoints_[robot_index];
+    for (const auto& waypoint : waypoints) {
+      auto publisher=std::static_pointer_cast<rclcpp::Publisher<geometry_msgs::msg::Point>>(
+          robot_publishers_[robot_index]);
+      publisher->publish(waypoint);
+    }
+  }
 }
 void Planner::generateNewTargets() {}
 
