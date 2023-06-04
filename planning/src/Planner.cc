@@ -369,8 +369,7 @@ void Planner::callCbsPlanner() {
   writeDataToYaml(inputFile);
   std::this_thread::sleep_for(std::chrono::seconds(1));
   RCLCPP_INFO(get_logger(), "Searching for solution...");
-  CBSHelper cbs;
-  cbs.executeCbs(inputFile, outputFile);
+  cbs_.executeCbs(inputFile, outputFile);
   std::this_thread::sleep_for(std::chrono::seconds(1));
   getDataFromYaml(outputFile);
 }

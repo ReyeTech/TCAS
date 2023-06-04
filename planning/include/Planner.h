@@ -168,6 +168,7 @@ class Planner : public rclcpp::Node {
    * obstacles_ in world frame 
    */
   bool updateObstacleLocations();
+  CBSHelper cbs_;
   bool custom_goals_ =
       false;  // True: read positions from /params/custom_goals.yaml
               // False: Random targets

@@ -1,35 +1,35 @@
 robots:
   - start:
       - 12
-      - 28
+      - 20
     goal:
       - 20
       - 20
     name: robot0
   - start:
-      - 28
-      - 18
+      - 26
+      - 24
     goal:
       - 20
       - 20
     name: robot1
   - start:
-      - 12
-      - 26
+      - 16
+      - 14
     goal:
       - 20
       - 20
     name: robot2
   - start:
-      - 14
-      - 26
+      - 20
+      - 22
     goal:
       - 20
       - 20
     name: robot3
   - start:
-      - 28
-      - 20
+      - 27
+      - 27
     goal:
       - 20
       - 20
