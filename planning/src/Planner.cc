@@ -4,6 +4,7 @@ namespace TCAS {
 
 Planner::Planner() : Node("Planner") {
   init();
+  updateObstacleLocations();
   createAllSubscribers();
   createAllPublishers();
 }
@@ -82,12 +83,16 @@ void Planner::goalCallback(const geometry_msgs::msg::Point::SharedPtr msg,
                            const std::string& topic) {
   std::regex robot_regex("/robot(\\d+)/goal");
   std::smatch match;
+  haltRobots();
   if (std::regex_search(topic, match, robot_regex)) {
     std::string robot_index_str = match[1].str();
     unsigned int robot_index = std::stoi(robot_index_str);
     geometry_msgs::msg::Point new_goal = *msg;
-    updateGoal(robot_index, new_goal);
+    // updateGoal(robot_index, new_goal);
+    generateNewTargets(robot_index, new_goal);
   }
+  resolveGoalConflicts();
+  resolveObstacleConflicts();
 }
 
 bool Planner::allRobotsArrivedCBSFinalWaypoint() {
@@ -130,7 +135,7 @@ bool Planner::allRobotsArrivedCBSFinalWaypoint() {
     return false;
   }
 }
-
+bool Planner::updateObstacleLocations() {}
 bool Planner::allRobotsArrivedInWaypoints() {
   int number_of_robots_in_waypoints = 0;
 
@@ -455,7 +460,7 @@ void Planner::getDataFromYaml(std::string& filename) {
     RCLCPP_INFO(get_logger(), "Solution not found!");
     std::this_thread::sleep_for(std::chrono::seconds(2));
     first_time_planning_ = true;
-    generateNewTargets();
+    // generateNewTargets();
     return;
   } else {
     int status = data["status"].as<int>();
@@ -466,7 +471,7 @@ void Planner::getDataFromYaml(std::string& filename) {
       RCLCPP_INFO(get_logger(), "Solution not found!");
       std::this_thread::sleep_for(std::chrono::seconds(2));
       first_time_planning_ = true;
-      generateNewTargets();
+      // generateNewTargets();
       return;
     } else {
       std_msgs::msg::String alarmMsg;
@@ -516,13 +521,18 @@ void Planner::getDataFromYaml(std::string& filename) {
        ++robot_index) {
     const auto& waypoints = target_waypoints_[robot_index];
     for (const auto& waypoint : waypoints) {
-      auto publisher=std::static_pointer_cast<rclcpp::Publisher<geometry_msgs::msg::Point>>(
+      auto publisher = std::static_pointer_cast<
+          rclcpp::Publisher<geometry_msgs::msg::Point>>(
           robot_publishers_[robot_index]);
       publisher->publish(waypoint);
     }
   }
 }
-void Planner::generateNewTargets() {}
+void Planner::generateNewTargets(unsigned int robot_index,
+                                 geometry_msgs::msg::Point new_goal) {
+  final_goal_[robot_index].x = float(round(goal[0]));
+  final_goal_[robot_index].y = float(round(goal[1]));
+}
 
 }  // namespace TCAS
 int main(int argc, char* argv[]) {

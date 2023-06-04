@@ -110,11 +110,13 @@ class Planner : public rclcpp::Node {
   void callCbsPlanner();
   /**
    * Generates a new goal close to the old one in case of any conflicts like two
-   * bot goals coinciding or the goal being inside an obstacle
+   * bot goals coinciding or the goal being inside an obstacle. The output is
+   * fed to void updateGoal function
    */
   geometry_msgs::msg::Point generateNewGoal(const geometry_msgs::msg::Point &);
   /**
-   * Assign new x, y coordinates to the goal position
+   * Assign new x, y coordinates to the goal position. Used only in the case of
+   * resolving conflicts
    */
   void updateGoal(int, const geometry_msgs::msg::Point &);
   /**
@@ -148,12 +150,17 @@ class Planner : public rclcpp::Node {
    * Create new goal points for the robots, this shall be done by reading from a
    * topic
    */
-  void generateNewTargets();
+  void generateNewTargets(unsigned int, geometry_msgs::msg::Point);
   /**
    * read the goal (x,y) coordinates from a topic for each robot
    */
   void goalCallback(const geometry_msgs::msg::Point::SharedPtr,
                     const std::string &);
+  /**
+   * Get the map (x,y) coordinates of the obstacles from pgm file, into
+   * obstacles_
+   */
+  bool updateObstacleLocations();
   bool custom_goals_ =
       false;  // True: read positions from /params/custom_goals.yaml
               // False: Random targets
