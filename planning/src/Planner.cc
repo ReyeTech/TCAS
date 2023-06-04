@@ -219,7 +219,48 @@ void Planner::updateGoal(int robot_id,
               new_goal.x, new_goal.y);
 }
 
-void Planner::driveRobotstoCbsWaypoints() {}
+void Planner::driveRobotstoCbsWaypoints() {
+  if (allPositionsReceived()) {
+    callCbsPlanner();
+  }
+
+  if (!first_time_planning_) {
+    if (allRobotsArrivedCBSFinalWaypoint()) {
+      if (replan_) {
+        RCLCPP_INFO(get_logger(), "All robots arrived on targets");
+        RCLCPP_INFO(get_logger(), "Acquiring new targets");
+       // generateNewTargets();
+        callCbsPlanner();
+      } else {
+        RCLCPP_WARN(get_logger(), "Plan executed successfully!");
+        std::exit(0);
+      }
+    } else {
+      if (allRobotsArrivedInWaypoints()) {
+        if (cbs_time_schedule_ <
+            *std::max_element(max_cbs_times_.begin(), max_cbs_times_.end())) {
+          cbs_time_schedule_++;  // Next time in CBS schedule
+          RCLCPP_INFO(
+              get_logger(), "Going to waypoint: %d | of total: %d",
+              cbs_time_schedule_,
+              *std::max_element(max_cbs_times_.begin(), max_cbs_times_.end()));
+        }
+      }
+      for (size_t robotIndex = 0; robotIndex < robots_.size(); ++robotIndex) {
+        geometry_msgs::msg::Point targetWaypoint =
+            getNextTargetWaypoints(robotIndex);
+        double currentOrientation = orientations_[robotIndex];
+        // Validate currentOrientation
+        if (!std::isfinite(currentOrientation)) {
+          RCLCPP_ERROR(get_logger(), "Invalid currentOrientation: %f",
+                       currentOrientation);
+          continue;
+        }
+        commandRobot(robotIndex, targetWaypoint, currentOrientation);
+      }
+    }
+  }
+}
 void Planner::callCbsPlanner() {
   verifyInitialRobotPositions();
   haltRobots();
@@ -530,8 +571,8 @@ void Planner::getDataFromYaml(std::string& filename) {
 }
 void Planner::generateNewTargets(unsigned int robot_index,
                                  geometry_msgs::msg::Point new_goal) {
-  final_goal_[robot_index].x = float(round(goal[0]));
-  final_goal_[robot_index].y = float(round(goal[1]));
+  final_goal_[robot_index].x = new_goal.x;
+  final_goal_[robot_index].y = new_goal.y;
 }
 
 }  // namespace TCAS

@@ -165,7 +165,7 @@ class Planner : public rclcpp::Node {
       false;  // True: read positions from /params/custom_goals.yaml
               // False: Random targets
   bool replan_ =
-      false;  // True: Plan and execute continuosly False: Plan and execute once
+      true;  // True: Plan and execute continuosly False: Plan and execute once
   float threshold_bot_on_target_ =
       0.1;  // Threshold to consider that robot has reached a target
   int targets_random_pool_size_ =
