@@ -13,7 +13,8 @@ void Planner::init() {
   number_of_robots_ = countRobotTopics();
   robots_.resize(number_of_robots_);
   subscribers_.resize(number_of_robots_);
-  robot_publishers_.resize(number_of_robots_);
+  // robot_publisher_waypoints_.resize(number_of_robots_);
+  // robot_publisher_velocity_.resize(number_of_robots_);
   target_waypoints_.resize(number_of_robots_);
   positions_.resize(number_of_robots_);
   orientations_.resize(number_of_robots_);
@@ -74,7 +75,7 @@ void Planner::positionCallback(const nav_msgs::msg::Odometry::SharedPtr msg,
     positions_[robot_index].y = position.y;
     positions_[robot_index].z = position.z;
     orientations_[robot_index] = yaw;
-
+    RCLCPP_INFO(get_logger(), "drive robots to cbs waypoints is next");
     // Compute a new control input for every update in position
     driveRobotstoCbsWaypoints();
   }
@@ -193,7 +194,7 @@ void Planner::createAllPublishers() {
   for (const auto& robot_name : robots_) {
     std::string topic = "/" + robot_name + "/cmd_vel";
     auto publisher = create_publisher<geometry_msgs::msg::Twist>(topic, 10);
-    robot_publishers_.push_back(publisher);
+    robot_publisher_velocity_.push_back(publisher);
   }
 
   std::string alarm_topic = "/planning_alarm";
@@ -201,7 +202,7 @@ void Planner::createAllPublishers() {
   for (const auto& robot_name : robots_) {
     std::string topic = "/" + robot_name + "/waypoints";
     auto publisher = create_publisher<geometry_msgs::msg::Point>(topic, 10);
-    robot_publishers_.push_back(publisher);
+    robot_publisher_waypoints_.push_back(publisher);
   }
 }
 int Planner::countRobotTopics() {
@@ -299,7 +300,8 @@ bool Planner::updateObstacleLocations() {
     RCLCPP_DEBUG(get_logger(), "Obstacle at (%d, %d)", std::get<0>(position),
                  std::get<1>(position));
   }
-  RCLCPP_INFO(get_logger(), "Number of obstacles added : %d", obstacles_.size());
+  RCLCPP_INFO(get_logger(), "Number of obstacles added : %d",
+              obstacles_.size());
   return 1;
 }
 
@@ -314,7 +316,7 @@ void Planner::driveRobotstoCbsWaypoints() {
   if (allPositionsReceived()) {
     callCbsPlanner();
   }
-
+  RCLCPP_INFO(get_logger(), "Cbs planner done one time");
   if (!first_time_planning_) {
     if (allRobotsArrivedCBSFinalWaypoint()) {
       if (replan_) {
@@ -360,6 +362,7 @@ void Planner::driveRobotstoCbsWaypoints() {
 }
 void Planner::callCbsPlanner() {
   verifyInitialRobotPositions();
+  RCLCPP_INFO(get_logger(), "Halt robots being called");
   haltRobots();
   RCLCPP_INFO(get_logger(), "Conflict Based Search Planning");
   std::string inputFile;
@@ -381,10 +384,16 @@ void Planner::haltRobots() {
       cmd_vel.angular.x = 0.0;
       cmd_vel.angular.y = 0.0;
       cmd_vel.angular.z = 0.0;
-      auto publisher = std::static_pointer_cast<
-          rclcpp::Publisher<geometry_msgs::msg::Twist>>(
-          robot_publishers_[robot_index]);
-      publisher->publish(cmd_vel);
+      RCLCPP_INFO(get_logger(), "going to publish velocities");
+      RCLCPP_INFO(get_logger(), "size of publisher velocity vector %d",
+                  robot_publisher_velocity_.size());
+      if (robot_index < robot_publisher_velocity_.size()) {
+        RCLCPP_INFO(get_logger(), "publishing velocities");
+        robot_publisher_velocity_[robot_index]->publish(cmd_vel);
+      } else {
+        RCLCPP_ERROR(get_logger(), "Invalid publisher index for robot %zu",
+                     robot_index);
+      }
     } catch (const std::exception& e) {
       std::string error_msg = "Error halting robots: " + std::string(e.what());
       RCLCPP_ERROR(get_logger(), error_msg);
@@ -398,6 +407,7 @@ void Planner::commandRobot(int robot_index,
                    // errors in the feedback linearization controller)
   geometry_msgs::msg::Point current_position = positions_[robot_index];
   geometry_msgs::msg::Twist cmd_vel;
+  RCLCPP_INFO(get_logger(), "entered command robot function");
   try {
     // Feedback linearization controller, get linear and angular desired
     // velocities from desired X and Y Points are shifted (SHIFT_MAP) by a fixed
@@ -419,10 +429,11 @@ void Planner::commandRobot(int robot_index,
         std::min(cmd_vel.linear.x, static_cast<double>(max_linear_velocity_));
     cmd_vel.angular.z =
         std::min(cmd_vel.angular.z, static_cast<double>(max_angular_velocity_));
-    auto publisher =
-        std::static_pointer_cast<rclcpp::Publisher<geometry_msgs::msg::Twist>>(
-            robot_publishers_[robot_index]);
-    publisher->publish(cmd_vel);
+    // auto publisher =
+    //     std::static_pointer_cast<rclcpp::Publisher<geometry_msgs::msg::Twist>>(
+    //         robot_publisher_waypoints_[robot_index]);
+    // publisher->publish(cmd_vel);
+    robot_publisher_velocity_[robot_index]->publish(cmd_vel);
   } catch (const std::exception& e) {
     std::string error_msg =
         "Error occurred during computation: " + std::string(e.what());
@@ -622,7 +633,7 @@ void Planner::getDataFromYaml(std::string& filename) {
   YAML::Node schedule = data["schedule"];
   target_waypoints_.resize(robots_.size());
   max_cbs_times_.resize(robots_.size());
-
+  RCLCPP_INFO(get_logger(), "Progressing in get data from yaml 1");
   for (const auto& robot : schedule) {
     std::string robotName = robot.first.as<std::string>();
     int robotIndex = std::stoi(robotName.substr(5));
@@ -642,7 +653,7 @@ void Planner::getDataFromYaml(std::string& filename) {
           max_cbs_times_[robotIndex] = tValue;
         }
       }
-
+      RCLCPP_INFO(get_logger(), "Progressing in get data from yaml 2");
       geometry_msgs::msg::Point waypoint;
       waypoint.x = xValue;
       waypoint.y = yValue;
@@ -650,19 +661,17 @@ void Planner::getDataFromYaml(std::string& filename) {
       target_waypoints_[robotIndex].push_back(waypoint);
     }
   }
-
+  RCLCPP_INFO(get_logger(), "Progressing in get data from yaml 3");
   int maxWaypoints =
       *std::max_element(max_cbs_times_.begin(), max_cbs_times_.end());
   RCLCPP_INFO(get_logger(), "Max number of waypoints to execute: %d",
               maxWaypoints);
   for (size_t robot_index = 0; robot_index < target_waypoints_.size();
        ++robot_index) {
+    RCLCPP_INFO(get_logger(), "inside the target waypoints publisher");
     const auto& waypoints = target_waypoints_[robot_index];
     for (const auto& waypoint : waypoints) {
-      auto publisher = std::static_pointer_cast<
-          rclcpp::Publisher<geometry_msgs::msg::Point>>(
-          robot_publishers_[robot_index]);
-      publisher->publish(waypoint);
+      robot_publisher_waypoints_[robot_index]->publish(waypoint);
     }
   }
 }

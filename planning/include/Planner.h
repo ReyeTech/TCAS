@@ -211,7 +211,11 @@ class Planner : public rclcpp::Node {
    * Each robot can publish to the topics it likes. The size of the vector is
    * equal to the number of robots
    */
-  std::vector<rclcpp::PublisherBase::SharedPtr> robot_publishers_;
+ std::vector<rclcpp::Publisher<geometry_msgs::msg::Point>::SharedPtr>  robot_publisher_waypoints_;
+  /**
+   * Velocity publisher for each robot
+  */
+ std::vector<rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr> robot_publisher_velocity_;
   /**
    * Creating a common publisher for the system, publishing to the planning
    * alarm. The topic is created in the create publisher code
