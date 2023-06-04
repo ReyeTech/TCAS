@@ -364,13 +364,13 @@ void Planner::callCbsPlanner() {
   verifyInitialRobotPositions();
   RCLCPP_INFO(get_logger(), "Halt robots being called");
   haltRobots();
-  RCLCPP_INFO(get_logger(), "Conflict Based Search Planning");
   std::string inputFile;
   std::string outputFile;
   writeDataToYaml(inputFile);
   std::this_thread::sleep_for(std::chrono::seconds(1));
   RCLCPP_INFO(get_logger(), "Searching for solution...");
-  // CBS::Environment::executeCbs(inputFile, outputFile);
+  CBSHelper cbs;
+  cbs.executeCbs(inputFile, outputFile);
   std::this_thread::sleep_for(std::chrono::seconds(1));
   getDataFromYaml(outputFile);
 }

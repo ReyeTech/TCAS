@@ -1,7 +1,8 @@
 #pragma once
 
-#include <map>
 #include <iostream>
+#include <map>
+
 #include "Astar.h"
 
 namespace TCAS {
@@ -170,7 +171,6 @@ class CBS {
 
     return false;
   }
-  bool executeCbs(std::string &inputFile,std::string &outputFile);
 
  private:
   struct HighLevelNode {
@@ -247,6 +247,11 @@ class CBS {
  private:
   Environment& m_env;
   typedef AStar<State, Action, Cost, LowLevelEnvironment> LowLevelSearch_t;
+};
+
+class CBSHelper{
+  public:
+bool executeCbs(std::string& inputFile, std::string& outputFile);
 };
 
 }  // namespace TCAS

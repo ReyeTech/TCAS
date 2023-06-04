@@ -5,6 +5,7 @@
 #include <boost/functional/hash.hpp>
 #include <boost/program_options.hpp>
 #include <fstream>
+#include <iostream>
 
 #include "Timer.h"
 
@@ -272,87 +273,6 @@ class Environment {
       }
     }
   }
-  bool executeCbs(const std::string& inputFile) {
-    YAML::Node config = YAML::LoadFile(inputFile);
-
-    std::unordered_set<Location> obstacles;
-    std::vector<Location> goals;
-    std::vector<State> startStates;
-
-    const auto& dim = config["map"]["dimensions"];
-    int dimx = dim[0].as<int>();
-    int dimy = dim[1].as<int>();
-
-    for (const auto& node : config["map"]["obstacles"]) {
-      obstacles.insert(Location(node[0].as<int>(), node[1].as<int>()));
-    }
-
-    for (const auto& node : config["agents"]) {
-      const auto& start = node["start"];
-      const auto& goal = node["goal"];
-      startStates.emplace_back(
-          State(0, start[0].as<int>(), start[1].as<int>()));
-      // std::cout << "s: " << startStates.back() << std::endl;
-      goals.emplace_back(Location(goal[0].as<int>(), goal[1].as<int>()));
-    }
-
-    // sanity check: no identical start states
-    std::unordered_set<State> startStatesSet;
-    for (const auto& s : startStates) {
-      if (startStatesSet.find(s) != startStatesSet.end()) {
-        std::cout << "Identical start states detected -> no solution!"
-                  << std::endl;
-        return 0;
-      }
-      startStatesSet.insert(s);
-    }
-
-    Environment mapf(dimx, dimy, obstacles, goals, m_disappearAtGoal);
-    CBS<State, Action, int, Conflict, Constraints, Environment> cbs(mapf);
-    std::vector<PlanResult<State, Action, int> > solution;
-
-    Timer timer;
-    bool success = cbs.search(startStates, solution);
-    timer.stop();
-
-    if (success) {
-      std::cout << "Planning successful! " << std::endl;
-      int cost = 0;
-      int makespan = 0;
-      for (const auto& s : solution) {
-        cost += s.cost;
-        makespan = std::max<int>(makespan, s.cost);
-      }
-      const std::string outputFile;
-      std::ofstream out(outputFile);
-      out << "statistics:" << std::endl;
-      out << "  cost: " << cost << std::endl;
-      out << "  makespan: " << makespan << std::endl;
-      out << "  runtime: " << timer.elapsedSeconds() << std::endl;
-      out << "  highLevelExpanded: " << mapf.highLevelExpanded() << std::endl;
-      out << "  lowLevelExpanded: " << mapf.lowLevelExpanded() << std::endl;
-      out << "schedule:" << std::endl;
-      for (size_t a = 0; a < solution.size(); ++a) {
-        // std::cout << "Solution for: " << a << std::endl;
-        // for (size_t i = 0; i < solution[a].actions.size(); ++i) {
-        //   std::cout << solution[a].states[i].second << ": " <<
-        //   solution[a].states[i].first << "->" << solution[a].actions[i].first
-        //   << "(cost: " << solution[a].actions[i].second << ")" << std::endl;
-        // }
-        // std::cout << solution[a].states.back().second << ": " <<
-        // solution[a].states.back().first << std::endl;
-
-        out << "  agent" << a << ":" << std::endl;
-        for (const auto& state : solution[a].states) {
-          out << "    - x: " << state.first.x << std::endl
-              << "      y: " << state.first.y << std::endl
-              << "      t: " << state.second << std::endl;
-        }
-      }
-    } else {
-      std::cout << "Planning NOT successful!" << std::endl;
-    }
-  };
 
   int admissibleHeuristic(const State& s) {
     // std::cout << "H: " <<  s << " " << m_heuristic[m_agentIdx][s.x + m_dimx *
@@ -654,6 +574,89 @@ class Environment {
   bool m_disappearAtGoal;
 };
 
+
+ bool TCAS::CBSHelper::executeCbs(std::string& inputFile, std::string& outputFile) {
+  bool disappearAtGoal=true;
+  YAML::Node config = YAML::LoadFile(inputFile);
+  std::unordered_set<Location> obstacles;
+  std::vector<Location> goals;
+  std::vector<State> startStates;
+
+  const auto& dim = config["map"]["dimensions"];
+  int dimx = dim[0].as<int>();
+  int dimy = dim[1].as<int>();
+
+  for (const auto& node : config["map"]["obstacles"]) {
+    obstacles.insert(Location(node[0].as<int>(), node[1].as<int>()));
+  }
+
+  for (const auto& node : config["agents"]) {
+    const auto& start = node["start"];
+    const auto& goal = node["goal"];
+    startStates.emplace_back(State(0, start[0].as<int>(), start[1].as<int>()));
+    // std::cout << "s: " << startStates.back() << std::endl;
+    goals.emplace_back(Location(goal[0].as<int>(), goal[1].as<int>()));
+  }
+
+  // sanity check: no identical start states
+  std::unordered_set<State> startStatesSet;
+  for (const auto& s : startStates) {
+    if (startStatesSet.find(s) != startStatesSet.end()) {
+      std::cout << "Identical start states detected -> no solution!"
+                << std::endl;
+      return 0;
+    }
+    startStatesSet.insert(s);
+  }
+
+  Environment mapf(dimx, dimy, obstacles, goals, disappearAtGoal);
+  CBS<State, Action, int, Conflict, Constraints, Environment> cbs(mapf);
+  std::vector<PlanResult<State, Action, int> > solution;
+
+  Timer timer;
+  bool success = cbs.search(startStates, solution);
+  timer.stop();
+
+  if (success) {
+    std::cout << "Planning successful! " << std::endl;
+    int cost = 0;
+    int makespan = 0;
+    for (const auto& s : solution) {
+      cost += s.cost;
+      makespan = std::max<int>(makespan, s.cost);
+    }
+    std::ofstream out(outputFile);
+    out << "statistics:" << std::endl;
+    out << "  cost: " << cost << std::endl;
+    out << "  makespan: " << makespan << std::endl;
+    out << "  runtime: " << timer.elapsedSeconds() << std::endl;
+    out << "  highLevelExpanded: " << mapf.highLevelExpanded() << std::endl;
+    out << "  lowLevelExpanded: " << mapf.lowLevelExpanded() << std::endl;
+    out << "schedule:" << std::endl;
+    for (size_t a = 0; a < solution.size(); ++a) {
+      // std::cout << "Solution for: " << a << std::endl;
+      // for (size_t i = 0; i < solution[a].actions.size(); ++i) {
+      //   std::cout << solution[a].states[i].second << ": " <<
+      //   solution[a].states[i].first << "->" << solution[a].actions[i].first
+      //   << "(cost: " << solution[a].actions[i].second << ")" << std::endl;
+      // }
+      // std::cout << solution[a].states.back().second << ": " <<
+      // solution[a].states.back().first << std::endl;
+
+      out << "  agent" << a << ":" << std::endl;
+      for (const auto& state : solution[a].states) {
+        out << "    - x: " << state.first.x << std::endl
+            << "      y: " << state.first.y << std::endl
+            << "      t: " << state.second << std::endl;
+      }
+    }
+  } else {
+    std::cout << "Planning NOT successful!" << std::endl;
+  }
+  return 1;
+}
+
+/*
 int main(int argc, char* argv[]) {
   namespace po = boost::program_options;
   // Declare the supported options.
@@ -765,3 +768,4 @@ int main(int argc, char* argv[]) {
 
   return 0;
 }
+*/
