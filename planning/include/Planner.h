@@ -28,6 +28,13 @@
 #include "CBS.h"
 
 namespace TCAS {
+
+struct Cell {
+  bool obstacle;
+  int x;
+  int y;
+};
+
 class Planner : public rclcpp::Node {
  public:
   Planner();
@@ -158,7 +165,7 @@ class Planner : public rclcpp::Node {
                     const std::string &);
   /**
    * Get the map (x,y) coordinates of the obstacles from pgm file, into
-   * obstacles_
+   * obstacles_ in world frame 
    */
   bool updateObstacleLocations();
   bool custom_goals_ =
