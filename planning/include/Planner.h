@@ -257,6 +257,10 @@ class Planner : public rclcpp::Node {
    * stores the (x,y) coordinates of all the obstacles, in the form of an int
    */
   std::vector<std::tuple<int, int>> obstacles_;
+  /**
+   * Keeps track of whether a new goal is recieved on the topic /robot_name/goal
+   */
+  bool new_goal_received_;
 };
 }  // namespace TCAS
 #endif

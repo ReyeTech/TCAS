@@ -88,9 +88,13 @@ void Planner::goalCallback(const geometry_msgs::msg::Point::SharedPtr msg,
     std::string robot_index_str = match[1].str();
     unsigned int robot_index = std::stoi(robot_index_str);
     geometry_msgs::msg::Point new_goal = *msg;
-    // updateGoal(robot_index, new_goal);
-    generateNewTargets(robot_index, new_goal);
+    //Removed the generateNewTargets() goal values can directly go into the final_goal_ vector
+    final_goal_[robot_index] = new_goal;
+    RCLCPP_INFO(get_logger(), "Updated goal for robot-%u: [%.2f, %.2f]",
+                robot_index, new_goal.x, new_goal.y);
   }
+  new_goal_received_= true;
+  first_time_planning_=true;
   resolveGoalConflicts();
   resolveObstacleConflicts();
 }
@@ -227,9 +231,13 @@ void Planner::driveRobotstoCbsWaypoints() {
   if (!first_time_planning_) {
     if (allRobotsArrivedCBSFinalWaypoint()) {
       if (replan_) {
-        RCLCPP_INFO(get_logger(), "All robots arrived on targets");
-        RCLCPP_INFO(get_logger(), "Acquiring new targets");
-       // generateNewTargets();
+        RCLCPP_INFO(get_logger(), "All robots arrived at targets. Acquiring new targets.");
+        
+        // Wait for goal input from user
+        while (!new_goal_received_) {
+          rclcpp::spin_some(shared_from_this());  // Process any pending callbacks
+          std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        }
         callCbsPlanner();
       } else {
         RCLCPP_WARN(get_logger(), "Plan executed successfully!");
