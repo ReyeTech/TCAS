@@ -25,24 +25,24 @@ map:
     - !!python/tuple [21, 22]
     - !!python/tuple [21, 23]
 robots:
--   goal: [25, 23]
+-   goal: [18, 16]
     name: robot0
-    start: [19, 26]
--   goal: [26, 14]
+    start: [18, 25]
+-   goal: [14, 15]
     name: robot1
-    start: [24, 25]
--   goal: [22, 19]
+    start: [14, 17]
+-   goal: [20, 25]
     name: robot2
-    start: [15, 13]
--   goal: [26, 21]
+    start: [20, 14]
+-   goal: [25, 24]
     name: robot3
-    start: [13, 25]
--   goal: [16, 17]
+    start: [16, 21]
+-   goal: [16, 23]
     name: robot4
-    start: [12, 19]
--   goal: [24, 18]
+    start: [23, 19]
+-   goal: [22, 19]
     name: robot5
-    start: [16, 19]
--   goal: [21, 21]
+    start: [15, 15]
+-   goal: [22, 18]
     name: robot6
-    start: [16, 19]
+    start: [15, 26]

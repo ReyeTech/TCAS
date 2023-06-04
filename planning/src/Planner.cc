@@ -34,8 +34,7 @@ void Planner::init() {
   first_time_planning_ = true;
   cbs_time_schedule_ = 1;
   number_of_successfully_executed_plans_ = 0;
-  //obstacles_.push_back(std::make_tuple(500, 500));  // Dummy obstacle
-
+  obstacles_.push_back(std::make_tuple(500, 500));  // Dummy obstacle
 }
 void Planner::createAllSubscribers() {
   for (const auto& robot_name : robots_) {
@@ -89,13 +88,14 @@ void Planner::goalCallback(const geometry_msgs::msg::Point::SharedPtr msg,
     std::string robot_index_str = match[1].str();
     unsigned int robot_index = std::stoi(robot_index_str);
     geometry_msgs::msg::Point new_goal = *msg;
-    //Removed the generateNewTargets() goal values can directly go into the final_goal_ vector
+    // Removed the generateNewTargets() goal values can directly go into the
+    // final_goal_ vector
     final_goal_[robot_index] = new_goal;
     RCLCPP_INFO(get_logger(), "Updated goal for robot-%u: [%.2f, %.2f]",
                 robot_index, new_goal.x, new_goal.y);
   }
-  new_goal_received_= true;
-  first_time_planning_=true;
+  new_goal_received_ = true;
+  first_time_planning_ = true;
   resolveGoalConflicts();
   resolveObstacleConflicts();
 }
@@ -140,7 +140,7 @@ bool Planner::allRobotsArrivedCBSFinalWaypoint() {
     return false;
   }
 }
-bool Planner::updateObstacleLocations() {}
+
 bool Planner::allRobotsArrivedInWaypoints() {
   int number_of_robots_in_waypoints = 0;
 
@@ -219,7 +219,7 @@ int Planner::countRobotTopics() {
 }
 
 bool Planner::updateObstacleLocations() {
-  // Load map and yaml file 
+  // Load map and yaml file
   const std::string map_filename = "/map/my_map.pgm";
   const std::string map_file_path = getFullFilename(map_filename);
   const std::string yaml_filename = "/map/my_map.yaml";
@@ -228,13 +228,13 @@ bool Planner::updateObstacleLocations() {
   // Read in the occupancy grid map from a PGM file
   std::ifstream map_file(map_file_path, std::ios::binary);
   if (!map_file.is_open()) {
-    RCLCPP_ERROR(get_logger(),"Could not open map file");
+    RCLCPP_ERROR(get_logger(), "Could not open map file");
     return 0;
   }
   std::string line;
   std::getline(map_file, line);
   if (line != "P5") {
-    RCLCPP_ERROR(get_logger(),"Invalid PGM file format");
+    RCLCPP_ERROR(get_logger(), "Invalid PGM file format");
     return 0;
   }
   std::getline(map_file, line);
@@ -269,17 +269,18 @@ bool Planner::updateObstacleLocations() {
   // Read in the origin and resolution data from a YAML file
   double origin_x, origin_y, resolution;
   YAML::Node root = YAML::LoadFile(yaml_file_path);
-  if (!root["image"]["resolution"] || !root["image"]["origin"]) {
-    RCLCPP_ERROR(get_logger(),"Missing origin or resolution data in YAML file");
+  if (!root["resolution"] || !root["origin"]) {
+    RCLCPP_ERROR(get_logger(),
+                 "Missing origin or resolution data in YAML file");
     return 0;
   }
-  resolution = root["image"]["resolution"].as<double>();
-  YAML::Node origin_node = root["image"]["origin"];
+  resolution = root["resolution"].as<double>();
+  YAML::Node origin_node = root["origin"];
   if (origin_node.Type() == YAML::NodeType::Sequence) {
     origin_x = origin_node[0].as<double>();
     origin_y = origin_node[1].as<double>();
   } else {
-    RCLCPP_ERROR(get_logger(),"Invalid origin data in YAML file");
+    RCLCPP_ERROR(get_logger(), "Invalid origin data in YAML file");
     return 0;
   }
 
@@ -287,17 +288,18 @@ bool Planner::updateObstacleLocations() {
   for (size_t y = 0; y < map.size(); y++) {
     for (size_t x = 0; x < map[y].size(); x++) {
       if (map[y][x].obstacle) {
-        // To do - change to float to improve accuracy 
+        // To do - change to float to improve accuracy
         int x_world = origin_x + x * resolution;
         int y_world = origin_y + y * resolution;
         obstacles_.emplace_back(x_world, y_world);
       }
     }
   }
-    for (const auto& position : obstacles_) {
-      printf("Obstacle at (%d, %d)",std::get<0>(position),std::get<1>(position));;
-        RCLCPP_INFO(get_logger(),"Obstacle at (%d, %d)",std::get<0>(position),std::get<1>(position));;
-    }
+  for (const auto& position : obstacles_) {
+    RCLCPP_DEBUG(get_logger(), "Obstacle at (%d, %d)", std::get<0>(position),
+                 std::get<1>(position));
+  }
+  RCLCPP_INFO(get_logger(), "Number of obstacles added : %d", obstacles_.size());
   return 1;
 }
 
@@ -316,11 +318,13 @@ void Planner::driveRobotstoCbsWaypoints() {
   if (!first_time_planning_) {
     if (allRobotsArrivedCBSFinalWaypoint()) {
       if (replan_) {
-        RCLCPP_INFO(get_logger(), "All robots arrived at targets. Acquiring new targets.");
-        
+        RCLCPP_INFO(get_logger(),
+                    "All robots arrived at targets. Acquiring new targets.");
+
         // Wait for goal input from user
         while (!new_goal_received_) {
-          rclcpp::spin_some(shared_from_this());  // Process any pending callbacks
+          rclcpp::spin_some(
+              shared_from_this());  // Process any pending callbacks
           std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
         callCbsPlanner();
