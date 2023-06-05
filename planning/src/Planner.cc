@@ -7,6 +7,7 @@ Planner::Planner() : Node("Planner") {
   updateObstacleLocations();
   createAllSubscribers();
   createAllPublishers();
+  readCustomGoals();
 }
 
 void Planner::init() {
@@ -84,6 +85,36 @@ void Planner::positionCallback(const nav_msgs::msg::Odometry::SharedPtr msg,
     driveRobotstoCbsWaypoints();
   }
 }
+void Planner::readCustomGoals() {
+  std::string input_filename = "scripts/params/custom_goals.yaml";
+  std::string filename = getFullFilename(input_filename);
+  std::ifstream file(filename);
+  if (!file.is_open()) {
+    RCLCPP_ERROR(get_logger(), "Failed to open file: %s", filename.c_str());
+    return;
+  }
+
+  YAML::Node data = YAML::Load(file);
+  YAML::Node data_robots = data["robots"];
+  for (std::size_t robot_index = 0;
+       robot_index < static_cast<std::size_t>(number_of_robots_);
+       ++robot_index) {
+    if (robot_index < data_robots.size()) {
+      YAML::Node robot_data = data_robots[robot_index];
+      YAML::Node goal_node = robot_data["goal"];
+      if (goal_node.IsSequence() && goal_node.size() >= 2) {
+        double goal_x = std::round(goal_node[0].as<double>());
+        double goal_y = std::round(goal_node[1].as<double>());
+        final_goal_[robot_index].x = goal_x;
+        final_goal_[robot_index].y = goal_y;
+      }
+    }
+  }
+
+  resolveGoalConflicts();
+  resolveObstacleConflicts();
+}
+
 void Planner::goalCallback(const geometry_msgs::msg::Point::SharedPtr msg,
                            const std::string& topic) {
   std::regex robot_regex("/robot(\\d+)/goal");
@@ -102,7 +133,7 @@ void Planner::goalCallback(const geometry_msgs::msg::Point::SharedPtr msg,
   first_time_planning_ = true;
   cbs_time_schedule_ = 1;
   position_received_ = 0;
-  number_of_successfully_executed_plans_ = 0;
+  // number_of_successfully_executed_plans_ = 0;
   for (int i = 0; i < number_of_robots_; ++i) {
     max_cbs_times_[i] = 0;
   }
@@ -601,8 +632,7 @@ void Planner::writeDataToYaml(std::string& filename) {
 
   yamlData["robots"] = robotsData;
   yamlData["map"] = mapData;
-  RCLCPP_INFO(get_logger(),
-              "Writing data to cbs_input---check the file");
+  RCLCPP_INFO(get_logger(), "Writing data to cbs_input---check the file");
   std::ofstream file(filename);
   if (file.is_open()) {
     file << yamlData;
