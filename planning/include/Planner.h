@@ -165,7 +165,7 @@ class Planner : public rclcpp::Node {
                     const std::string &);
   /**
    * Get the map (x,y) coordinates of the obstacles from pgm file, into
-   * obstacles_ in world frame 
+   * obstacles_ in world frame
    */
   bool updateObstacleLocations();
   CBSHelper cbs_;
@@ -203,20 +203,26 @@ class Planner : public rclcpp::Node {
    */
   std::vector<std::string> robots_;
   /**
-   * Each robot can subsribe to the topics it likes. The size of the vector is
-   * equal to the number of robots. The subsriber itself is stored in the vector
-   * entries
+   * Subscriber for goal positions
    */
-  std::vector<rclcpp::SubscriptionBase::SharedPtr> subscribers_;
+  std::vector<rclcpp::Subscription<geometry_msgs::msg::Point>::SharedPtr>
+      subscriber_goal_;
+  /**
+   * Subscriber for Odometry
+   */
+  std::vector<rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr>
+      subscriber_odom_;
   /**
    * Each robot can publish to the topics it likes. The size of the vector is
    * equal to the number of robots
    */
- std::vector<rclcpp::Publisher<geometry_msgs::msg::Point>::SharedPtr>  robot_publisher_waypoints_;
+  std::vector<rclcpp::Publisher<geometry_msgs::msg::Point>::SharedPtr>
+      robot_publisher_waypoints_;
   /**
    * Velocity publisher for each robot
-  */
- std::vector<rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr> robot_publisher_velocity_;
+   */
+  std::vector<rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr>
+      robot_publisher_velocity_;
   /**
    * Creating a common publisher for the system, publishing to the planning
    * alarm. The topic is created in the create publisher code

@@ -1,39 +1,53 @@
 robots:
   - start:
-      - 12
-      - 20
+      - 24
+      - 23
     goal:
       - 20
       - 20
     name: robot0
   - start:
-      - 26
-      - 24
+      - 12
+      - 20
     goal:
       - 20
       - 20
     name: robot1
   - start:
-      - 16
       - 14
+      - 24
     goal:
       - 20
       - 20
     name: robot2
   - start:
       - 20
-      - 22
+      - 20
     goal:
       - 20
       - 20
     name: robot3
   - start:
-      - 27
-      - 27
+      - 28
+      - 28
     goal:
       - 20
       - 20
     name: robot4
+  - start:
+      - 12
+      - 28
+    goal:
+      - 20
+      - 20
+    name: robot5
+  - start:
+      - 22
+      - 12
+    goal:
+      - 20
+      - 20
+    name: robot6
 map:
   dimensions:
     - 40

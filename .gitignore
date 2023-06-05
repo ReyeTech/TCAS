@@ -96,3 +96,6 @@ CATKIN_IGNORE
 #.vscode extensions
 .vscode/
 .vscode/extensions.json
+
+#cbs input file
+cbs_input.yaml

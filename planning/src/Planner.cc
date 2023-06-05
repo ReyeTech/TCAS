@@ -12,7 +12,7 @@ Planner::Planner() : Node("Planner") {
 void Planner::init() {
   number_of_robots_ = countRobotTopics();
   robots_.resize(number_of_robots_);
-  subscribers_.resize(number_of_robots_);
+  // subscribers_.resize(number_of_robots_);
   // robot_publisher_waypoints_.resize(number_of_robots_);
   // robot_publisher_velocity_.resize(number_of_robots_);
   target_waypoints_.resize(number_of_robots_);
@@ -21,6 +21,7 @@ void Planner::init() {
   distance_to_target_.resize(number_of_robots_);
   max_cbs_times_.resize(number_of_robots_);
   final_goal_.resize(number_of_robots_);
+  new_goal_received_ = false;
 
   for (int i = 0; i < number_of_robots_; ++i) {
     robots_[i] = "robot" + std::to_string(i);
@@ -44,7 +45,7 @@ void Planner::createAllSubscribers() {
         topic, 10, [this, topic](const nav_msgs::msg::Odometry::SharedPtr msg) {
           positionCallback(msg, topic);
         });
-    subscribers_.push_back(subscriber);
+    subscriber_odom_.push_back(subscriber);
   }
   for (const auto& robot_name : robots_) {
     std::string topic = "/" + robot_name + "/goal";
@@ -53,7 +54,7 @@ void Planner::createAllSubscribers() {
         [this, topic](const geometry_msgs::msg::Point::SharedPtr msg) {
           goalCallback(msg, topic);
         });
-    subscribers_.push_back(subscriber);
+    subscriber_goal_.push_back(subscriber);
   }
 }
 void Planner::positionCallback(const nav_msgs::msg::Odometry::SharedPtr msg,
@@ -75,7 +76,10 @@ void Planner::positionCallback(const nav_msgs::msg::Odometry::SharedPtr msg,
     positions_[robot_index].y = position.y;
     positions_[robot_index].z = position.z;
     orientations_[robot_index] = yaw;
-    RCLCPP_INFO(get_logger(), "drive robots to cbs waypoints is next");
+    RCLCPP_INFO(get_logger(), "Position of robot-%u: [x=%.2f, y=%.2f, z=%.2f]",
+                robot_index, positions_[robot_index].x,
+                positions_[robot_index].y, positions_[robot_index].z);
+
     // Compute a new control input for every update in position
     driveRobotstoCbsWaypoints();
   }
@@ -89,16 +93,22 @@ void Planner::goalCallback(const geometry_msgs::msg::Point::SharedPtr msg,
     std::string robot_index_str = match[1].str();
     unsigned int robot_index = std::stoi(robot_index_str);
     geometry_msgs::msg::Point new_goal = *msg;
-    // Removed the generateNewTargets() goal values can directly go into the
-    // final_goal_ vector
+
     final_goal_[robot_index] = new_goal;
     RCLCPP_INFO(get_logger(), "Updated goal for robot-%u: [%.2f, %.2f]",
                 robot_index, new_goal.x, new_goal.y);
   }
   new_goal_received_ = true;
   first_time_planning_ = true;
+  cbs_time_schedule_ = 1;
+  position_received_ = 0;
+  number_of_successfully_executed_plans_ = 0;
+  for (int i = 0; i < number_of_robots_; ++i) {
+    max_cbs_times_[i] = 0;
+  }
   resolveGoalConflicts();
   resolveObstacleConflicts();
+  driveRobotstoCbsWaypoints();
 }
 
 bool Planner::allRobotsArrivedCBSFinalWaypoint() {
@@ -297,8 +307,8 @@ bool Planner::updateObstacleLocations() {
     }
   }
   for (const auto& position : obstacles_) {
-    RCLCPP_DEBUG(get_logger(), "Obstacle at (%d, %d)", std::get<0>(position),
-                 std::get<1>(position));
+    RCLCPP_INFO(get_logger(), "Obstacle at (%d, %d)", std::get<0>(position),
+                std::get<1>(position));
   }
   RCLCPP_INFO(get_logger(), "Number of obstacles added : %d",
               obstacles_.size());
@@ -327,8 +337,9 @@ void Planner::driveRobotstoCbsWaypoints() {
         while (!new_goal_received_) {
           rclcpp::spin_some(
               shared_from_this());  // Process any pending callbacks
-          std::this_thread::sleep_for(std::chrono::milliseconds(100));
+          std::this_thread::sleep_for(std::chrono::milliseconds(10000));
         }
+        new_goal_received_ = false;
         callCbsPlanner();
       } else {
         RCLCPP_WARN(get_logger(), "Plan executed successfully!");
@@ -608,7 +619,11 @@ void Planner::getDataFromYaml(std::string& filename) {
     RCLCPP_INFO(get_logger(), "Solution not found!");
     std::this_thread::sleep_for(std::chrono::seconds(2));
     first_time_planning_ = true;
-    // generateNewTargets();
+    while (!new_goal_received_) {
+      rclcpp::spin_some(shared_from_this());  // Process any pending callbacks
+      std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+    }
+    new_goal_received_ = false;
     return;
   } else {
     int status = data["status"].as<int>();
@@ -619,7 +634,11 @@ void Planner::getDataFromYaml(std::string& filename) {
       RCLCPP_INFO(get_logger(), "Solution not found!");
       std::this_thread::sleep_for(std::chrono::seconds(2));
       first_time_planning_ = true;
-      // generateNewTargets();
+      while (!new_goal_received_) {
+        rclcpp::spin_some(shared_from_this());  // Process any pending callbacks
+        std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+      }
+      new_goal_received_ = false;
       return;
     } else {
       std_msgs::msg::String alarmMsg;
@@ -683,7 +702,8 @@ void Planner::generateNewTargets(unsigned int robot_index,
 }  // namespace TCAS
 int main(int argc, char* argv[]) {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<TCAS::Planner>());
+  auto plannerNode = std::make_shared<TCAS::Planner>();
+  rclcpp::spin(plannerNode);
   rclcpp::shutdown();
   return 0;
 }
