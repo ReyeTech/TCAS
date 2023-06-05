@@ -105,6 +105,7 @@ void Planner::readCustomGoals() {
       if (goal_node.IsSequence() && goal_node.size() >= 2) {
         double goal_x = std::round(goal_node[0].as<double>());
         double goal_y = std::round(goal_node[1].as<double>());
+        RCLCPP_INFO(get_logger(),"goal : x %.2f y %.2f",goal_x,goal_y);
         final_goal_[robot_index].x = goal_x;
         final_goal_[robot_index].y = goal_y;
       }
@@ -336,10 +337,6 @@ bool Planner::updateObstacleLocations() {
         obstacles_.emplace_back(x_world, y_world);
       }
     }
-  }
-  for (const auto& position : obstacles_) {
-    RCLCPP_INFO(get_logger(), "Obstacle at (%d, %d)", std::get<0>(position),
-                std::get<1>(position));
   }
   RCLCPP_INFO(get_logger(), "Number of obstacles added : %d",
               obstacles_.size());
