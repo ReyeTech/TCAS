@@ -326,7 +326,7 @@ void Planner::driveRobotstoCbsWaypoints() {
   if (allPositionsReceived()) {
     callCbsPlanner();
   }
-  RCLCPP_INFO(get_logger(), "Cbs planner done one time");
+  RCLCPP_INFO(get_logger(), "Cbs planner may or may not have been entered");
   if (!first_time_planning_) {
     if (allRobotsArrivedCBSFinalWaypoint()) {
       if (replan_) {
@@ -394,7 +394,7 @@ void Planner::haltRobots() {
       cmd_vel.angular.x = 0.0;
       cmd_vel.angular.y = 0.0;
       cmd_vel.angular.z = 0.0;
-      RCLCPP_INFO(get_logger(), "going to publish velocities");
+      RCLCPP_INFO(get_logger(), "going to publish zeros in cmd_vel");
       RCLCPP_INFO(get_logger(), "size of publisher velocity vector %d",
                   robot_publisher_velocity_.size());
       if (robot_index < robot_publisher_velocity_.size()) {
@@ -458,6 +458,8 @@ bool Planner::allPositionsReceived() {
       auto current_position = positions_[robot_index];
       if (current_position.x != 0 && current_position.y != 0) {
         position_received_++;
+        RCLCPP_INFO(get_logger(), "No of positions recieved: %d",
+                    position_received_);
       }
     }
     if (position_received_ ==
@@ -538,6 +540,7 @@ void Planner::verifyInitialRobotPositions() {
       }
     }
   }
+  RCLCPP_INFO(get_logger(), "Exiting verify initial robot positions");
 }
 
 float Planner::getDistance(const float dx, const float dy) {
@@ -598,7 +601,8 @@ void Planner::writeDataToYaml(std::string& filename) {
 
   yamlData["robots"] = robotsData;
   yamlData["map"] = mapData;
-
+  RCLCPP_INFO(get_logger(),
+              "Writing data to cbs_input---check the file");
   std::ofstream file(filename);
   if (file.is_open()) {
     file << yamlData;
