@@ -174,7 +174,7 @@ class Planner : public rclcpp::Node {
   void readCustomGoals();
   CBSHelper cbs_;
   bool custom_goals_ =
-      false;  // True: read positions from /params/custom_goals.yaml
+      true;  // True: read positions from /params/custom_goals.yaml
               // False: Random targets
   bool replan_ =
       false;  // True: Plan and execute continuosly False: Plan and execute once

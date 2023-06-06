@@ -11,24 +11,31 @@ from launch.substitutions import LaunchConfiguration, TextSubstitution
 import random
 
 SPAWN_AREA = 4
-NUMBER_OF_ROBOTS = 7
+NUMBER_OF_ROBOTS = 3
 
 def gen_robot_list(number_of_robots):
     robots = []
-    coordinates = set()  # Set to store unique coordinates
+    # coordinates = set()  # Set to store unique coordinates
+    # coordinates.add((1,2))
+    # coordinates.add((2,3))
+    # coordinates.add((1,4))
+    coordinates=[[1,2],[0.5,0.5],[-2,0]]
 
     for i in range(number_of_robots):
-        while True:
-            x = random.randint(-SPAWN_AREA, SPAWN_AREA)
-            y = random.randint(-SPAWN_AREA, SPAWN_AREA)
+        # while True:
+        #     # x = random.randint(-SPAWN_AREA, SPAWN_AREA)
+        #     # y = random.randint(-SPAWN_AREA, SPAWN_AREA)
+        x=coordinates[i][0]
+        y=coordinates[i][1]
 
-            # Check if the coordinates are already taken
-            if (x, y) not in coordinates:
-                break
+        #     # Check if the coordinates are already taken
+        #     if (x, y) not in coordinates:
+        #         break
 
-        coordinates.add((x, y))
+        #coordinates.add((x, y))
         robot_name = "robot" + str(i)
         robots.append({'name': robot_name, 'x_pose': x, 'y_pose': y, 'z_pose': 0.01})
+        #robots.append({'name': robot_name,'z_pose': 0.01})
 
     return robots
 
