@@ -1,9 +1,9 @@
 robots:
--   goal: [4, 4]
-    name: robot4
--   goal: [4, 4]
+-   goal: [10, 10]
+    name: robot0
+-   goal: [0, 10]
     name: robot1
--   goal: [4, 4]
+-   goal: [7, 9]
     name: robot2
 -   goal: [4, 4]
     name: robot3

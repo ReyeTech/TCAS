@@ -21,8 +21,8 @@ import yaml
 import ament_index_python.packages as packages
 import cbs
 
-CUSTOM_GOALS = False # True: read positions from /params/custom_goals.yaml False: Random targets
-REPLAN = True # True: Plan and execute continuosly False: Plan and execute once
+CUSTOM_GOALS = True # True: read positions from /params/custom_goals.yaml False: Random targets
+REPLAN = False # True: Plan and execute continuosly False: Plan and execute once
 THRE_ROBOT_ON_TARGET = 0.1 # Threshold to consider that robot has reached a target
 TARGETS_RANDOM_POOL_SIZE = 3 # Size of target area in meters (Gazebo squares)
 KP = 0.15 # Controller "proportional" gain
