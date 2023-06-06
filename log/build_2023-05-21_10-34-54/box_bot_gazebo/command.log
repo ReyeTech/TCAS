@@ -1,6 +1,0 @@
-Invoking command in '/home/edson_20_04/TCAS/build/box_bot_gazebo': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake /home/edson_20_04/TCAS/box_bot_gazebo -DCMAKE_INSTALL_PREFIX=/home/edson_20_04/TCAS/install/box_bot_gazebo
-Invoked command in '/home/edson_20_04/TCAS/build/box_bot_gazebo' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake /home/edson_20_04/TCAS/box_bot_gazebo -DCMAKE_INSTALL_PREFIX=/home/edson_20_04/TCAS/install/box_bot_gazebo
-Invoking command in '/home/edson_20_04/TCAS/build/box_bot_gazebo': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/box_bot_gazebo -- -j16 -l16
-Invoked command in '/home/edson_20_04/TCAS/build/box_bot_gazebo' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/box_bot_gazebo -- -j16 -l16
-Invoking command in '/home/edson_20_04/TCAS/build/box_bot_gazebo': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/TCAS/build/box_bot_gazebo
-Invoked command in '/home/edson_20_04/TCAS/build/box_bot_gazebo' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/TCAS/build/box_bot_gazebo

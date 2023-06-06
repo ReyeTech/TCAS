@@ -1,6 +1,0 @@
-Invoking command in '/home/edson_20_04/TCAS/build/planning': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake /home/edson_20_04/TCAS/planning -DCMAKE_INSTALL_PREFIX=/home/edson_20_04/TCAS/install/planning
-Invoked command in '/home/edson_20_04/TCAS/build/planning' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake /home/edson_20_04/TCAS/planning -DCMAKE_INSTALL_PREFIX=/home/edson_20_04/TCAS/install/planning
-Invoking command in '/home/edson_20_04/TCAS/build/planning': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/planning -- -j16 -l16
-Invoked command in '/home/edson_20_04/TCAS/build/planning' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /home/edson_20_04/TCAS/build/planning -- -j16 -l16
-Invoking command in '/home/edson_20_04/TCAS/build/planning': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/TCAS/build/planning
-Invoked command in '/home/edson_20_04/TCAS/build/planning' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --install /home/edson_20_04/TCAS/build/planning

@@ -1,8 +1,0 @@
-source;share/box_bot_tutorials/hook/cmake_prefix_path.ps1
-source;share/box_bot_tutorials/hook/cmake_prefix_path.dsv
-source;share/box_bot_tutorials/hook/cmake_prefix_path.sh
-source;share/box_bot_tutorials/local_setup.bash
-source;share/box_bot_tutorials/local_setup.dsv
-source;share/box_bot_tutorials/local_setup.ps1
-source;share/box_bot_tutorials/local_setup.sh
-source;share/box_bot_tutorials/local_setup.zsh

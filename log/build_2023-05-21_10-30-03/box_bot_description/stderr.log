@@ -1,7 +1,0 @@
-CMake Error: The current CMakeCache.txt directory /home/edson_20_04/TCAS/build/box_bot_description/CMakeCache.txt is different than the directory /home/edson_20_04/box_bot/build/box_bot_description where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt
-CMake Error at cmake_install.cmake:48 (file):
-  file INSTALL cannot find
-  "/home/edson_20_04/box_bot/box_bot_description/launch/spawn_box_bot_v2.py":
-  No such file or directory.
-
-
