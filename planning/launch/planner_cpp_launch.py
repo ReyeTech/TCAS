@@ -10,7 +10,7 @@ def generate_launch_description():
         launch_ros.actions.Node(
             package='planning',
             executable='Planner_cpp',
-            name='Planner',
+            name='robot_controller',
             output='screen',
             arguments=[]),
     ])

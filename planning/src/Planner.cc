@@ -1,12 +1,44 @@
 #include "Planner.h"
-
+#define NUMBER_OF_ROBOTS 3
 namespace TCAS {
 
-Planner::Planner() : Node("Planner") {
-  RCLCPP_INFO(get_logger(), "Planner Constructor has been called");
-}
+Planner::Planner() : Node("robot_controller") { init(); }
 
-void Planner::init() {}
+void Planner::init() {
+  RCLCPP_INFO(get_logger(), "Planner init has been called");
+  number_of_robots_ = 0;
+  while (number_of_robots_ < NUMBER_OF_ROBOTS) {
+    number_of_robots_ = countRobotTopics();
+    RCLCPP_INFO(get_logger(), "Waiting for robot topics odom and cmd_vel");
+  }
+  RCLCPP_INFO(get_logger(), "Number of robots is %d", number_of_robots_);
+  robots_.resize(number_of_robots_);
+  for (int i = 0; i < number_of_robots_; ++i) {
+    robots_[i] = "robot" + std::to_string(i);
+    RCLCPP_INFO(get_logger(), "Name of robot is %s\n", robots_[i].c_str());
+  }
+}
+int Planner::countRobotTopics() {
+  auto topic_list = this->get_topic_names_and_types();
+  int robot_count_vel = 0;
+  int robot_count_odom = 0;
+  for (const auto& item : topic_list) {
+    if (item.first.find("/robot") == 0 &&
+        item.first.find("/cmd_vel") != std::string::npos) {
+      robot_count_vel++;
+    }
+    if (item.first.find("/robot") == 0 &&
+        item.first.find("/odom") != std::string::npos) {
+      robot_count_odom++;
+    }
+  }
+  if (robot_count_vel == NUMBER_OF_ROBOTS &&
+      robot_count_odom == NUMBER_OF_ROBOTS) {
+    return robot_count_odom;
+  }
+
+  return 0;
+}
 void Planner::createAllSubscribers() {}
 void Planner::positionCallback(const nav_msgs::msg::Odometry::SharedPtr msg,
                                const std::string& topic) {}
@@ -24,7 +56,6 @@ const geometry_msgs::msg::Point& Planner::getNextTargetWaypoints(
 
 int Planner::getRobotIndex(const std::string& robot_name) const {}
 void Planner::createAllPublishers() {}
-int Planner::countRobotTopics() {}
 
 bool Planner::updateObstacleLocations() {}
 
