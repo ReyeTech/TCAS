@@ -105,7 +105,7 @@ void Planner::readCustomGoals() {
       if (goal_node.IsSequence() && goal_node.size() >= 2) {
         double goal_x = std::round(goal_node[0].as<double>());
         double goal_y = std::round(goal_node[1].as<double>());
-        RCLCPP_INFO(get_logger(),"goal : x %.2f y %.2f",goal_x,goal_y);
+        RCLCPP_INFO(get_logger(), "goal : x %.2f y %.2f", goal_x, goal_y);
         final_goal_[robot_index].x = goal_x;
         final_goal_[robot_index].y = goal_y;
       }
@@ -403,12 +403,48 @@ void Planner::callCbsPlanner() {
   verifyInitialRobotPositions();
   RCLCPP_INFO(get_logger(), "Halt robots being called");
   haltRobots();
+
   std::string inputFile;
   std::string outputFile;
+
+  std::string inputFilename = "scripts/params/cbs_input.yaml";
+  inputFile = getFullFilename(inputFilename);
+  std::string outputFilename = "scripts/params/cbs_output.yaml";
+  outputFile = getFullFilename(outputFilename);
+  // Check if the input file is not empty
+  std::ifstream inputCheckFile(inputFile);
+  if (inputCheckFile.peek() != std::ifstream::traits_type::eof()) {
+    // Clear the input file
+    std::ofstream inputClearFile(inputFile);
+    if (inputClearFile.is_open()) {
+      inputClearFile.close();
+      RCLCPP_INFO(get_logger(), "Input file cleared");
+    } else {
+      RCLCPP_ERROR(get_logger(), "Failed to clear input file");
+      return;
+    }
+  }
+  inputCheckFile.close();
+
+  // Check if the output file is not empty
+  std::ifstream outputCheckFile(outputFile);
+  if (outputCheckFile.peek() != std::ifstream::traits_type::eof()) {
+    // Clear the output file
+    std::ofstream outputClearFile(outputFile);
+    if (outputClearFile.is_open()) {
+      outputClearFile.close();
+      RCLCPP_INFO(get_logger(), "Output file cleared");
+    } else {
+      RCLCPP_ERROR(get_logger(), "Failed to clear output file");
+      return;
+    }
+  }
+  outputCheckFile.close();
+
   writeDataToYaml(inputFile);
   std::this_thread::sleep_for(std::chrono::seconds(1));
   RCLCPP_INFO(get_logger(), "Searching for solution...");
-  //cbs_.executeCbs(inputFile, outputFile);
+  // cbs_.executeCbs(inputFile, outputFile);
   std::this_thread::sleep_for(std::chrono::seconds(1));
   getDataFromYaml(outputFile);
 }
@@ -642,88 +678,98 @@ void Planner::getDataFromYaml(std::string& filename) {
   std::string outputFilename = "scripts/params/cbs_output.yaml";
   filename = getFullFilename(outputFilename);
 
-  YAML::Node data = YAML::LoadFile(filename);
-  if (!data) {
-    std_msgs::msg::String alarmMsg;
-    alarmMsg.data = "Solution not found!";
-    alarm_publisher_->publish(alarmMsg);
-    RCLCPP_INFO(get_logger(), "Solution not found!");
-    std::this_thread::sleep_for(std::chrono::seconds(2));
-    first_time_planning_ = true;
-    while (!new_goal_received_) {
-      rclcpp::spin_some(shared_from_this());  // Process any pending callbacks
-      std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-    }
-    new_goal_received_ = false;
-    return;
-  } else {
-    int status = data["status"].as<int>();
-    if (status == 0) {
+  try {
+    YAML::Node data = YAML::LoadFile(filename);
+    if (!data) {
       std_msgs::msg::String alarmMsg;
       alarmMsg.data = "Solution not found!";
       alarm_publisher_->publish(alarmMsg);
       RCLCPP_INFO(get_logger(), "Solution not found!");
       std::this_thread::sleep_for(std::chrono::seconds(2));
       first_time_planning_ = true;
-      while (!new_goal_received_) {
-        rclcpp::spin_some(shared_from_this());  // Process any pending callbacks
-        std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-      }
-      new_goal_received_ = false;
-      return;
+      RCLCPP_WARN(get_logger(), "Planning failed!");
+      std::exit(0);
     } else {
-      std_msgs::msg::String alarmMsg;
-      alarmMsg.data = "Solution found!";
-      alarm_publisher_->publish(alarmMsg);
-      RCLCPP_INFO(get_logger(), "Solution found!");
-    }
-  }
-
-  YAML::Node schedule = data["schedule"];
-  target_waypoints_.resize(robots_.size());
-  max_cbs_times_.resize(robots_.size());
-  RCLCPP_INFO(get_logger(), "Progressing in get data from yaml 1");
-  for (const auto& robot : schedule) {
-    std::string robotName = robot.first.as<std::string>();
-    int robotIndex = std::stoi(robotName.substr(5));
-
-    for (const auto& wp : robot.second) {
-      double xValue, yValue;
-      int tValue;
-
-      for (const auto& item : wp) {
-        std::string key = item.first.as<std::string>();
-        if (key == "x") {
-          xValue = item.second.as<double>();
-        } else if (key == "y") {
-          yValue = item.second.as<double>();
-        } else if (key == "t") {
-          tValue = item.second.as<int>();
-          max_cbs_times_[robotIndex] = tValue;
-        }
+      int status = 0;
+      try {
+        status = data["status"].as<int>();
+      } catch (const YAML::Exception& e) {
+        RCLCPP_ERROR(get_logger(), "Failed to read status from YAML: %s", e.what());
+        // Handle the error and return or throw an exception
+        // ...
       }
-      RCLCPP_INFO(get_logger(), "Progressing in get data from yaml 2");
-      geometry_msgs::msg::Point waypoint;
-      waypoint.x = xValue;
-      waypoint.y = yValue;
-      waypoint.z = 0.01;
-      target_waypoints_[robotIndex].push_back(waypoint);
+
+      if (status == 0) {
+        std_msgs::msg::String alarmMsg;
+        alarmMsg.data = "Solution not found!";
+        alarm_publisher_->publish(alarmMsg);
+        RCLCPP_INFO(get_logger(), "Solution not found!");
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        first_time_planning_ = true;
+        RCLCPP_WARN(get_logger(), "Planning failed!");
+        std::exit(0);
+      } else {
+        std_msgs::msg::String alarmMsg;
+        alarmMsg.data = "Solution found!";
+        alarm_publisher_->publish(alarmMsg);
+        RCLCPP_INFO(get_logger(), "Solution found!");
+      }
     }
-  }
-  RCLCPP_INFO(get_logger(), "Progressing in get data from yaml 3");
-  int maxWaypoints =
-      *std::max_element(max_cbs_times_.begin(), max_cbs_times_.end());
-  RCLCPP_INFO(get_logger(), "Max number of waypoints to execute: %d",
-              maxWaypoints);
-  for (size_t robot_index = 0; robot_index < target_waypoints_.size();
-       ++robot_index) {
-    RCLCPP_INFO(get_logger(), "inside the target waypoints publisher");
-    const auto& waypoints = target_waypoints_[robot_index];
-    for (const auto& waypoint : waypoints) {
-      robot_publisher_waypoints_[robot_index]->publish(waypoint);
+
+    YAML::Node schedule = data["schedule"];
+    target_waypoints_.resize(robots_.size());
+    max_cbs_times_.resize(robots_.size());
+
+    RCLCPP_INFO(get_logger(), "Progressing in get data from yaml 1");
+    for (const auto& robot : schedule) {
+      std::string robotName = robot.first.as<std::string>();
+      int robotIndex = std::stoi(robotName.substr(5));
+
+      for (const auto& wp : robot.second) {
+        double xValue = 0.0;
+        double yValue = 0.0;
+        int tValue = 0;
+
+        try {
+          for (const auto& item : wp) {
+            std::string key = item.first.as<std::string>();
+            if (key == "x") {
+              xValue = item.second.as<double>();
+            } else if (key == "y") {
+              yValue = item.second.as<double>();
+            } else if (key == "t") {
+              tValue = item.second.as<int>();
+              max_cbs_times_[robotIndex] = tValue;
+            }
+          }
+        } catch (const YAML::Exception& e) {
+          RCLCPP_ERROR(get_logger(), "Failed to read waypoint data from YAML: %s", e.what());
+          // Handle the error and return or throw an exception
+          // ...
+        }
+
+        RCLCPP_INFO(get_logger(), "Progressing in get data from yaml 2");
+        geometry_msgs::msg::Point waypoint;
+        waypoint.x = xValue;
+        waypoint.y = yValue;
+        waypoint.z = 0.01;
+        target_waypoints_[robotIndex].push_back(waypoint);
+      }
     }
+
+    RCLCPP_INFO(get_logger(), "Progressing in get data from yaml 3");
+    int maxWaypoints =
+        *std::max_element(max_cbs_times_.begin(), max_cbs_times_.end());
+    RCLCPP_INFO(get_logger(), "Max number of waypoints to execute: %d", maxWaypoints);
+  } catch (const YAML::Exception& e) {
+    RCLCPP_ERROR(get_logger(), "Failed to load YAML file: %s", e.what());
+    // Handle the error and return or throw an exception
+    // ...
   }
+
+  // Rest of the code...
 }
+
 void Planner::generateNewTargets(unsigned int robot_index,
                                  geometry_msgs::msg::Point new_goal) {
   final_goal_[robot_index].x = new_goal.x;
