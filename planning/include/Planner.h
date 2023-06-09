@@ -170,12 +170,12 @@ class Planner : public rclcpp::Node {
   bool updateObstacleLocations();
   /**
    * Reads goals for obstacles
-  */
+   */
   void readCustomGoals();
+  void readObstacleParams();
   CBSHelper cbs_;
-  bool custom_goals_ =
-      true;  // True: read positions from /params/custom_goals.yaml
-              // False: Random targets
+  bool custom_goals_ = true;  // True: read positions from
+                              // /params/custom_goals.yaml False: Random targets
   bool replan_ =
       false;  // True: Plan and execute continuosly False: Plan and execute once
   float threshold_bot_on_target_ =

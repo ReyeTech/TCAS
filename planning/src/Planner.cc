@@ -4,7 +4,8 @@ namespace TCAS {
 
 Planner::Planner() : Node("robot_controller") {
   init();
-  updateObstacleLocations();
+  //updateObstacleLocations();
+  readObstacleParams();
   readCustomGoals();
   createAllSubscribers();
   createAllPublishers();
@@ -37,7 +38,7 @@ void Planner::init() {
   first_time_planning_ = true;
   cbs_time_schedule_ = 1;
   number_of_successfully_executed_plans_ = 0;
-  //obstacles_.push_back(std::make_tuple(500, 500));  // Dummy obstacle
+  // obstacles_.push_back(std::make_tuple(500, 500));  // Dummy obstacle
 }
 int Planner::countRobotTopics() {
   auto topic_list = this->get_topic_names_and_types();
@@ -231,6 +232,22 @@ bool Planner::updateObstacleLocations() {  // Load map and yaml file
               obstacles_.size());
   return 1;
 }
+void Planner::readObstacleParams() {
+  std::string inputFilename = "scripts/params/custom_obstacles.yaml";
+  std::string filename = getFullFilename(inputFilename);
+
+  YAML::Node data = YAML::LoadFile(filename);
+
+  const YAML::Node& obstaclesData = data["obstacles"];
+  for (const auto& obstacleData : obstaclesData) {
+    const YAML::Node& obstacle = obstacleData["obstacle"];
+    int x = static_cast<int>(obstacle[0].as<double>() * discretization_ +
+                             shift_map_);
+    int y = static_cast<int>(obstacle[1].as<double>() * discretization_ +
+                             shift_map_);
+    obstacles_.emplace_back(std::make_tuple(x, y));
+  }
+}
 
 void Planner::updateGoal(int robot_id,
                          const geometry_msgs::msg::Point& new_goal) {
@@ -292,7 +309,7 @@ void Planner::callCbsPlanner() {
   cbs_.executeCbs(inputFile, outputFile);
   std::this_thread::sleep_for(std::chrono::seconds(1));
   RCLCPP_INFO(get_logger(), "Cbs execution finished..");
-  //getDataFromYaml(outputFile);
+  getDataFromYaml(outputFile);
 }
 
 void Planner::haltRobots() {
@@ -458,10 +475,13 @@ void Planner::writeDataToYaml(std::string& filename) {
 
   for (const auto& obstacle : obstacles_) {
     YAML::Node obstacleData;
-    obstacleData.push_back(
-        static_cast<int>(std::get<0>(obstacle) * discretization_ + shift_map_));
-    obstacleData.push_back(
-        static_cast<int>(std::get<1>(obstacle) * discretization_ + shift_map_));
+    // obstacleData.push_back(
+    //     static_cast<int>(std::get<0>(obstacle) * discretization_ + shift_map_));
+    // obstacleData.push_back(
+    //     static_cast<int>(std::get<1>(obstacle) * discretization_ + shift_map_));
+    // if readObstacleParams() is used
+    obstacleData.push_back(std::get<0>(obstacle));
+    obstacleData.push_back(std::get<1>(obstacle));
     obstaclesData.push_back(obstacleData);
   }
 
