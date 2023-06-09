@@ -589,17 +589,17 @@ bool TCAS::CBSHelper::executeCbs(std::string& inputFile,
   std::cout << "Map dimension y " << dimy << std::endl;
   for (const auto& node : config["map"]["obstacles"]) {
     obstacles.insert(Location(node[0].as<int>(), node[1].as<int>()));
-    std::cout<<node[0]<<" "<<node[1]<<std::endl;
+    std::cout << node[0] << " " << node[1] << std::endl;
   }
   std::cout << "Cbs obstacles loaded..." << std::endl;
   for (const auto& node : config["robots"]) {
     const auto& start = node["start"];
     const auto& goal = node["goal"];
     startStates.emplace_back(State(0, start[0].as<int>(), start[1].as<int>()));
-    std::cout<<"States: "<<start[0]<<" "<<start[1]<<std::endl;
+    std::cout << "States: " << start[0] << " " << start[1] << std::endl;
     // std::cout << "s: " << startStates.back() << std::endl;
     goals.emplace_back(Location(goal[0].as<int>(), goal[1].as<int>()));
-    std::cout<<"Goals: "<<goal[0]<<" "<<goal[1]<<std::endl;
+    std::cout << "Goals: " << goal[0] << " " << goal[1] << std::endl;
   }
   std::cout << "Cbs goals and obstacles loaded..." << std::endl;
   // sanity check: no identical start states
@@ -620,7 +620,7 @@ bool TCAS::CBSHelper::executeCbs(std::string& inputFile,
   Timer timer;
   bool success = cbs.search(startStates, solution);
   timer.stop();
-
+  YAML::Node rootNode;
   if (success) {
     std::cout << "Planning successful! " << std::endl;
     int cost = 0;
@@ -629,34 +629,29 @@ bool TCAS::CBSHelper::executeCbs(std::string& inputFile,
       cost += s.cost;
       makespan = std::max<int>(makespan, s.cost);
     }
-    std::ofstream out(outputFile);
-    out << "statistics:" << std::endl;
-    out << "  cost: " << cost << std::endl;
-    out << "  makespan: " << makespan << std::endl;
-    out << "  runtime: " << timer.elapsedSeconds() << std::endl;
-    out << "  highLevelExpanded: " << mapf.highLevelExpanded() << std::endl;
-    out << "  lowLevelExpanded: " << mapf.lowLevelExpanded() << std::endl;
-    out << "schedule:" << std::endl;
+    rootNode["cost"] = cost;
+    YAML::Node scheduleNode;
     for (size_t a = 0; a < solution.size(); ++a) {
-      // std::cout << "Solution for: " << a << std::endl;
-      // for (size_t i = 0; i < solution[a].actions.size(); ++i) {
-      //   std::cout << solution[a].states[i].second << ": " <<
-      //   solution[a].states[i].first << "->" << solution[a].actions[i].first
-      //   << "(cost: " << solution[a].actions[i].second << ")" << std::endl;
-      // }
-      // std::cout << solution[a].states.back().second << ": " <<
-      // solution[a].states.back().first << std::endl;
-
-      out << "  agent" << a << ":" << std::endl;
+      YAML::Node agentNode;
       for (const auto& state : solution[a].states) {
-        out << "    - x: " << state.first.x << std::endl
-            << "      y: " << state.first.y << std::endl
-            << "      t: " << state.second << std::endl;
+        YAML::Node stateNode;
+        stateNode["x"] = state.first.x;
+        stateNode["y"] = state.first.y;
+        stateNode["t"] = state.second;
+        agentNode.push_back(stateNode);
       }
+      scheduleNode["agent" + std::to_string(a)] = agentNode;
     }
+    rootNode["schedule"] = scheduleNode;
+    rootNode["status"] = 1;
   } else {
-    std::cout << "Planning NOT successful!" << std::endl;
+    rootNode["status"] = 0;
   }
+  //Write data to Yaml file
+  std::ofstream outFile(outputFile);
+  outFile << rootNode;
+  outFile.close();
+
   return 1;
 }
 

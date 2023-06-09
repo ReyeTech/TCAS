@@ -4,7 +4,7 @@ namespace TCAS {
 
 Planner::Planner() : Node("robot_controller") {
   init();
-  //updateObstacleLocations();
+  // updateObstacleLocations();
   readObstacleParams();
   readCustomGoals();
   createAllSubscribers();
@@ -476,9 +476,11 @@ void Planner::writeDataToYaml(std::string& filename) {
   for (const auto& obstacle : obstacles_) {
     YAML::Node obstacleData;
     // obstacleData.push_back(
-    //     static_cast<int>(std::get<0>(obstacle) * discretization_ + shift_map_));
+    //     static_cast<int>(std::get<0>(obstacle) * discretization_ +
+    //     shift_map_));
     // obstacleData.push_back(
-    //     static_cast<int>(std::get<1>(obstacle) * discretization_ + shift_map_));
+    //     static_cast<int>(std::get<1>(obstacle) * discretization_ +
+    //     shift_map_));
     // if readObstacleParams() is used
     obstacleData.push_back(std::get<0>(obstacle));
     obstacleData.push_back(std::get<1>(obstacle));
@@ -548,7 +550,6 @@ void Planner::getDataFromYaml(std::string& filename) {
     target_waypoints_.resize(robots_.size());
     max_cbs_times_.resize(robots_.size());
 
-    RCLCPP_INFO(get_logger(), "Progressing in get data from yaml 1");
     for (const auto& robot : schedule) {
       std::string robotName = robot.first.as<std::string>();
       int robotIndex = std::stoi(robotName.substr(5));
@@ -577,7 +578,6 @@ void Planner::getDataFromYaml(std::string& filename) {
           // ...
         }
 
-        RCLCPP_INFO(get_logger(), "Progressing in get data from yaml 2");
         geometry_msgs::msg::Point waypoint;
         waypoint.x = xValue;
         waypoint.y = yValue;
@@ -586,7 +586,6 @@ void Planner::getDataFromYaml(std::string& filename) {
       }
     }
 
-    RCLCPP_INFO(get_logger(), "Progressing in get data from yaml 3");
     int maxWaypoints =
         *std::max_element(max_cbs_times_.begin(), max_cbs_times_.end());
     RCLCPP_INFO(get_logger(), "Max number of waypoints to execute: %d",

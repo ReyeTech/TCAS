@@ -1,9 +1,4 @@
-statistics:
-  cost: 24
-  makespan: 13
-  runtime: 0.000741896
-  highLevelExpanded: 1
-  lowLevelExpanded: 56
+cost: 24
 schedule:
   agent0:
     - x: 22
@@ -89,3 +84,4 @@ schedule:
     - x: 24
       y: 23
       t: 13
+status: 1
