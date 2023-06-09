@@ -90,12 +90,7 @@ void Planner::positionCallback(const nav_msgs::msg::Odometry::SharedPtr msg,
     positions_[robot_index].y = position.y;
     positions_[robot_index].z = position.z;
     orientations_[robot_index] = yaw;
-    // RCLCPP_INFO(get_logger(), "Position of robot-%u: [x=%.2f, y=%.2f,
-    // z=%.2f]",
-    //             robot_index, positions_[robot_index].x,
-    //             positions_[robot_index].y, positions_[robot_index].z);
 
-    // Compute a new control input for every update in position
     driveRobotstoCbsWaypoints();
   }
 }
@@ -130,17 +125,85 @@ void Planner::readCustomGoals() {
   resolveObstacleConflicts();
 }
 
-void Planner::goalCallback(const geometry_msgs::msg::Point::SharedPtr msg,
-                           const std::string& topic) {}
+bool Planner::allRobotsArrivedCBSFinalWaypoint() {
+  int number_of_robots_in_target = 0;
+  // This will store the coordinates of the waypoints for the goal for each
+  // robot
+  std::vector<geometry_msgs::msg::Point> cbs_last_waypoints;
 
-bool Planner::allRobotsArrivedCBSFinalWaypoint() {}
+  for (size_t robot_index = 0; robot_index < target_waypoints_.size();
+       ++robot_index) {
+    cbs_last_waypoints.emplace_back(target_waypoints_[robot_index].back());
+  }
 
-bool Planner::allRobotsArrivedInWaypoints() {}
+  for (size_t robot_index = 0; robot_index < robots_.size(); ++robot_index) {
+    auto current_position = positions_[robot_index];
+
+    // The odom topic gives coordinates in real frame, but cbs goal is in cbs
+    // coordinates these have to be converted before finding out the distance
+    distance_to_target_[robot_index] = getDistance(
+        (cbs_last_waypoints[robot_index].x - shift_map_) / discretization_ -
+            current_position.x,
+        (cbs_last_waypoints[robot_index].y - shift_map_) / discretization_ -
+            current_position.y);
+
+    if (distance_to_target_[robot_index] < threshold_bot_on_target_) {
+      number_of_robots_in_target++;
+    }
+  }
+
+  // All robots on last waypoint
+  if (static_cast<size_t>(number_of_robots_in_target) == robots_.size()) {
+    haltRobots();
+    number_of_successfully_executed_plans_++;
+    RCLCPP_WARN(get_logger(),
+                "Number of successfully executed plans: " +
+                    std::to_string(number_of_successfully_executed_plans_));
+    cbs_time_schedule_ = 1;  // Plan again
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool Planner::allRobotsArrivedInWaypoints() {
+  int number_of_robots_in_waypoints = 0;
+
+  for (size_t robot_index = 0; robot_index < robots_.size(); ++robot_index) {
+    auto current_position = positions_[robot_index];
+    auto target_waypoint = getNextTargetWaypoints(robot_index);
+    // Points are shifted (SHIFT_MAP) by a fixed amount so that they are
+    // positive and are shrinked/inflated (DISCRETIZATION) to allow the use of
+    // CBS that only accepts positive integers
+    distance_to_target_[robot_index] = getDistance(
+        (target_waypoint.x - shift_map_) / discretization_ - current_position.x,
+        (target_waypoint.y - shift_map_) / discretization_ -
+            current_position.y);
+
+    if (distance_to_target_[robot_index] < threshold_bot_on_target_) {
+      number_of_robots_in_waypoints++;
+    }
+  }
+
+  if (number_of_robots_in_waypoints == static_cast<int>(robots_.size())) {
+    RCLCPP_INFO(get_logger(), "Robots Arrived in waypoint: " +
+                                  std::to_string(cbs_time_schedule_));
+    return true;
+  } else {
+    return false;
+  }
+}
 
 const geometry_msgs::msg::Point& Planner::getNextTargetWaypoints(
-    const int robot_index) {}
+    const int robot_index) {
+  if (static_cast<int>(target_waypoints_[robot_index].size()) >
+      cbs_time_schedule_) {
+    return target_waypoints_[robot_index][cbs_time_schedule_];
+  } else {
+    return target_waypoints_[robot_index][max_cbs_times_[robot_index]];
+  }
+}
 
-int Planner::getRobotIndex(const std::string& robot_name) const {}
 void Planner::createAllPublishers() {
   for (const auto& robot_name : robots_) {
     std::string topic = "/" + robot_name + "/cmd_vel";
@@ -260,6 +323,36 @@ void Planner::driveRobotstoCbsWaypoints() {
   if (allPositionsReceived()) {
     callCbsPlanner();
   }
+  if (!first_time_planning_) {
+    if (allRobotsArrivedCBSFinalWaypoint()) {
+      RCLCPP_WARN(get_logger(), "Plan executed successfully!");
+      std::exit(0);
+
+    } else {
+      if (allRobotsArrivedInWaypoints()) {
+        if (cbs_time_schedule_ <
+            *std::max_element(max_cbs_times_.begin(), max_cbs_times_.end())) {
+          cbs_time_schedule_++;  // Next time in CBS schedule
+          RCLCPP_INFO(
+              get_logger(), "Going to waypoint: %d | of total: %d",
+              cbs_time_schedule_,
+              *std::max_element(max_cbs_times_.begin(), max_cbs_times_.end()));
+        }
+      }
+      for (size_t robotIndex = 0; robotIndex < robots_.size(); ++robotIndex) {
+        geometry_msgs::msg::Point targetWaypoint =
+            getNextTargetWaypoints(robotIndex);
+        double currentOrientation = orientations_[robotIndex];
+        // Validate currentOrientation
+        if (!std::isfinite(currentOrientation)) {
+          RCLCPP_ERROR(get_logger(), "Invalid currentOrientation: %f",
+                       currentOrientation);
+          continue;
+        }
+        commandRobot(robotIndex, targetWaypoint, currentOrientation);
+      }
+    }
+  }
 }
 void Planner::callCbsPlanner() {
   verifyInitialRobotPositions();
@@ -335,7 +428,44 @@ void Planner::haltRobots() {
 }
 void Planner::commandRobot(int robot_index,
                            const geometry_msgs::msg::Point& target_waypoint,
-                           double current_orientation) {}
+                           double current_orientation) {
+  double d = 0.1;  // Virtual point outside robot center (avoid mathematical
+                   // errors in the feedback linearization controller)
+  geometry_msgs::msg::Point current_position = positions_[robot_index];
+  geometry_msgs::msg::Twist cmd_vel;
+  RCLCPP_INFO(get_logger(), "entered command robot function");
+  try {
+    // Feedback linearization controller, get linear and angular desired
+    // velocities from desired X and Y Points are shifted (SHIFT_MAP) by a fixed
+    // amount so that they are positive and are shrinked/inflated
+    // (DISCRETIZATION) to allow the use of CBS that only accepts positive
+    // integers
+    double target_x_scaled = (target_waypoint.x - shift_map_) / discretization_;
+    double target_y_scaled = (target_waypoint.y - shift_map_) / discretization_;
+    double error_x = target_x_scaled - current_position.x;
+    double error_y = target_y_scaled - current_position.y;
+    cmd_vel.linear.x =
+        (error_x)*cos(current_orientation) + (error_y)*sin(current_orientation);
+    cmd_vel.angular.z = -(error_x)*sin(current_orientation) / d +
+                        (error_y)*cos(current_orientation) / d;
+    cmd_vel.linear.x = Kp_ * cmd_vel.linear.x;
+    cmd_vel.angular.z = Kp_ * cmd_vel.angular.z;
+    // Limit the velocities
+    cmd_vel.linear.x =
+        std::min(cmd_vel.linear.x, static_cast<double>(max_linear_velocity_));
+    cmd_vel.angular.z =
+        std::min(cmd_vel.angular.z, static_cast<double>(max_angular_velocity_));
+    // auto publisher =
+    //     std::static_pointer_cast<rclcpp::Publisher<geometry_msgs::msg::Twist>>(
+    //         robot_publisher_waypoints_[robot_index]);
+    // publisher->publish(cmd_vel);
+    robot_publisher_velocity_[robot_index]->publish(cmd_vel);
+  } catch (const std::exception& e) {
+    std::string error_msg =
+        "Error occurred during computation: " + std::string(e.what());
+    RCLCPP_ERROR(get_logger(), error_msg);
+  }
+}
 
 bool Planner::allPositionsReceived() {
   if (first_time_planning_) {
@@ -426,7 +556,6 @@ void Planner::verifyInitialRobotPositions() {
       }
     }
   }
-  RCLCPP_INFO(get_logger(), "Exiting verify initial robot positions");
 }
 
 float Planner::getDistance(const float dx, const float dy) {
@@ -598,9 +727,6 @@ void Planner::getDataFromYaml(std::string& filename) {
 
   // Rest of the code...
 }
-
-void Planner::generateNewTargets(unsigned int robot_index,
-                                 geometry_msgs::msg::Point new_goal) {}
 
 }  // namespace TCAS
 int main(int argc, char* argv[]) {
