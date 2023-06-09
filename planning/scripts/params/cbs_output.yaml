@@ -1,0 +1,7 @@
+statistics:
+  cost: 0
+  makespan: 0
+  runtime: 1.2248e-05
+  highLevelExpanded: 1
+  lowLevelExpanded: 0
+schedule:
