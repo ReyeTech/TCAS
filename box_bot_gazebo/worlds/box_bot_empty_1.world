@@ -13,7 +13,7 @@
     <!-- Box Obstacle 1 -->
     <model name="box_obstacle1">
       <static>true</static>
-      <pose>1 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>1.0 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -185,7 +185,7 @@
     <!-- Box Obstacle 7 -->
     <model name="box_obstacle7">
       <static>true</static>
-      <pose>-2 -1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>-2 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -214,7 +214,7 @@
     <!-- Box Obstacle 8 -->
     <model name="box_obstacle8">
       <static>true</static>
-      <pose>-3 -3 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>-1.5  0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -623,6 +623,991 @@
       </link>
     </model>
 
+    <!-- Box Obstacle 22 -->
+    <model name="box_obstacle22">
+      <static>true</static>
+      <pose>0.5 2.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+   <!-- Box Obstacle 23 -->
+    <model name="box_obstacle23">
+      <static>true</static>
+      <pose>-0.5 2.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+       <!-- Box Obstacle 24 -->
+    <model name="box_obstacle24">
+      <static>true</static>
+      <pose>-1.0 1.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+   <!-- Box Obstacle 25 -->
+    <model name="box_obstacle25">
+      <static>true</static>
+      <pose>-1.5 1.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+       <!-- Box Obstacle 26 -->
+    <model name="box_obstacle26">
+      <static>true</static>
+      <pose>-2.0 1.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+       <!-- Box Obstacle 27 -->
+    <model name="box_obstacle27">
+      <static>true</static>
+      <pose>-1 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+       <!-- Box Obstacle 28 -->
+    <model name="box_obstacle28">
+      <static>true</static>
+      <pose>-0.5 2.5 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+       <!-- Box Obstacle 29 -->
+    <model name="box_obstacle29">
+      <static>true</static>
+      <pose>0.5 2.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+           <!-- Box Obstacle 30-->
+    <model name="box_obstacle30">
+      <static>true</static>
+      <pose>-2.5 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+           <!-- Box Obstacle 31 -->
+    <model name="box_obstacle31">
+      <static>true</static>
+      <pose>-3 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+           <!-- Box Obstacle 32 -->
+    <model name="box_obstacle32">
+      <static>true</static>
+      <pose>-3.5 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+               <!-- Box Obstacle 33-->
+    <model name="box_obstacle33">
+      <static>true</static>
+      <pose>-2.5 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+           <!-- Box Obstacle 34 -->
+    <model name="box_obstacle34">
+      <static>true</static>
+      <pose>-3 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+           <!-- Box Obstacle 35 -->
+    <model name="box_obstacle35">
+      <static>true</static>
+      <pose>-3.5 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+               <!-- Box Obstacle 36-->
+    <model name="box_obstacle36">
+      <static>true</static>
+      <pose>0.5 3 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Box Obstacle 37 -->
+    <model name="box_obstacle37">
+      <static>true</static>
+      <pose>0.5 3.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Box Obstacle 38 -->
+    <model name="box_obstacle38">
+      <static>true</static>
+      <pose>0.5 4 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+    <!-- Box Obstacle 39-->
+    <model name="box_obstacle39">
+      <static>true</static>
+      <pose>-0.5 3 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Box Obstacle 40 -->
+    <model name="box_obstacle40">
+      <static>true</static>
+      <pose>-0.5 3.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+           <!-- Box Obstacle 41 -->
+    <model name="box_obstacle41">
+      <static>true</static>
+      <pose>-0.5 4 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+               <!-- Box Obstacle 42-->
+    <model name="box_obstacle42">
+      <static>true</static>
+      <pose>2.5 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+           <!-- Box Obstacle 43 -->
+    <model name="box_obstacle43">
+      <static>true</static>
+      <pose>3.0 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+           <!-- Box Obstacle 44 -->
+    <model name="box_obstacle44">
+      <static>true</static>
+      <pose>3.5 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+    <!-- Box Obstacle 45-->
+    <model name="box_obstacle45">
+      <static>true</static>
+      <pose>2.5 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+           <!-- Box Obstacle 46 -->
+    <model name="box_obstacle46">
+      <static>true</static>
+      <pose>3 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Box Obstacle 47 -->
+    <model name="box_obstacle47">
+      <static>true</static>
+      <pose>3.5 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Box Obstacle 48-->
+    <model name="box_obstacle48">
+      <static>true</static>
+      <pose>-2.5 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+           <!-- Box Obstacle 49 -->
+    <model name="box_obstacle49">
+      <static>true</static>
+      <pose>-3 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+           <!-- Box Obstacle 50 -->
+    <model name="box_obstacle50">
+      <static>true</static>
+      <pose>-3.5 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+
+    <!-- Box Obstacle 51-->
+    <model name="box_obstacle51">
+      <static>true</static>
+      <pose>0.5 -2.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+           <!-- Box Obstacle 52 -->
+    <model name="box_obstacle52">
+      <static>true</static>
+      <pose>0.5 -2.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Box Obstacle 53 -->
+    <model name="box_obstacle53">
+      <static>true</static>
+      <pose>0.5 -3 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Box Obstacle 54-->
+    <model name="box_obstacle54">
+      <static>true</static>
+      <pose>-0.5 -2.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+           <!-- Box Obstacle 55 -->
+    <model name="box_obstacle55">
+      <static>true</static>
+      <pose>-0.5 -2.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+           <!-- Box Obstacle 56 -->
+    <model name="box_obstacle56">
+      <static>true</static>
+      <pose>-0.5 -3 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
 
   </world>
 </sdf>

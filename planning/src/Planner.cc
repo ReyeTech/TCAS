@@ -1,5 +1,5 @@
 #include "Planner.h"
-#define NUMBER_OF_ROBOTS 3
+#define NUMBER_OF_ROBOTS 4
 namespace TCAS {
 
 Planner::Planner() : Node("robot_controller") {
