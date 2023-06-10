@@ -11,6 +11,7 @@
 #include <ament_index_cpp/get_package_share_directory.hpp>
 #include <chrono>
 #include <cmath>
+#include <csignal>
 #include <fstream>
 #include <geometry_msgs/msg/point.hpp>
 #include <geometry_msgs/msg/twist.hpp>
@@ -38,6 +39,7 @@ struct Cell {
 class Planner : public rclcpp::Node {
  public:
   Planner();
+  static void signalHandler(int signal);
 
  private:
   /**
@@ -159,7 +161,9 @@ class Planner : public rclcpp::Node {
    */
   void readCustomGoals();
   void readObstacleParams();
+
   CBSHelper cbs_;
+  static Planner *instance;
   bool custom_goals_ = true;  // True: read positions from
                               // /params/custom_goals.yaml False: Random targets
   bool replan_ =

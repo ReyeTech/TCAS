@@ -1,8 +1,9 @@
 #include "Planner.h"
 #define NUMBER_OF_ROBOTS 4
 namespace TCAS {
-
+Planner* Planner::instance = nullptr;  // Initialize the static member variable
 Planner::Planner() : Node("robot_controller") {
+  instance = this;
   init();
   // updateObstacleLocations();
   readObstacleParams();
@@ -112,8 +113,8 @@ void Planner::readCustomGoals() {
       YAML::Node robot_data = data_robots[robot_index];
       YAML::Node goal_node = robot_data["goal"];
       if (goal_node.IsSequence() && goal_node.size() >= 2) {
-        double goal_x = std::round(goal_node[0].as<double>());
-        double goal_y = std::round(goal_node[1].as<double>());
+        double goal_x = goal_node[0].as<double>();
+        double goal_y = goal_node[1].as<double>();
         RCLCPP_INFO(get_logger(), "goal : x %.2f y %.2f", goal_x, goal_y);
         final_goal_[robot_index].x = goal_x;
         final_goal_[robot_index].y = goal_y;
@@ -727,11 +728,22 @@ void Planner::getDataFromYaml(std::string& filename) {
 
   // Rest of the code...
 }
+void Planner::signalHandler(int signal) {
+  // Access the instance through the static member variable
+  Planner* plannerInstance = instance;
+  if (plannerInstance && signal == SIGINT) {
+    // Call haltRobots() to stop the robots
+    plannerInstance->haltRobots();
 
+    // Shutdown ROS 2
+    rclcpp::shutdown();
+  }
+}
 }  // namespace TCAS
 int main(int argc, char* argv[]) {
   rclcpp::init(argc, argv);
   auto plannerNode = std::make_shared<TCAS::Planner>();
+  std::signal(SIGINT, &TCAS::Planner::signalHandler);
   rclcpp::spin(plannerNode);
   rclcpp::shutdown();
   return 0;
