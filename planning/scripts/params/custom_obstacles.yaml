@@ -1,63 +1,61 @@
 obstacles:
--   obstacle: [1, 0]
--   obstacle: [1.5, 0]
--   obstacle: [2, 0]
--   obstacle: [1, 1]
--   obstacle: [1.5, 1]
--   obstacle: [2, 1]
--   obstacle: [-2, -1]
--   obstacle: [-3, -3]
--   obstacle: [-0.5, 1.5]
--   obstacle: [-0.5, 1]
--   obstacle: [-0.5, 1.5]
--   obstacle: [-0.5, 1]
--   obstacle: [-0.5, 0]
--   obstacle: [-1, 0]
--   obstacle: [0.5, -0.5]
--   obstacle: [0.5, -1]
--   obstacle: [0.5, -1.5]
--   obstacle: [-0.5, -0.5]
--   obstacle: [-0.5, -1]
--   obstacle: [-0.5, -1.5]
--   obstacle: [0.5, 0]
--   obstacle: [0.5, 1]
--   obstacle: [0.5, 1.5]
--   obstacle: [-0.5, 1.5]
--   obstacle: [-0.5, 1]
--   obstacle: [-0.5, 0]
--   obstacle: [-1, 0]
--   obstacle: [0.5, 2]
--   obstacle: [-0.5, 2]
--   obstacle: [1, 1]
--   obstacle: [-1.5, 1]
--   obstacle: [-2, 1]
--   obstacle: [-1, 1]
--   obstacle: [-0.5, 2.5]
--   obstacle: [0.5, 2.5]
--   obstacle: [-2.5, 1]
--   obstacle: [3, 1]
--   obstacle: [-3.5, 1]
--   obstacle: [-2.5, 0]
--   obstacle: [-3, 0]
--   obstacle: [-3.5, 0]
--   obstacle: [0.5, 3]
--   obstacle: [0.5, 3.5]
--   obstacle: [0.5, 4]
--   obstacle: [-0.5, 3]
--   obstacle: [-0.5, 3.5]
--   obstacle: [-0.5, 4]
--   obstacle: [2.5, 0]
--   obstacle: [3, 0]
--   obstacle: [3.5, 0]
--   obstacle: [2.5, 1]
--   obstacle: [3, 1]
--   obstacle: [3.5, 1]
--   obstacle: [-2.5, 0]
--   obstacle: [-3, 0]
--   obstacle: [-3.5, 0]
--   obstacle: [0.5, -2]
--   obstacle: [0.5, -2.5]
--   obstacle: [0.5, -3]
--   obstacle: [-0.5, -2]
--   obstacle: [-0.5, -2.5]
--   obstacle: [-0.5, -3]
+-   obstacle: [1, 0]          #1
+-   obstacle: [1.5, 0]        #2
+-   obstacle: [2, 0]          #3 
+-   obstacle: [1, 0.85]       #4
+-   obstacle: [1.5, 0.85]     #5
+-   obstacle: [2, 0.85]       #6 
+-   obstacle: [-1.5, 0]       #8
+-   obstacle: [0.425, -0.5]   #9
+-   obstacle: [0.425, -1]     #10
+-   obstacle: [0.425, -1.5]   #11
+-   obstacle: [-0.425, -0.5]  #12
+-   obstacle: [-0.425, -1]    #13
+-   obstacle: [-0.425, -1.5]  #14
+-   obstacle: [0.425, 0]      #15
+-   obstacle: [0.425, 0.85]   #16
+-   obstacle: [0.425, 1.5]    #17
+-   obstacle: [-0.425, 1.5]   #18
+-   obstacle: [-0.425, 0.85]  #19
+-   obstacle: [-0.425, 0]     #20
+-   obstacle: [-1, 0]         #21
+-   obstacle: [0.425, 2]      #22
+-   obstacle: [-0.425, 2]     #23
+-   obstacle: [-1, 0.85]      #24
+-   obstacle: [-1.5, 0.85]    #25    
+-   obstacle: [-2.0, 0.85]    #26
+-   obstacle: [-0.425, 2.5]   #28
+-   obstacle: [0.425, 2.5]    #29
+-   obstacle: [-2.5, 0.85]    #30
+-   obstacle: [-3, 0.85]      #31
+-   obstacle: [-3.5, 0.85]    #32
+-   obstacle: [-2.5, 0]       #33
+-   obstacle: [-3, 0]         #34
+-   obstacle: [-3.5, 0]       #35
+-   obstacle: [0.425, 3]      #36
+-   obstacle: [0.425, 3.5]    #37
+-   obstacle: [0.425, 4]      #38
+-   obstacle: [-0.425, 3]     #39
+-   obstacle: [-0.425, 3.5]   #40
+-   obstacle: [-0.425, 4]     #41
+-   obstacle: [2.5, 0]        #42
+-   obstacle: [3, 0]          #43
+-   obstacle: [3.5, 0]        #44
+-   obstacle: [2.5, 0.85]     #45
+-   obstacle: [3, 0.85]       #46
+-   obstacle: [3.5, 0.85]     #47
+-   obstacle: [-2.5, 0]       #48
+-   obstacle: [-3, 0]         #49
+-   obstacle: [-3.5, 0]       #50
+-   obstacle: [0.425, -2]     #51
+-   obstacle: [0.425, -2.5]   #52
+-   obstacle: [0.425, -3]     #53
+-   obstacle: [-0.425, -2]    #54
+-   obstacle: [-0.425, -2.5]  #55
+-   obstacle: [-0.425, -3]    #56
+-   obstacle: [0.425, 1]      #57
+-   obstacle: [-0.425, 1]     #58
+-   obstacle: [-0.5, 0]       #59
+-   obstacle: [-0.5, 0.85]    #60
+-   obstacle: [0.5, 0]        #61
+-   obstacle: [0.5, 0.85]     #62

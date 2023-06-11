@@ -99,7 +99,7 @@
     <!-- Box Obstacle 4 -->
     <model name="box_obstacle4">
       <static>true</static>
-      <pose>1 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>1 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -128,7 +128,7 @@
     <!-- Box Obstacle 5 -->
     <model name="box_obstacle5">
       <static>true</static>
-      <pose>1.5 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>1.5 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -156,7 +156,7 @@
     <!-- Box Obstacle 6 -->
     <model name="box_obstacle6">
       <static>true</static>
-      <pose>2 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>2 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -243,7 +243,7 @@
     <!-- Box Obstacle 9 -->
     <model name="box_obstacle9">
       <static>true</static>
-      <pose>0.5 -0.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>0.425 -0.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -272,7 +272,7 @@
     <!-- Box Obstacle 10 -->
     <model name="box_obstacle10">
       <static>true</static>
-      <pose>0.5 -1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> 0.425 -1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -301,7 +301,7 @@
     <!-- Box Obstacle 11 -->
     <model name="box_obstacle11">
       <static>true</static>
-      <pose>0.5 -1.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> 0.425 -1.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -330,7 +330,7 @@
     <!-- Box Obstacle 12 -->
     <model name="box_obstacle12">
       <static>true</static>
-      <pose>-0.5 -0.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> -0.425 -0.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -359,7 +359,7 @@
     <!-- Box Obstacle 13 -->
     <model name="box_obstacle13">
       <static>true</static>
-      <pose>-0.5 -1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> -0.425 -1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -388,7 +388,7 @@
     <!-- Box Obstacle 14 -->
     <model name="box_obstacle14">
       <static>true</static>
-      <pose>-0.5 -1.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> -0.425 -1.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -418,7 +418,7 @@
     <!-- Box Obstacle 15 -->
     <model name="box_obstacle15">
       <static>true</static>
-      <pose>0.5 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> 0.425 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -448,7 +448,7 @@
     <!-- Box Obstacle 16 -->
     <model name="box_obstacle16">
       <static>true</static>
-      <pose>0.5 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> 0.425 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -478,7 +478,7 @@
     <!-- Box Obstacle 17 -->
     <model name="box_obstacle17">
       <static>true</static>
-      <pose>0.5 1.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> 0.425 1.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -508,7 +508,7 @@
     <!-- Box Obstacle 18 -->
     <model name="box_obstacle18">
       <static>true</static>
-      <pose>-0.5 1.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> -0.425 1.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -538,7 +538,7 @@
     <!-- Box Obstacle 19 -->
     <model name="box_obstacle19">
       <static>true</static>
-      <pose>-0.5 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> -0.425 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -568,7 +568,7 @@
     <!-- Box Obstacle 20 -->
     <model name="box_obstacle20">
       <static>true</static>
-      <pose>-0.5 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> -0.425 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -626,7 +626,7 @@
     <!-- Box Obstacle 22 -->
     <model name="box_obstacle22">
       <static>true</static>
-      <pose>0.5 2.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> 0.425 2.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -654,7 +654,7 @@
    <!-- Box Obstacle 23 -->
     <model name="box_obstacle23">
       <static>true</static>
-      <pose>-0.5 2.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> -0.425 2.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -682,7 +682,7 @@
        <!-- Box Obstacle 24 -->
     <model name="box_obstacle24">
       <static>true</static>
-      <pose>-1.0 1.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>-1.0 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -710,7 +710,7 @@
    <!-- Box Obstacle 25 -->
     <model name="box_obstacle25">
       <static>true</static>
-      <pose>-1.5 1.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>-1.5 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -738,7 +738,7 @@
        <!-- Box Obstacle 26 -->
     <model name="box_obstacle26">
       <static>true</static>
-      <pose>-2.0 1.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>-2.0 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -762,40 +762,11 @@
         </visual>
       </link>
     </model>
-
-       <!-- Box Obstacle 27 -->
-    <model name="box_obstacle27">
-      <static>true</static>
-      <pose>-1 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
-      <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
-            </box>
-          </geometry>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
-            </box>
-          </geometry>
-          <material>
-            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
-            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
-            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
-            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
-          </material>
-        </visual>
-      </link>
-    </model>
-
 
        <!-- Box Obstacle 28 -->
     <model name="box_obstacle28">
       <static>true</static>
-      <pose>-0.5 2.5 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> -0.425 2.5 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -824,7 +795,7 @@
        <!-- Box Obstacle 29 -->
     <model name="box_obstacle29">
       <static>true</static>
-      <pose>0.5 2.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> 0.425 2.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -852,7 +823,7 @@
            <!-- Box Obstacle 30-->
     <model name="box_obstacle30">
       <static>true</static>
-      <pose>-2.5 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>-2.5 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -880,7 +851,7 @@
            <!-- Box Obstacle 31 -->
     <model name="box_obstacle31">
       <static>true</static>
-      <pose>-3 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>-3 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -908,7 +879,7 @@
            <!-- Box Obstacle 32 -->
     <model name="box_obstacle32">
       <static>true</static>
-      <pose>-3.5 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>-3.5 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -1020,7 +991,7 @@
                <!-- Box Obstacle 36-->
     <model name="box_obstacle36">
       <static>true</static>
-      <pose>0.5 3 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> 0.425 3 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -1048,7 +1019,7 @@
     <!-- Box Obstacle 37 -->
     <model name="box_obstacle37">
       <static>true</static>
-      <pose>0.5 3.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> 0.425 3.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -1076,7 +1047,7 @@
     <!-- Box Obstacle 38 -->
     <model name="box_obstacle38">
       <static>true</static>
-      <pose>0.5 4 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> 0.425 4 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -1105,7 +1076,7 @@
     <!-- Box Obstacle 39-->
     <model name="box_obstacle39">
       <static>true</static>
-      <pose>-0.5 3 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> -0.425 3 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -1133,7 +1104,7 @@
     <!-- Box Obstacle 40 -->
     <model name="box_obstacle40">
       <static>true</static>
-      <pose>-0.5 3.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> -0.425 3.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -1161,7 +1132,7 @@
            <!-- Box Obstacle 41 -->
     <model name="box_obstacle41">
       <static>true</static>
-      <pose>-0.5 4 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> -0.425 4 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -1275,7 +1246,7 @@
     <!-- Box Obstacle 45-->
     <model name="box_obstacle45">
       <static>true</static>
-      <pose>2.5 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>2.5 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -1303,7 +1274,7 @@
            <!-- Box Obstacle 46 -->
     <model name="box_obstacle46">
       <static>true</static>
-      <pose>3 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>3 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -1331,7 +1302,7 @@
     <!-- Box Obstacle 47 -->
     <model name="box_obstacle47">
       <static>true</static>
-      <pose>3.5 1 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose>3.5 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -1444,7 +1415,7 @@
     <!-- Box Obstacle 51-->
     <model name="box_obstacle51">
       <static>true</static>
-      <pose>0.5 -2.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> 0.425 -2.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -1472,7 +1443,7 @@
            <!-- Box Obstacle 52 -->
     <model name="box_obstacle52">
       <static>true</static>
-      <pose>0.5 -2.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> 0.425 -2.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -1500,7 +1471,7 @@
     <!-- Box Obstacle 53 -->
     <model name="box_obstacle53">
       <static>true</static>
-      <pose>0.5 -3 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> 0.425 -3 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -1528,7 +1499,7 @@
     <!-- Box Obstacle 54-->
     <model name="box_obstacle54">
       <static>true</static>
-      <pose>-0.5 -2.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> -0.425 -2.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -1556,7 +1527,7 @@
            <!-- Box Obstacle 55 -->
     <model name="box_obstacle55">
       <static>true</static>
-      <pose>-0.5 -2.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> -0.425 -2.5 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>
@@ -1584,7 +1555,180 @@
            <!-- Box Obstacle 56 -->
     <model name="box_obstacle56">
       <static>true</static>
-      <pose>-0.5 -3 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <pose> -0.425 -3 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Box Obstacle 57 -->
+    <model name="box_obstacle57">
+      <static>true</static>
+      <pose> 0.425 1.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    
+    
+    <!-- Box Obstacle 58 -->
+    <model name="box_obstacle58">
+      <static>true</static>
+      <pose> -0.425 1.0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    
+    <!-- Box Obstacle 59 -->
+    <model name="box_obstacle59">
+      <static>true</static>
+      <pose>-0.5 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+    
+    <!-- Box Obstacle 60 -->
+    <model name="box_obstacle60">
+      <static>true</static>
+      <pose>-0.5 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    
+    <!-- Box Obstacle 61 -->
+    <model name="box_obstacle61">
+      <static>true</static>
+      <pose>0.5 0 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.45 0.45 0.6</size> <!-- Set the size of the box -->
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 1 0 1</ambient> <!-- Set the ambient color to green (RGBA) -->
+            <diffuse>0 1 0 1</diffuse> <!-- Set the diffuse color to green (RGBA) -->
+            <specular>0.7 0.7 0.7 1</specular> <!-- Set the specular color to light gray (RGBA) -->
+            <emissive>0 0 0 1</emissive> <!-- Set the emissive color to black (RGBA) -->
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    
+    <!-- Box Obstacle 62 -->
+    <model name="box_obstacle62">
+      <static>true</static>
+      <pose>0.5 0.85 0 0 0 0</pose> <!-- Set the pose (position and orientation) of the box -->
       <link name="link">
         <collision name="collision">
           <geometry>

@@ -17,7 +17,7 @@ def gen_robot_list(number_of_robots):
     robots = []
     # coordinates = set()  # Set to store unique coordinates
     # coordinates.add((1,2))
-    coordinates=[[2,0.5],[0,2.5],[-2,0.5],[0,-1.5]]
+    coordinates=[[2,0.425],[0,2.5],[-2,0.425],[0,-1.5]]
 
     for i in range(number_of_robots):
         # while True:

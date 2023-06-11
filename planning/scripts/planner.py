@@ -305,8 +305,8 @@ class Planner(Node):
         for robot_index, robot_data in enumerate(data_robots):
             if robot_index < self.number_of_robots:
                 goal = robot_data['goal']
-                self.final_goal[int(robot_index)].x = float(round(goal[0]))
-                self.final_goal[int(robot_index)].y = float(round(goal[1]))
+                self.final_goal[int(robot_index)].x = float(goal[0])
+                self.final_goal[int(robot_index)].y = float(goal[1])
         # self.get_logger().info(f"Goals: {self.final_goal}")
         self.resolve_goal_conflicts()
         self.resolve_obstacle_conflicts()

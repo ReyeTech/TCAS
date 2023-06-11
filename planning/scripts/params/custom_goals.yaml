@@ -1,7 +1,7 @@
 robots:
--   goal: [-3, 1]
+-   goal: [-3, 0.85]
     name: robot1
--   goal: [3, 1]
+-   goal: [3, 0.85]
     name: robot2
 -   goal: [0, -2]
     name: robot3
