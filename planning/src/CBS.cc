@@ -581,27 +581,19 @@ bool TCAS::CBSHelper::executeCbs(std::string& inputFile,
   std::unordered_set<Location> obstacles;
   std::vector<Location> goals;
   std::vector<State> startStates;
-  std::cout << "Execute Cbs function entered..." << std::endl;
   const auto& dim = config["map"]["dimensions"];
   int dimx = dim[0].as<int>();
   int dimy = dim[1].as<int>();
-  std::cout << "Map dimension x " << dimx << std::endl;
-  std::cout << "Map dimension y " << dimy << std::endl;
   for (const auto& node : config["map"]["obstacles"]) {
     obstacles.insert(Location(node[0].as<int>(), node[1].as<int>()));
-    std::cout << node[0] << " " << node[1] << std::endl;
   }
-  std::cout << "Cbs obstacles loaded..." << std::endl;
   for (const auto& node : config["robots"]) {
     const auto& start = node["start"];
     const auto& goal = node["goal"];
     startStates.emplace_back(State(0, start[0].as<int>(), start[1].as<int>()));
-    std::cout << "States: " << start[0] << " " << start[1] << std::endl;
-    // std::cout << "s: " << startStates.back() << std::endl;
     goals.emplace_back(Location(goal[0].as<int>(), goal[1].as<int>()));
-    std::cout << "Goals: " << goal[0] << " " << goal[1] << std::endl;
   }
-  std::cout << "Cbs goals and obstacles loaded..." << std::endl;
+
   // sanity check: no identical start states
   std::unordered_set<State> startStatesSet;
   for (const auto& s : startStates) {
@@ -647,7 +639,7 @@ bool TCAS::CBSHelper::executeCbs(std::string& inputFile,
   } else {
     rootNode["status"] = 0;
   }
-  //Write data to Yaml file
+  // Write data to Yaml file
   std::ofstream outFile(outputFile);
   outFile << rootNode;
   outFile.close();

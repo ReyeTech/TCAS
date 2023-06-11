@@ -13,7 +13,6 @@ Planner::Planner() : Node("robot_controller") {
 }
 
 void Planner::init() {
-  RCLCPP_INFO(get_logger(), "Planner init has been called");
   // populating number of robots and robots_ vector
   number_of_robots_ = 0;
   while (number_of_robots_ < NUMBER_OF_ROBOTS) {
@@ -39,7 +38,6 @@ void Planner::init() {
   first_time_planning_ = true;
   cbs_time_schedule_ = 1;
   number_of_successfully_executed_plans_ = 0;
-  // obstacles_.push_back(std::make_tuple(500, 500));  // Dummy obstacle
 }
 int Planner::countRobotTopics() {
   auto topic_list = this->get_topic_names_and_types();
@@ -363,9 +361,9 @@ void Planner::callCbsPlanner() {
   std::string inputFile;
   std::string outputFile;
 
-  std::string inputFilename = "scripts/params/cbs_input.yaml";
+  std::string inputFilename = "scripts/params/cbs_input_cpp.yaml";
   inputFile = getFullFilename(inputFilename);
-  std::string outputFilename = "scripts/params/cbs_output.yaml";
+  std::string outputFilename = "scripts/params/cbs_output_cpp.yaml";
   outputFile = getFullFilename(outputFilename);
   // Check if the input file is not empty
   std::ifstream inputCheckFile(inputFile);
@@ -434,7 +432,6 @@ void Planner::commandRobot(int robot_index,
                    // errors in the feedback linearization controller)
   geometry_msgs::msg::Point current_position = positions_[robot_index];
   geometry_msgs::msg::Twist cmd_vel;
-  RCLCPP_INFO(get_logger(), "entered command robot function");
   try {
     // Feedback linearization controller, get linear and angular desired
     // velocities from desired X and Y Points are shifted (SHIFT_MAP) by a fixed
@@ -575,8 +572,8 @@ std::string Planner::getFullFilename(const std::string& paramFilename) {
 }
 
 void Planner::writeDataToYaml(std::string& filename) {
-  std::string inputFilename = "scripts/params/cbs_input.yaml";
-  filename = getFullFilename(inputFilename);
+ // std::string inputFilename = "scripts/params/cbs_input.yaml";
+  //filename = getFullFilename(inputFilename);
 
   YAML::Node yamlData;
   YAML::Node robotsData;
@@ -624,7 +621,6 @@ void Planner::writeDataToYaml(std::string& filename) {
 
   yamlData["robots"] = robotsData;
   yamlData["map"] = mapData;
-  RCLCPP_INFO(get_logger(), "Writing data to cbs_input---check the file");
   std::ofstream file(filename);
   if (file.is_open()) {
     file << yamlData;
@@ -634,8 +630,8 @@ void Planner::writeDataToYaml(std::string& filename) {
   }
 }
 void Planner::getDataFromYaml(std::string& filename) {
-  std::string outputFilename = "scripts/params/cbs_output.yaml";
-  filename = getFullFilename(outputFilename);
+ // std::string outputFilename = "scripts/params/cbs_output.yaml";
+  //filename = getFullFilename(outputFilename);
 
   try {
     YAML::Node data = YAML::LoadFile(filename);
