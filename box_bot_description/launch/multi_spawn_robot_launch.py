@@ -11,8 +11,40 @@ from launch.substitutions import LaunchConfiguration, TextSubstitution
 import random
 
 SPAWN_AREA = 4
-NUMBER_OF_ROBOTS = 7
+NUMBER_OF_ROBOTS = 4
 
+def fixed_robot_position():
+    """Create only 4 robots with fixed positions"""
+    NUMBER_OF_ROBOTS = 4
+    robots = []
+    FIXED_START_POSITION = 2
+    coordinates = set()  # Set to store unique coordinates
+    robot_idx = 0
+    x = 0
+    y = FIXED_START_POSITION
+    coordinates.add((x,y))
+    robot_name = "robot" + str(robot_idx)
+    robots.append({'name': robot_name, 'x_pose': x, 'y_pose': y, 'z_pose': 0.01})
+    robot_idx +=1   
+    x = 0
+    y = -FIXED_START_POSITION
+    coordinates.add((x,y))
+    robot_name = "robot" + str(robot_idx)
+    robots.append({'name': robot_name, 'x_pose': x, 'y_pose': y, 'z_pose': 0.01}) 
+    robot_idx += 1
+    x = FIXED_START_POSITION
+    y = 0
+    coordinates.add((x,y))
+    robot_name = "robot" + str(robot_idx)
+    robots.append({'name': robot_name, 'x_pose': x, 'y_pose': y, 'z_pose': 0.01})
+    robot_idx += 1
+    x = -FIXED_START_POSITION
+    y = 0
+    coordinates.add((x,y))
+    robot_name = "robot" + str(robot_idx)
+    robots.append({'name': robot_name, 'x_pose': x, 'y_pose': y, 'z_pose': 0.01})
+    return robots
+    
 def gen_robot_list(number_of_robots):
     robots = []
     coordinates = set()  # Set to store unique coordinates
@@ -44,7 +76,8 @@ def generate_launch_description():
     assert os.path.exists(urdf), "Thebox_bot.urdf doesnt exist in "+str(urdf)
 
     # Names and poses of the robots
-    robots = gen_robot_list(NUMBER_OF_ROBOTS)
+    # robots = gen_robot_list(NUMBER_OF_ROBOTS)
+    robots = fixed_robot_position()
 
     # We create the list of spawn robots commands
     spawn_robots_cmds = []

@@ -21,11 +21,14 @@ import yaml
 import ament_index_python.packages as packages
 import cbs
 
-CUSTOM_GOALS = False # True: read positions from /params/custom_goals.yaml False: Random targets
+CUSTOM_GOALS = True # True: read positions from /params/custom_goals.yaml False: Random targets
 REPLAN = True # True: Plan and execute continuosly False: Plan and execute once
 THRE_ROBOT_ON_TARGET = 0.1 # Threshold to consider that robot has reached a target
 TARGETS_RANDOM_POOL_SIZE = 3 # Size of target area in meters (Gazebo squares)
-KP = 0.15 # Controller "proportional" gain
+KP_linear = 0.25 # Controller "proportional" gain for linear velocity
+KP_angular = 0.5 # Controller "proportional" gain for angular velocity
+KI_linear = 0.05 # Controller "integral" gain for angular velocity
+KI_angular = 0.01 # Controller "integral" gain for angular velocity
 MAX_LINEAR_VELOCITY = 1
 MAX_ANGULAR_VELOCITY = 0.2
 DISCRETIZATION = 2 # Discretization of map (1: one point per gazebo square, 2: 4 points per gazebo square)
@@ -48,6 +51,10 @@ class Planner(Node):
         self.first_time_planning = True
         self.cbs_time_schedule = 1
         self.number_of_succesfully_executed_plans = 0
+        # Initialize the integral and previous error for PID controller
+        self.angular_integral = [0.0] * self.number_of_robots
+        self.distance_integral = [0.0] * self.number_of_robots
+        
         self.obstacles=(500, 500) # Dummy obstacle (CBS code needs at least one obstacle, if no obstacle is defined, it will consider this obstacle far away that do not interfere)
         self.read_obstacle_param()
         self.create_all_subscribers()
@@ -104,6 +111,8 @@ class Planner(Node):
         '''
         Check if all robots arrived in cbs last waypoint, i.e, the goal. Return True only if all robots have arrived
         '''
+        self.angular_integral = [0.0] * self.number_of_robots # Zero controller errors (Anti Windup)
+        self.distance_integral = [0.0] * self.number_of_robots # Zero controller errors (Anti Windup)
         number_of_robots_in_target = 0
         cbs_last_waypoints = []
         for robot_index, _ in enumerate(self.target_waypoints):
@@ -175,32 +184,56 @@ class Planner(Node):
                         error_msg = "Invalid current_orientation: " + str(current_orientation)
                         continue
                     self.command_robot(robot_index, target_waypoint, current_orientation)
-                    
+                            
+
     def command_robot(self, robot_index, target_waypoint, current_orientation):
         '''
         Control the robot to the desired target_waypoint
         '''
-        d = 0.1 # Virtual point outside robot center (avoid mathematical errors in the feedback linearization controller)
         current_position = self.positions[robot_index]
         cmd_vel = Twist()
-        try: # Feedback linearization controller, get linear and angular desired velocities from desired X and Y
+        try:
             # Points are shifted (SHIFT_MAP) by a fixed amount so that they are positive and are shrinked/inflated (DISCRETIZATION) to allow the use of CBS that only accepts positive integers
             target_x_scaled = (target_waypoint.x - SHIFT_MAP)/DISCRETIZATION
             target_y_scaled = (target_waypoint.y - SHIFT_MAP)/DISCRETIZATION
             error_x = target_x_scaled - current_position.x
             error_y = target_y_scaled - current_position.y
-            cmd_vel.linear.x = (error_x) * math.cos(current_orientation) + (error_y) * math.sin(current_orientation)
-            cmd_vel.angular.z = -(error_x) * math.sin(current_orientation) / d + (error_y) * math.cos(current_orientation) / d
-            cmd_vel.linear.x = KP * cmd_vel.linear.x
-            cmd_vel.angular.z = KP * cmd_vel.angular.z
-            # Limit the velocities
-            cmd_vel.linear.x = min(cmd_vel.linear.x, MAX_LINEAR_VELOCITY)
-            cmd_vel.angular.z = min(cmd_vel.angular.z, MAX_ANGULAR_VELOCITY)
+
+            target_angle = math.atan2(error_y, error_x) # Use atan2 to get the correct angle
+                    
+            # Calculate the closer angle taking into account the circular nature of angles
+            angle_diff = target_angle - current_orientation
+            if angle_diff > math.pi:
+                angle_diff -= 2 * math.pi
+            elif angle_diff < -math.pi:
+                angle_diff += 2 * math.pi
+                
+            # PI control for rotation
+            angular_error = angle_diff
+            self.angular_integral[robot_index] += angular_error
+            angular_output = KP_angular * angular_error + KI_angular * self.angular_integral[robot_index]
+                
+            # Set control mode based on the magnitude of the angle difference
+            ANGLE_THRE = 0.4 # Too small -> Jittering, too big -> Robots move in a straight line with wrong direction
+            if abs(angle_diff) > ANGLE_THRE:
+                # Rotate in place towards the target
+                cmd_vel.linear.x = 0.0
+                cmd_vel.angular.z = angular_output
+            else:
+                # PI control for translation
+                distance_error = math.sqrt(error_x**2 + error_y**2)
+                self.distance_integral[robot_index] += distance_error
+                distance_output = KP_linear * distance_error + KI_linear * self.distance_integral[robot_index]
+
+                # Move straight towards the target
+                cmd_vel.linear.x = distance_output
+                cmd_vel.angular.z = 0.0
+
             self.robot_publishers[int(robot_index)].publish(cmd_vel)
         except Exception as e:
             error_msg = "Error occurred during computation: " + str(e)
-            self.get_logger().error(error_msg)             
-
+            self.get_logger().error(error_msg)   
+    
     def halt_robots(self):
         '''
         Send zero to the robots if they are not supposed to move, avoid robots wander around
@@ -210,6 +243,7 @@ class Planner(Node):
             try:
                 cmd_vel.linear.x = float(0)
                 cmd_vel.linear.y = float(0)
+                cmd_vel.linear.z = float(0)
                 cmd_vel.angular.x = float(0)
                 cmd_vel.angular.y = float(0)
                 cmd_vel.angular.z = float(0)

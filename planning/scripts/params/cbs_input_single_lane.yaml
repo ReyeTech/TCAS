@@ -30,16 +30,17 @@ map:
     - !!python/tuple [19, 18]
     - !!python/tuple [19, 17]
     - !!python/tuple [19, 16]
+
 robots:
--   goal: [20, 18]
+-   goal: [18, 24]
     name: robot0
-    start: [20, 18]
--   goal: [20, 22]
+    start: [20, 24]
+-   goal: [26, 25]
     name: robot1
-    start: [20, 22]
--   goal: [18, 20]
+    start: [20, 16]
+-   goal: [18, 23]
     name: robot2
-    start: [18, 20]
--   goal: [22, 20]
+    start: [24, 20]
+-   goal: [26, 15]
     name: robot3
-    start: [22, 20]
+    start: [16, 20]
