@@ -38,59 +38,7 @@
       </link>
     </model>
 
-<model name="box_obstacle2">
-  <static>true</static>
-  <pose>-0.5 0.5 0 0 0 0</pose>
-  <link name="link">
-    <collision name="collision">
-      <geometry>
-        <box>
-          <size>0.45 0.45 0.6</size>
-        </box>
-      </geometry>
-    </collision>
-    <visual name="visual">
-      <geometry>
-        <box>
-          <size>0.45 0.45 0.6</size>
-        </box>
-      </geometry>
-      <material>
-        <ambient>0 1 0 1</ambient>
-        <diffuse>0 1 0 1</diffuse>
-        <specular>0.7 0.7 0.7 1</specular>
-        <emissive>0 0 0 1</emissive>
-      </material>
-    </visual>
-  </link>
-</model>
 
-<model name="box_obstacle3">
-  <static>true</static>
-  <pose>0.5 -0.5 0 0 0 0</pose>
-  <link name="link">
-    <collision name="collision">
-      <geometry>
-        <box>
-          <size>0.45 0.45 0.6</size>
-        </box>
-      </geometry>
-    </collision>
-    <visual name="visual">
-      <geometry>
-        <box>
-          <size>0.45 0.45 0.6</size>
-        </box>
-      </geometry>
-      <material>
-        <ambient>0 1 0 1</ambient>
-        <diffuse>0 1 0 1</diffuse>
-        <specular>0.7 0.7 0.7 1</specular>
-        <emissive>0 0 0 1</emissive>
-      </material>
-    </visual>
-  </link>
-</model>
 
 
 <model name="box_obstacle4">
@@ -123,7 +71,7 @@
 
 <model name="box_obstacle5">
   <static>true</static>
-  <pose>-1 0.5 0 0 0 0</pose>
+  <pose>-1 1 0 0 0 0</pose>
   <link name="link">
     <collision name="collision">
       <geometry>
@@ -151,7 +99,7 @@
 
 <model name="box_obstacle6">
   <static>true</static>
-  <pose>-1.5 0.5 0 0 0 0</pose>
+  <pose>-1.5 1 0 0 0 0</pose>
   <link name="link">
     <collision name="collision">
       <geometry>
@@ -177,38 +125,11 @@
 </model>
 
 
-
-<model name="box_obstacle7">
-  <static>true</static>
-  <pose>0.5 -1 0 0 0 0</pose>
-  <link name="link">
-    <collision name="collision">
-      <geometry>
-        <box>
-          <size>0.45 0.45 0.6</size>
-        </box>
-      </geometry>
-    </collision>
-    <visual name="visual">
-      <geometry>
-        <box>
-          <size>0.45 0.45 0.6</size>
-        </box>
-      </geometry>
-      <material>
-        <ambient>0 1 0 1</ambient>
-        <diffuse>0 1 0 1</diffuse>
-        <specular>0.7 0.7 0.7 1</specular>
-        <emissive>0 0 0 1</emissive>
-      </material>
-    </visual>
-  </link>
-</model>
 
 
 <model name="box_obstacle8">
   <static>true</static>
-  <pose>0.5 -1.5 0 0 0 0</pose>
+  <pose>1 -1.5 0 0 0 0</pose>
   <link name="link">
     <collision name="collision">
       <geometry>
@@ -235,7 +156,7 @@
 
 <model name="box_obstacle9">
   <static>true</static>
-  <pose>0.5 -2 0 0 0 0</pose>
+  <pose>1 -2 0 0 0 0</pose>
   <link name="link">
     <collision name="collision">
       <geometry>
@@ -262,7 +183,7 @@
 
 <model name="box_obstacle10">
   <static>true</static>
-  <pose>-2 0.5 0 0 0 0</pose>
+  <pose>-2 1 0 0 0 0</pose>
   <link name="link">
     <collision name="collision">
       <geometry>
@@ -288,7 +209,7 @@
 </model>
 <model name="box_obstacle11">
   <static>true</static>
-  <pose>1 -0.5 0 0 0 0</pose>
+  <pose>1 -1 0 0 0 0</pose>
   <link name="link">
     <collision name="collision">
       <geometry>
@@ -314,7 +235,7 @@
 </model>
 <model name="box_obstacle12">
   <static>true</static>
-  <pose>1.5 -0.5 0 0 0 0</pose>
+  <pose>1.5 -1 0 0 0 0</pose>
   <link name="link">
     <collision name="collision">
       <geometry>
@@ -340,7 +261,7 @@
 </model>
 <model name="box_obstacle13">
   <static>true</static>
-  <pose>-0.5 1 0 0 0 0</pose>
+  <pose>-1 1 0 0 0 0</pose>
   <link name="link">
     <collision name="collision">
       <geometry>
@@ -367,7 +288,7 @@
 
 <model name="box_obstacle14">
   <static>true</static>
-  <pose>-0.5 1.5 0 0 0 0</pose>
+  <pose>-1 1.5 0 0 0 0</pose>
   <link name="link">
     <collision name="collision">
       <geometry>
@@ -393,7 +314,7 @@
 </model>
 <model name="box_obstacle15">
   <static>true</static>
-  <pose>-0.5 2 0 0 0 0</pose>
+  <pose>-1 2 0 0 0 0</pose>
   <link name="link">
     <collision name="collision">
       <geometry>
@@ -504,7 +425,7 @@
 
 <model name="box_obstacle20">
   <static>true</static>
-  <pose>2 -0.5 0 0 0 0</pose>
+  <pose>2 -1 0 0 0 0</pose>
   <link name="link">
     <collision name="collision">
       <geometry>
